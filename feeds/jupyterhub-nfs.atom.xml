@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Olamilekan Wahab</title><link href="n/" rel="alternate"></link><link href="n/feeds/jupyterhub-nfs.atom.xml" rel="self"></link><id>n/</id><updated>2016-09-10T00:00:00+00:00</updated><entry><title>Jupyter Hub on Kubernetes Part II: NFS</title><link href="n/blog/2016/09/10/jupyterhub-kubernetes-nfs/" rel="alternate"></link><published>2016-09-10T00:00:00+00:00</published><updated>2016-09-10T00:00:00+00:00</updated><author><name>Daniel Rodriguez</name></author><id>tag:,2016-09-10:n/blog/2016/09/10/jupyterhub-kubernetes-nfs/</id><summary type="html">&lt;p&gt;Second part of my JupyterHub deployment in Kubernetes experiment be sure to read &lt;a href="n/blog/2016/09/03/jupyterhub-kubernetes-ldap/"&gt;Part I&lt;/a&gt;.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Olamilekan Wahab</title><link href="/" rel="alternate"></link><link href="/feeds/jupyterhub-nfs.atom.xml" rel="self"></link><id>/</id><updated>2016-09-10T00:00:00+00:00</updated><entry><title>Jupyter Hub on Kubernetes Part II: NFS</title><link href="/blog/2016/09/10/jupyterhub-kubernetes-nfs/" rel="alternate"></link><published>2016-09-10T00:00:00+00:00</published><updated>2016-09-10T00:00:00+00:00</updated><author><name>Daniel Rodriguez</name></author><id>tag:,2016-09-10:blog/2016/09/10/jupyterhub-kubernetes-nfs/</id><summary type="html">&lt;p&gt;Second part of my JupyterHub deployment in Kubernetes experiment be sure to read &lt;a href="/blog/2016/09/03/jupyterhub-kubernetes-ldap/"&gt;Part I&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Last time we got JupyterHub authenticating to LDAP and creating the single user notebooks in
 Kubernetes containers. As I mentioned in that post one big problem with that deployment
 was that the notebook files are gone when the pod is deleted
@@ -234,7 +234,7 @@ $ kubectl create -f hub.yml
 
 &lt;/pre&gt;
 
-&lt;p&gt;Wait for the service to give you an External IP and login as any LDAP user (see &lt;a href="n/blog/2016/09/03/jupyterhub-kubernetes-ldap/"&gt;Part I&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Wait for the service to give you an External IP and login as any LDAP user (see &lt;a href="/blog/2016/09/03/jupyterhub-kubernetes-ldap/"&gt;Part I&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;After logging in a new pod will be created and mount the Persistent Volume Claim that uses the NFS Server.
 Create a couple of notebooks and in the &lt;code&gt;jupyterhub-nfs-web&lt;/code&gt; service you should see something like this.&lt;/p&gt;
 &lt;p&gt;{% b64img articles/2016/08/jupyterhub-nfs/nfs-web.png "NFS web files" %}&lt;/p&gt;

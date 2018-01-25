@@ -1,255 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Olamilekan Wahab</title><link href="n/" rel="alternate"></link><link href="n/feeds/10.atom.xml" rel="self"></link><id>n/</id><updated>2015-10-06T00:00:00+00:00</updated><entry><title>Multicorn in Docker + conda for Postgres Foreign Data Wrappers in Python</title><link href="n/blog/2015/10/06/multicorn-docker-conda/" rel="alternate"></link><published>2015-10-06T00:00:00+00:00</published><updated>2015-10-06T00:00:00+00:00</updated><author><name>Daniel Rodriguez</name></author><id>tag:,2015-10-06:n/blog/2015/10/06/multicorn-docker-conda/</id><summary type="html">&lt;p&gt;&lt;a href="http://multicorn.org/"&gt;Multicorn&lt;/a&gt; is (in my opinion) one of those hidden gems in the python community.
-It is basically a wrapper for &lt;a href="https://wiki.postgresql.org/wiki/Foreign_data_wrappers"&gt;Postgres Foreign data wrappers&lt;/a&gt;
-and it makes it really easy to develop one in python.
-What that means is that it allows to use what is probably the most common and used database right now,
-Postgres, as a frontend for sql queries while allowing to use different data storage and even computation.&lt;/p&gt;
-&lt;p&gt;Unfortunately its not really known and therefore used, the only real example I have been impress
-with is a talk by Ville Tuulos: &lt;a href="https://www.youtube.com/watch?v=xnfnv6WT1Ng"&gt;How to Build a SQL-based Data Warehouse for 100+ Billion Rows in Python&lt;/a&gt;
-where he talks about how AdRoll &lt;em&gt;"built a custom, high-performance data warehouse in Python which
-can handle hundreds of billions of data points with sub-minute latency on a small cluster of servers"&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;That talk is a only a year old but to be honest the first time I saw it and tried to use Multicorn it was a complete failure.
-Fortunately things have improved and now also we have Docker and conda.
-I was really curious if it was still difficult to combine these two to make a simple Pandas FDW.
-Basically use pandas to read a CSV and filter using Pandas instead of Postgres.&lt;/p&gt;
-&lt;p&gt;There are a couple of Multicorn docker container in Docker Hub but I decided to do my own specially
-because the ones I found were not based on the Postgres docker container.
-Dockerfile can be found in &lt;a href="https://github.com/danielfrg/docker-multicorn"&gt;Github: docker-multicorn&lt;/a&gt;
-or the image can be just pulled by doing &lt;code&gt;docker pull danielfrg/multicorn&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;When started the container will install any python library on &lt;code&gt;/src&lt;/code&gt; since this is required for Multicorn to use the custom FDW.&lt;/p&gt;
-&lt;p&gt;It also includes a couple of examples on how to use the image.&lt;/p&gt;
-&lt;h2&gt;Simple CSV&lt;/h2&gt;
-&lt;p&gt;This example is basically a copy of one of Multicorn examples
-where they just load a &lt;code&gt;csv&lt;/code&gt; file using just the python std-library I just use the iris dataset here.&lt;/p&gt;
-&lt;div class="codehilite"&gt;
-&lt;pre class="bash"&gt;
-$ docker run -p 5432:5432 -v $(pwd):/src multicorn
-&lt;/div&gt;
-
-&lt;/pre&gt;
-
-&lt;p&gt;Connect to the Database (using pgadmin for example) create the FDW and Foreign table.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="n"&gt;EXTENSION&lt;/span&gt; &lt;span class="n"&gt;multicorn&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="n"&gt;SERVER&lt;/span&gt; &lt;span class="n"&gt;csv_srv&lt;/span&gt; &lt;span class="k"&gt;foreign&lt;/span&gt; &lt;span class="k"&gt;data&lt;/span&gt; &lt;span class="n"&gt;wrapper&lt;/span&gt; &lt;span class="n"&gt;multicorn&lt;/span&gt; &lt;span class="k"&gt;options&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;wrapper&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;multicorn.csvfdw.CsvFdw&amp;#39;&lt;/span&gt;
-&lt;span class="p"&gt;);&lt;/span&gt;
-
-&lt;span class="k"&gt;create&lt;/span&gt; &lt;span class="k"&gt;foreign&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt; &lt;span class="n"&gt;csvtest&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-      &lt;span class="n"&gt;sepal_length&lt;/span&gt; &lt;span class="nb"&gt;numeric&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="n"&gt;sepal_width&lt;/span&gt; &lt;span class="nb"&gt;numeric&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="n"&gt;petal_length&lt;/span&gt; &lt;span class="nb"&gt;numeric&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="n"&gt;petal_width&lt;/span&gt; &lt;span class="nb"&gt;numeric&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="n"&gt;species&lt;/span&gt; &lt;span class="nb"&gt;character&lt;/span&gt; &lt;span class="nb"&gt;varying&lt;/span&gt;
-&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="n"&gt;csv_srv&lt;/span&gt; &lt;span class="k"&gt;options&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-      &lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/src/iris.csv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="n"&gt;skip_header&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="k"&gt;delimiter&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;,&amp;#39;&lt;/span&gt;
-&lt;span class="p"&gt;);&lt;/span&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Olamilekan Wahab</title><link href="/" rel="alternate"></link><link href="/feeds/10.atom.xml" rel="self"></link><id>/</id><updated>2016-10-29T00:00:00+00:00</updated><entry><title>Introduction To The Fast Fourier Transform In Python</title><link href="/blog/2016/10/29/jupyter-notebook-cloudera-csd/" rel="alternate"></link><published>2016-10-29T00:00:00+00:00</published><updated>2016-10-29T00:00:00+00:00</updated><author><name>Olamilekan Wahab</name></author><id>tag:,2016-10-29:blog/2016/10/29/jupyter-notebook-cloudera-csd/</id><summary type="html">&lt;p&gt;NOTE : This is the first of a two part blog post on the topic.&lt;/p&gt;
+&lt;p&gt;The Fast Fourier Transform is an algorithmic optimization of the Discrete Fourier Transform.&lt;/p&gt;
+&lt;p&gt;I came across it a couple of weeks back and found it quite interesting because it's based on a topic I had previously done in class but never really got to use. In this post, I would give a brief explanation of the FFT algorithm stating its mathematical background. In the blogpost following this, various uses-cases of the FFT in Python would explored.&lt;/p&gt;
+&lt;p&gt;The FFT algorithm is an implementation of the Discrete Fourier Transform which is a type of Fourier Transform. The other type is the  &lt;strong&gt;Inverse Discrete Fourier Transform&lt;/strong&gt;. It's an adaptation of the Fourier Transform, which in simple terms is an "attempt at digitizing the analog world".&lt;/p&gt;
+&lt;h3&gt;The Fourier Transform&lt;/h3&gt;
+&lt;p&gt;Everything can be described using a waveform. Waveforms are a function of time or any other variable(space for an example). The Fourier Transform provides a rather useful way of looking at these waveforms. 
+In its basic form, a Fourier Transform breaks down a waveform into sinusoids.This siusoids go a long way into proving that waves are not made of discrete number of frequencies but rather of a continuous range of frequencies. &lt;/p&gt;
+&lt;p&gt;In mathematical terms, a Fourier Transform converts a time-based signal(wave, filter etc) into a sum of its sine and cosine waves with varying amplitude and wavelength.&lt;/p&gt;
+&lt;p&gt;For each frequency of wave in the signal, it assigns a complex-valued coefficient. This is called the Fourier coefficient.
+The real part of this coefficient contains information about the waves' cosine amplitude and the imaginary part contains information about the waves' sine amplitude.&lt;/p&gt;
+&lt;h3&gt;The Discrete Fourier Transform&lt;/h3&gt;
+&lt;p&gt;The DFT is further divided into two.&lt;/p&gt;
+&lt;p&gt;The Forward Transform represented as&lt;/p&gt;
+&lt;p&gt;$$F(m)  = {1 \over N}\sum_{n=0}^{N-1} f(n) \cdot e^{-i2 \pi mn \over N} $$  &lt;/p&gt;
+&lt;p&gt;The Backward/Inverse Transform represented as&lt;/p&gt;
+&lt;p&gt;$$f(n)  = \sum_{m=0}^{N-1} F(m) \cdot e^{-i2 \pi mn \over N} $$        &lt;/p&gt;
+&lt;p&gt;$$ f(n) $$ in both equations above is the value of the function $$ f $$ at point n. It can be either real or complex-valued.
+$$ F(m) $$ on the other hand, is the coefficient for the $$ m^{th} $$ wave component and can only be complex. &lt;/p&gt;
+&lt;p&gt;The movement from $$ f(n) $$ to $$ F(m) $$ defines a change in configuration from spacial to frequency based configurations. The Fourier coefficients at this point is represented as&lt;/p&gt;
+&lt;p&gt;$$v_m  = {m \over t_s N} $$ where m=0, 1, 2, ..., $${N \over 2}$$    for positive frequencies and as $$v_m  = -{ (N - m + 1)\over t_s N} $$ where m=$${({N\over 2}) + 1}, {({N\over 2}) + 2}, {({N\over 2}) + 3}, ... , {({N\over 2})  + N}$$ for negative frequencies.&lt;/p&gt;
+&lt;h3&gt;Python Implementation&lt;/h3&gt;
+&lt;p&gt;Given its relevance in so many areas, there are a lot of wrappers for computing the &lt;strong&gt;DFT&lt;/strong&gt; in Python. &lt;strong&gt;Numpy&lt;/strong&gt; has its &lt;code&gt;numpy.fft&lt;/code&gt; function and &lt;strong&gt;scipy&lt;/strong&gt; has its &lt;code&gt;scipy.fftpack&lt;/code&gt; implementation of this algorithm. &lt;/p&gt;
+&lt;p&gt;Before looking at these use cases, let's attempt to write a dummy implementation of the &lt;strong&gt;DFT&lt;/strong&gt; in python.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt; 
+ &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;cmath&lt;/span&gt;
+ &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Now is possible to make SQL queries to the table.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;csvtest&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="n"&gt;sepal_width&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;csvtest&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dft_with_complex_input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_array&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;input_array_length&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dft_matrix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_array&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt; 
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;number&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_array_length&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;  
+        &lt;span class="n"&gt;array_complex&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;complex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_array_length&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;angle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2j&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;cmath&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pi&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;number&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;input_array_length&lt;/span&gt; 
+            &lt;span class="n"&gt;array_complex&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;input_array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;cmath&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;angle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;dft_matrix&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;array_complex&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;dft_matrix&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;Pandas&lt;/h2&gt;
-&lt;p&gt;That simple example shows what is possible but is very useless. In Ville Tuulos talk he uses Numba
-to make some computation, the easiest way to use Numba is to using conda so the docker container
-also includes conda so you can create a custom container with the extra packages needed.
-In this case I am just using pandas.&lt;/p&gt;
-&lt;p&gt;The code for the pandas FDW could not be simpler:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;multicorn&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ForeignDataWrapper&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;multicorn.utils&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;log_to_postgres&lt;/span&gt;
-
-
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
-
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PandasForeignDataWrapper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ForeignDataWrapper&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;options&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PandasForeignDataWrapper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;options&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;options&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;filename&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;
-
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quals&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="n"&gt;log_to_postgres&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;python&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;qual&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;quals&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;qual&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;operator&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;lt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-                &lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;qual&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;field_name&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;qual&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-
-        &lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iterrows&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-            &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_dict&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;p&gt;The above function iterates through each item in the input data and manually assigns them to fields in the &lt;strong&gt;DFT&lt;/strong&gt; formula above. &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The input in this case has to be an array of real values.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Checking the result by comparing it to numpy's FFT implementation, we get:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;test_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;allclose&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dft_with_complex_input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test_data&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fft&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fft&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test_data&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Basically:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;True
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Looks like everything is working fine&lt;/p&gt;
+&lt;p&gt;Timing the &lt;strong&gt;dft_with_complex_input&lt;/strong&gt; and the standard numpy implementation to view run_time differences, we get&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;timeit&lt;/span&gt; &lt;span class="n"&gt;standard_dft_with_complex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;timeit&lt;/span&gt; &lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fft&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fft&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    1 loop, best of 3: 136 ms per loop
+    The slowest run took 16.43 times longer than the fastest. This could mean that an intermediate result is being cached.
+    100000 loops, best of 3: 11.7 µs per loop
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;From the time difference above, the &lt;strong&gt;&lt;strong&gt;dft_with_complex_input&lt;/strong&gt;&lt;/strong&gt; function is more than ten thousand times slower than the numpy implementation.&lt;/p&gt;
+&lt;p&gt;Why?&lt;/p&gt;
+&lt;p&gt;Its easy. &lt;/p&gt;
+&lt;p&gt;To start with, the &lt;code&gt;dft_with_complex_input&lt;/code&gt; is a rather simple implementation involving loops.
+Then it scales as an $$O[N^2]$$ whereas the standard numpy implementation scales as an  $$O[N log N]$$ .&lt;/p&gt;
+&lt;p&gt;An alternative implementation of the &lt;strong&gt;DFT&lt;/strong&gt; is shown below.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dft_with_input_pair&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;real_input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;imaginary_input&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;real_input&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;imaginary_input&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;The lengths should be equal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;input_array_length&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;real_output&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;imaginary_output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inreal&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;[],&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;num_iterator_one&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_array_length&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;real_sum&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;imaginary_sum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;num_iterator_two&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_array_length&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;  &lt;span class="c1"&gt;# For each input element&lt;/span&gt;
+            &lt;span class="n"&gt;angle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pi&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;num_iterator_two&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;num_iterator_one&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;input_array_length&lt;/span&gt;
+            &lt;span class="n"&gt;real_sum&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt;  &lt;span class="n"&gt;real_input&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;angle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;imaginary_input&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;angle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;imaginary_sum&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;real_input&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;angle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;imaginary_input&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;angle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;real_output&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;real_sum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;imaginary_output&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;imaginary_sum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;outreal&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;outimag&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;The above function uses a similar approach as the first one but uses a pair of real and imaginary input.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;A third implementation of the &lt;strong&gt;DFT&lt;/strong&gt; in Python is shown below.
+It uses optimised numpy array functions.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dft_with_numpy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;input_to_array&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;asarray&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;input_array_shape&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;input_to_array&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;input_array_range&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_array_shape&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;input_array_rearrange&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;reshape&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;input_array_shape&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;output_matrix_vector&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2j&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pi&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;input_array_rearrange&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;input_array_range&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;input_array_shape&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output_matrix_vector&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;input_to_array&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;N.B : You can go ahead and check the output of each function on your own and also compare run times with that of the standard numpy and scipy implementations of the &lt;strong&gt;DFT&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3&gt;Scipy FFT&lt;/h3&gt;
+&lt;p&gt;Scipy has an extensive support for the  Discrete Fourier Transform. It provides support for 3 types of FFTs.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Importing &lt;code&gt;multicorn.ForeignDataWrapper&lt;/code&gt; and &lt;code&gt;pandas&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Extend a &lt;code&gt;ForeignDataWrapper&lt;/code&gt; class&lt;/li&gt;
-&lt;li&gt;Define an &lt;code&gt;execute&lt;/code&gt; method that does the load/computation&lt;/li&gt;
-&lt;li&gt;Implement (or not, see below) the filtering of columns and rows. The &lt;code&gt;quals&lt;/code&gt; has &lt;code&gt;.field&lt;/code&gt; &lt;code&gt;.operator&lt;/code&gt; ('&amp;lt;', '&amp;gt;=', and so on) and a &lt;code&gt;.value&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Yield a dictionary with the columns as keys and values as values&lt;/li&gt;
+&lt;li&gt;Standard FFTs&lt;/li&gt;
+&lt;li&gt;Real FFTs&lt;/li&gt;
+&lt;li&gt;Hermitian FFTs&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;With the code ready just need to build a custom container with my requirements.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="s"&gt; multicorn&lt;/span&gt;
-&lt;span class="k"&gt;RUN&lt;/span&gt; conda install -y pandas
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now build that image run the container in the same way as the previous one.&lt;/p&gt;
-&lt;div class="codehilite"&gt;
-&lt;pre class="bash"&gt;
-$ docker build -t pandasfdw .
-$ docker run -p 5432:5432 -v $(pwd):/src pandasfdw
-&lt;/div&gt;
-
-&lt;/pre&gt;
-
-&lt;p&gt;Create the FDW and table in a similar way as before:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="n"&gt;EXTENSION&lt;/span&gt; &lt;span class="n"&gt;multicorn&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="n"&gt;SERVER&lt;/span&gt; &lt;span class="n"&gt;pandas_srv&lt;/span&gt; &lt;span class="k"&gt;foreign&lt;/span&gt; &lt;span class="k"&gt;data&lt;/span&gt; &lt;span class="n"&gt;wrapper&lt;/span&gt; &lt;span class="n"&gt;multicorn&lt;/span&gt; &lt;span class="k"&gt;options&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;wrapper&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;pandasfdw.PandasForeignDataWrapper&amp;#39;&lt;/span&gt;
-&lt;span class="p"&gt;);&lt;/span&gt;
-
-&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;FOREIGN&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;pandastable&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;sepal_length&lt;/span&gt; &lt;span class="nb"&gt;numeric&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;sepal_width&lt;/span&gt; &lt;span class="nb"&gt;numeric&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;petal_length&lt;/span&gt; &lt;span class="nb"&gt;numeric&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;petal_width&lt;/span&gt; &lt;span class="nb"&gt;numeric&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="n"&gt;species&lt;/span&gt; &lt;span class="nb"&gt;character&lt;/span&gt; &lt;span class="nb"&gt;varying&lt;/span&gt;
-&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="n"&gt;pandas_srv&lt;/span&gt; &lt;span class="k"&gt;options&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/src/iris.csv&amp;#39;&lt;/span&gt;
-&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now you can query the table and since we implemented the less than operation we can do:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;pandastable&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;sepal_width&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sepal_length,sepal_width,petal_length,petal_width,species
-4.5;2.3;1.3;0.3;&amp;quot;setosa&amp;quot;
-5.5;2.3;4.0;1.3;&amp;quot;versicolor&amp;quot;
-4.9;2.4;3.3;1.0;&amp;quot;versicolor&amp;quot;
-5.0;2.0;3.5;1.0;&amp;quot;versicolor&amp;quot;
-6.0;2.2;4.0;1.0;&amp;quot;versicolor&amp;quot;
-6.2;2.2;4.5;1.5;&amp;quot;versicolor&amp;quot;
-5.5;2.4;3.8;1.1;&amp;quot;versicolor&amp;quot;
-5.5;2.4;3.7;1.0;&amp;quot;versicolor&amp;quot;
-6.3;2.3;4.4;1.3;&amp;quot;versicolor&amp;quot;
-5.0;2.3;3.3;1.0;&amp;quot;versicolor&amp;quot;
-6.0;2.2;5.0;1.5;&amp;quot;virginica&amp;quot;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;What if we do a greater than now?, we don't have that implemented.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;pandastable&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;sepal_width&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sepal_length,sepal_width,petal_length,petal_width,species
-5.1;3.5;1.4;0.2;&amp;quot;setosa&amp;quot;
-4.9;3.0;1.4;0.2;&amp;quot;setosa&amp;quot;
-4.7;3.2;1.3;0.2;&amp;quot;setosa&amp;quot;
-4.6;3.1;1.5;0.2;&amp;quot;setosa&amp;quot;
-5.0;3.6;1.4;0.2;&amp;quot;setosa&amp;quot;
-5.4;3.9;1.7;0.4;&amp;quot;setosa&amp;quot;
-4.6;3.4;1.4;0.3;&amp;quot;setosa&amp;quot;
-5.0;3.4;1.5;0.2;&amp;quot;setosa&amp;quot;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Answer is still correct! That is because Postgres will check the conditions anyways but
-if we want we can do that in the custom FDW and pass only the values we want to postgres.&lt;/p&gt;
-&lt;h2&gt;Thoughts&lt;/h2&gt;
-&lt;p&gt;This time it was really straight forward to create the Multicorn container and make simple example using pandas.&lt;/p&gt;
-&lt;p&gt;That code is far (way far) from being useful. For example is reading the CSV file every query (&lt;code&gt;execute&lt;/code&gt;).
-It should be possible to load in the &lt;code&gt;__init__&lt;/code&gt; and use that &lt;code&gt;df&lt;/code&gt; in the query as shown in one of Multicorn's examples: &lt;a href="https://github.com/Kozea/Multicorn/blob/master/python/multicorn/statefdw.py"&gt;statefdw.py&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I am not sure why Multicorn and this method is not more wildly used.
-One simple idea in my mind is for example: for one of the million SQL-on-Hadoop engines that are
-now why not make a simple FDW that sends the information to a that engine.
-It would make it much easier for multiple application in multiple languages to just query Postgres
-(&lt;code&gt;Psycopg2&lt;/code&gt; in python) rather than have custom libraries in multiple languages with different features on each one.
-It would also probably make custom DSLs like blaze and ibis target more backends easier.&lt;/p&gt;
-&lt;p&gt;For that particular example I can thing a couple of reason why not to use Multicorn.
-For example you cannot do some operations in the Custom FDW:
-a &lt;code&gt;group by&lt;/code&gt; gets executed by Postgres using the data passed back from the FDW.
-Also each SQL engine has its own characteristics, features and DLL and being constrain to Postgres
-is probably not an option on those cases.&lt;/p&gt;
-&lt;p&gt;Another simple idea would be to have multiple services (maybe with a ZMQ API) and having postgres making
-the requests to those services, that way the clients can just query Postgres as an universal SQL entrypoint.&lt;/p&gt;</summary><category term="Postgres"></category><category term="Multicorn"></category><category term="Python"></category><category term="Conda"></category><category term="Docker"></category></entry><entry><title>Month-Log.oct.2013</title><link href="n/blog/2013/10/31/month-log/" rel="alternate"></link><published>2013-10-31T00:00:00+00:00</published><updated>2013-10-31T00:00:00+00:00</updated><author><name>Daniel Rodriguez</name></author><id>tag:,2013-10-31:n/blog/2013/10/31/month-log/</id><summary type="html">&lt;p&gt;I've been busy with real work to write any specific posts for the blog but I realize it was
-a productive month. I worked a lot and learned quite a few things and  new technologies and
-I have some thoughts about them, I usually use twitter to share simple thoughts but they usually get
-lost on the noise.&lt;/p&gt;
-&lt;p&gt;So I am going to start a monthly series in which I discuss a little bit about what I have done that month.
-Hopefully mixing with regular posts I am hoping that this makes me learn more and more stuff every month so I have something to write about. On this case is October and a few weeks of September.&lt;/p&gt;
-&lt;h2&gt;Books I read&lt;/h2&gt;
-&lt;p&gt;I had to do some &lt;a href="http://pig.apache.org/"&gt;pig&lt;/a&gt; for my job so I used this opportunity to
-consolidate a little bit my knowledge.
-I had worked with pig a little bit before thanks to &lt;a href="https://class.coursera.org/datasci-001/class"&gt;Coursera Data Science&lt;/a&gt; course but this time I went
-to the source and read &lt;a href="http://shop.oreilly.com/product/0636920018087.do"&gt;Programming Pig&lt;/a&gt; by O'reilly.&lt;/p&gt;
-&lt;p&gt;I highly recommend the book to anyone starting with pig but as every technology there is
-nothing as getting the hands dirty and do real stuff. The book gives you the foundation you need
-and gets in enough depth so you can write &lt;strong&gt;and understand&lt;/strong&gt; latin pig scripts.&lt;/p&gt;
-&lt;p&gt;I also learned how to run a pig job using a jython UDF on EMR, after some try and error I found the solution
-and put it on a &lt;a href="https://gist.github.com/danielfrg/7220473"&gt;gist&lt;/a&gt;.
-I found that the people of &lt;a href="http://www.mortardata.com/"&gt;mortardata.com&lt;/a&gt; do the same but with &lt;em&gt;real&lt;/em&gt;
-python so one can use all the libraries available (e.g. NLTK).
-(FYI they open source their code and is on the new version of pig, 0.12)
-I cannot recommend enough &lt;a href="http://www.mortardata.com/"&gt;mortardata.com&lt;/a&gt; just create an account and be amazed.&lt;/p&gt;
-&lt;h2&gt;Nutch&lt;/h2&gt;
-&lt;p&gt;I had to do a lot of crawling this month. The universal solution on this case is
-&lt;a href="http://nutch.apache.org/"&gt;Apache Nutch&lt;/a&gt;.
-It was not the most pleasant experience to be honest. It gets the job done? Yes. Do I like it? No.&lt;/p&gt;
-&lt;p&gt;The best part of Nutch is that is "easy" to run it on top of Hadoop and distribute the load
-and maybe I just don't like it that much because I haven't been able to clean all the data as I want
-and I am blaming Nutch. Another option is &lt;a href="http://scrapy.org/"&gt;scrapy&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;Vagrant and Saltstack&lt;/h2&gt;
-&lt;p&gt;I had finally decided to try &lt;a href="http://www.vagrantup.com/"&gt;vagrant&lt;/a&gt; and I love it. I regret all the time
-that I knew about its existence and didn't read about it.&lt;/p&gt;
-&lt;p&gt;The idea is create a &lt;strong&gt;clean&lt;/strong&gt; virtual box based on a bootstrap so one can know &lt;strong&gt;exactly&lt;/strong&gt; the
-requirements to run every project. Then is possible deploy it to EC2 using a
-simple command so the &lt;em&gt;same&lt;/em&gt; box will be available online. I was so happy that I could develop
-and deploy in the same box. It feels clean.&lt;/p&gt;
-&lt;p&gt;Then we have &lt;a href="http://docs.opscode.com/"&gt;chef&lt;/a&gt; or &lt;a href="http://www.saltstack.com/"&gt;salt&lt;/a&gt;.
-With chef recipes or salt modules one can setup not one virtual local machine but a thousand boxes
-on the cloud using the same configuration file.
-The magic occurs when vagrant uses chef recipes or salt modules to create the VM. Development
-and deployment using the same configuration. Amazing.&lt;/p&gt;
-&lt;p&gt;As a pythonista it was easy to choose salt on top of chef (ruby) but I also read &lt;a href="http://www.linuxjournal.com/content/getting-started-salt-stack-other-configuration-management-system-built-python"&gt;this&lt;/a&gt;
-and I was convinced.&lt;/p&gt;
-&lt;p&gt;I just got started with those technologies but I am very exited and cannot wait to use them more and more
-to make my work more deployable and production ready.&lt;/p&gt;
-&lt;p&gt;I am also keeping an eye on &lt;a href="https://www.docker.io/"&gt;docker&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;Luigi&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://github.com/spotify/luigi?source=c"&gt;Luigi&lt;/a&gt; is a small project to create pipelines in python.
-It doesn't try to solve parallelization: it includes support for Hadoop. It doesn't try to solve
-task scheduling or distribution: &lt;a href="http://www.celeryproject.org/"&gt;celery&lt;/a&gt; exists.&lt;/p&gt;
-&lt;p&gt;Is solves a very specific problem and it was designed with data pipelines in mind. Is a young
-project but it is developed but guys at spotify and I can see a bright future.&lt;/p&gt;
-&lt;p&gt;Also the pipeline structures makes code very clean, easy to understand and debug.&lt;/p&gt;
-&lt;p&gt;I did a couple of examples and put them on gists:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://gist.github.com/danielfrg/7091876"&gt;Clean HTML and Index it into Solr&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://gist.github.com/danielfrg/7091940"&gt;Merge files in HDFS and count a json field&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="Month-Log"></category><category term="Python"></category><category term="Pig"></category><category term="Nutch"></category><category term="Crawling"></category><category term="Vagrant"></category><category term="Salt"></category><category term="Luigi"></category></entry><entry><title>Creating a blog in 2012</title><link href="n/blog/2012/10/05/creating-a-blog-in-2012/" rel="alternate"></link><published>2012-10-05T03:22:00+00:00</published><updated>2012-10-05T03:22:00+00:00</updated><author><name>Daniel Rodriguez</name></author><id>tag:,2012-10-05:n/blog/2012/10/05/creating-a-blog-in-2012/</id><summary type="html">&lt;p&gt;Yes, I am creating a blog on October 5, 2012!&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt; Having a flu is one of the reasons. Other reason is that I and
-want to improve my English and have a lot of time to waste (not having a
-car on the US is hard). Also having a blog in 2012 is old-stylish
-and that is &lt;strong&gt;always &lt;/strong&gt;cool.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;About me: &lt;/strong&gt;Originally from Colombia and currently living in Frisco,
-TX (DFW Area) pursuing a Master in Information Technology and Management
-on the University of Texas at Dallas.&lt;/p&gt;
-&lt;p&gt;Dog lover, book reader, TV Series Fanatic and amateur gamer. Passionate
-about new technologies, always wanting to learn something new (mainly
-about technology). Hopes to keep writing for a long time.&lt;/p&gt;
-&lt;p&gt;-Dan&lt;/p&gt;</summary><category term="This blog"></category></entry></feed>
+&lt;h3&gt;Numpy FFT&lt;/h3&gt;
+&lt;p&gt;Like scipy, numpy has a very thorough and very documented support for the FFT. It provides support for FFT with 5 functions under the &lt;code&gt;numpy.fft&lt;/code&gt; module. These functions are:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;numpy.fft.fft : This provides support for 1-Dimensional FFTs&lt;/li&gt;
+&lt;li&gt;numpy.ifft2 : This provides support for inverse 2-Dimensional FFTs&lt;/li&gt;
+&lt;li&gt;numpy.fftn : This provides support for n-D FFTs&lt;/li&gt;
+&lt;li&gt;numpy.fftshift: This shifts zero-frequency terms to the center of the array. For two-dimensional input, swaps first and third quadrants, and second and fourth quadrants.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If you are able to get to this point, you should have a clear idea of what the FFT algorithm is and how it can be implemented in various forms in Python.
+In the accompanying post, I would look into each scipy and numpy fft function and give a detailed outline of their use-cases.&lt;/p&gt;</summary><category term="Jupyter"></category><category term="Cloudera"></category><category term="CSD"></category></entry></feed>
