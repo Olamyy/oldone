@@ -5,7 +5,7 @@ LOAD_CONTENT_CACHE = False
 SITEURL = ''
 # SITEURL = 'http://danielfrg.github.io'
 AUTHOR = u'Olamilekan Wahab'
-SITENAME = u'Olamilekan Wahab'
+SITENAME = u'Indent'
 
 TIMEZONE = 'UTC'
 

@@ -12,6 +12,9 @@
       <time datetime="" title="{{ article.date.isoformat() }}" pubdate>{{ article.locale_date }}</time>
     </header>
 
+    <img src="{{ SITEURL }}/images/{{ article.image }}">
+
+
     <div class="article_content">
       {{ article.summary }}
     </div>

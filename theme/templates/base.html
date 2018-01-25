@@ -22,15 +22,12 @@
         <header class="navbar navbar-static-top bs-docs-nav main-header">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/" title="Home" class="title">Daniel Rodriguez</a></li>
+                    <a class="navbar-brand" href="/" title="Home" class="title">{{SITENAME}}</a></li>
                 </div>
                 <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
                     <ul class="nav navbar-nav navbar-right">
                         {% if ABOUT_PAGE %}
                             <li><a href="{{ ABOUT_PAGE }}" title="About">About</a></li>
-                        {% endif %}
-                        {% if PHOTOS_PAGE %}
-                            <li><a href="{{ PHOTOS_PAGE }}" title="Photos">Photos</a></li>
                         {% endif %}
                         {% if GITHUB_USERNAME %}
                             <li><a href="http://github.com/{{ GITHUB_USERNAME }}" title="{{ GITHUB_USERNAME }}'s Github" rel="me">Github</a></li>
@@ -41,9 +38,6 @@
                         {% if SHOW_ARCHIVES %}
                             <li><a href="/archives.html" title="Archive">Archive</a></li>
                         {% endif %}
-                        {% if SHOW_FEED %}
-                            <li><a href="/feeds/all.atom.xml" title="danielfrg.github.io RSS feed" rel="me">RSS</a></li>
-                        {% endif %}
                     </ul>
                 </nav>
             </div>
@@ -53,5 +47,36 @@
         {% block content %}{% endblock %}
         </div>
         {% include 'analytics.html' %}
+
+
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
     </body>
 </html>
