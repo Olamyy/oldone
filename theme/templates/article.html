@@ -22,9 +22,10 @@
     <article>
         <header>
             <h1>{{ article.title }}</h1>
+            <img src="{{ SITEURL }}/assets/img/{{ page.image }}">
             <time datetime="article.date.isoformat()" pubdate>{{ article.locale_date }}</time>
         </header>
-
+        
         <div class="article_content">
             {{ article.content }}
         </div>

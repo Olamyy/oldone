@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 LOAD_CONTENT_CACHE = False
 
-SITEURL = 'olamyy.github.io'
+SITEURL = ''
 # SITEURL = 'http://danielfrg.github.io'
 AUTHOR = u'Olamilekan Wahab'
 SITENAME = u'Olamilekan Wahab'
@@ -45,8 +45,8 @@ STATIC_PATHS = ['images', 'favicon.ico', '404.html', 'robots.txt', 'CNAME']
 # THEME SETTINGS
 DEFAULT_HEADER_BG = '/images/station1.jpg'
 ABOUT_PAGE = '/pages/about.html'
-TWITTER_USERNAME = 'danielfrg'
-GITHUB_USERNAME = 'danielfrg'
+TWITTER_USERNAME = '__olamilekan__'
+GITHUB_USERNAME = 'olamyy'
 SHOW_ARCHIVES = True
 SHOW_FEED = True
 
