@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="author" content="Olamilekan Wahab">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <title>Review: Harvard Data Science - Fall 2013 | Olamilekan Wahab</title>
+
+        <link rel="alternate" type="application/atom+xml" title="Olamilekan Wahab blog atom feed" href="/feeds/all.atom.xml" />
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <style>.codehilite .hll { background-color: #404040 }
+.codehilite .c { color: #999999; font-style: italic } /* Comment */
+.codehilite .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.codehilite .g { color: #d0d0d0 } /* Generic */
+.codehilite .k { color: #6ab825; font-weight: bold } /* Keyword */
+.codehilite .l { color: #d0d0d0 } /* Literal */
+.codehilite .n { color: #d0d0d0 } /* Name */
+.codehilite .o { color: #d0d0d0 } /* Operator */
+.codehilite .x { color: #d0d0d0 } /* Other */
+.codehilite .p { color: #d0d0d0 } /* Punctuation */
+.codehilite .cm { color: #999999; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #cd2828; font-weight: bold } /* Comment.Preproc */
+.codehilite .c1 { color: #999999; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #e50808; font-weight: bold; background-color: #520000 } /* Comment.Special */
+.codehilite .gd { color: #d22323 } /* Generic.Deleted */
+.codehilite .ge { color: #d0d0d0; font-style: italic } /* Generic.Emph */
+.codehilite .gr { color: #d22323 } /* Generic.Error */
+.codehilite .gh { color: #ffffff; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #589819 } /* Generic.Inserted */
+.codehilite .go { color: #cccccc } /* Generic.Output */
+.codehilite .gp { color: #aaaaaa } /* Generic.Prompt */
+.codehilite .gs { color: #d0d0d0; font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #ffffff; text-decoration: underline } /* Generic.Subheading */
+.codehilite .gt { color: #d22323 } /* Generic.Traceback */
+.codehilite .kc { color: #6ab825; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #6ab825; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #6ab825; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #6ab825 } /* Keyword.Pseudo */
+.codehilite .kr { color: #6ab825; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #6ab825; font-weight: bold } /* Keyword.Type */
+.codehilite .ld { color: #d0d0d0 } /* Literal.Date */
+.codehilite .m { color: #3677a9 } /* Literal.Number */
+.codehilite .s { color: #ed9d13 } /* Literal.String */
+.codehilite .na { color: #bbbbbb } /* Name.Attribute */
+.codehilite .nb { color: #24909d } /* Name.Builtin */
+.codehilite .nc { color: #447fcf; text-decoration: underline } /* Name.Class */
+.codehilite .no { color: #40ffff } /* Name.Constant */
+.codehilite .nd { color: #ffa500 } /* Name.Decorator */
+.codehilite .ni { color: #d0d0d0 } /* Name.Entity */
+.codehilite .ne { color: #bbbbbb } /* Name.Exception */
+.codehilite .nf { color: #447fcf } /* Name.Function */
+.codehilite .nl { color: #d0d0d0 } /* Name.Label */
+.codehilite .nn { color: #447fcf; text-decoration: underline } /* Name.Namespace */
+.codehilite .nx { color: #d0d0d0 } /* Name.Other */
+.codehilite .py { color: #d0d0d0 } /* Name.Property */
+.codehilite .nt { color: #6ab825; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #40ffff } /* Name.Variable */
+.codehilite .ow { color: #6ab825; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #666666 } /* Text.Whitespace */
+.codehilite .mf { color: #3677a9 } /* Literal.Number.Float */
+.codehilite .mh { color: #3677a9 } /* Literal.Number.Hex */
+.codehilite .mi { color: #3677a9 } /* Literal.Number.Integer */
+.codehilite .mo { color: #3677a9 } /* Literal.Number.Oct */
+.codehilite .sb { color: #ed9d13 } /* Literal.String.Backtick */
+.codehilite .sc { color: #ed9d13 } /* Literal.String.Char */
+.codehilite .sd { color: #ed9d13 } /* Literal.String.Doc */
+.codehilite .s2 { color: #ed9d13 } /* Literal.String.Double */
+.codehilite .se { color: #ed9d13 } /* Literal.String.Escape */
+.codehilite .sh { color: #ed9d13 } /* Literal.String.Heredoc */
+.codehilite .si { color: #ed9d13 } /* Literal.String.Interpol */
+.codehilite .sx { color: #ffa500 } /* Literal.String.Other */
+.codehilite .sr { color: #ed9d13 } /* Literal.String.Regex */
+.codehilite .s1 { color: #ed9d13 } /* Literal.String.Single */
+.codehilite .ss { color: #ed9d13 } /* Literal.String.Symbol */
+.codehilite .bp { color: #24909d } /* Name.Builtin.Pseudo */
+.codehilite .vc { color: #40ffff } /* Name.Variable.Class */
+.codehilite .vg { color: #40ffff } /* Name.Variable.Global */
+.codehilite .vi { color: #40ffff } /* Name.Variable.Instance */
+.codehilite .il { color: #3677a9 } /* Literal.Number.Integer.Long */</style>
+        <style>body{margin:0;padding:0;font:15px 'Source Sans Pro',sans-serif;line-height:1.6em;color:#222;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}a{color:#007ee5;text-decoration:none}a:hover{color:#007ee5;text-decoration:none}header.main-header{background:none repeat scroll 0% 0% #2A66C0;margin-bottom:0px}header.main-header a{color:#fff}header.main-header .container{max-width:1000px}header.main-header .container nav a:hover{background-color:#2A66C0}article{margin:0}article header{margin-bottom:20px;padding-bottom:20px}article header h1{margin-bottom:2px;font-weight:700;color:#000}article header time{color:#9E9E9E;font-size:0.85em;float:right}article header time.left{color:#9E9E9E;font-size:0.85em;float:left}article p{font-size:16px;margin-bottom:20px;line-height:1.6em}article p.note{background:#f5f5f5;border:1px solid #ddd;padding:0.533em 0.733em}article p.update{background-color:#FEEFB3;border:1px solid #e6e68a;padding:0.533em 0.733em}article p.alert{background-color:#ffe2e2;border:1px solid #ffb2b2;padding:0.533em 0.733em}article ul,article ol{margin-top:0px;margin-bottom:25px}article li{font-size:16px;line-height:1.6em}article a:hover{text-decoration:underline}article blockquote{border-left:2px solid #c7c7cc;color:#666;margin:30px 0;padding:0 0 0 25px}article img{max-width:100%}article code{color:#333;background-color:#EEE;border-radius:0;font-size:13px}article .codehilite pre{border-radius:0;background-color:#202020;color:#d0d0d0}article .codehilite pre code{border:none}article .codehilite pre.bash{background-color:#000;color:#FFF}article .meta{font-size:11px}article .meta a:hover{text-decoration:none}article .meta div{margin-bottom:20px;display:block}article .meta a.tag{margin:0 10px 10px 0;padding:1px 12px;display:inline-block;font-size:12px;color:rgba(0,0,0,0.6);background:rgba(0,0,0,0.05)}article .meta a.tag:hover{background:rgba(0,0,0,0.15)}article .meta a.read_more,article .meta a.comments_btn{font-size:14px;font-weight:800;padding:10px 20px;color:#007EE5;background:#FFF;border:1px solid #007EE5}article .meta a.read_more:hover,article .meta a.comments_btn:hover{color:#FFF;background:#007EE5}.index{max-width:700px}.index article header h2{font-size:36px;margin-bottom:2px;font-weight:700}.index article header h2 a{color:#000}.index article header h2 a:hover{color:#007ee5;text-decoration:none}.index .separator{padding:40px 0 0 0;margin:0 0 40px 0;height:10px;border-bottom:solid 1px #CCC}.index .pagination{display:block;margin-bottom:100px}.index .pagination .left{text-align:right}.index .pagination .right{text-align:left}.index .pagination a{display:inline-block;border:2px solid #007EE5;margin:0 5px;padding:8px 20px;font-weight:bold;color:#007EE5}.index .pagination a:hover{color:#FFF;background:#007EE5}.post{max-width:700px}.post h2:before{content:"# ";font-weight:bold;color:#DDD}.post h3:before{content:"## ";font-weight:bold;color:#DDD}.post h4:before{content:"### ";font-weight:bold;color:#DDD}.post article .meta{margin:50px 0 100px}.list{max-width:700px}.list ul.double-list{margin:0 auto 60px;padding:0;list-style-type:none}.list ul.double-list li{padding:5px 0}.list ul.double-list li h2{font-size:1em;display:inline;font-weight:normal}.list ul.double-list li span{font-family:sans-serif;text-transform:uppercase;text-align:right;float:right;padding-top:3px;font-size:12px;color:#999}.full-width-content{padding-top:10px;padding-left:0px;padding-right:0px;margin-left:-20px;margin-right:-20px}.col-xs-1,.col-sm-1,.col-md-1,.col-lg-1,.col-xs-2,.col-sm-2,.col-md-2,.col-lg-2,.col-xs-3,.col-sm-3,.col-md-3,.col-lg-3,.col-xs-4,.col-sm-4,.col-md-4,.col-lg-4,.col-xs-5,.col-sm-5,.col-md-5,.col-lg-5,.col-xs-6,.col-sm-6,.col-md-6,.col-lg-6,.col-xs-7,.col-sm-7,.col-md-7,.col-lg-7,.col-xs-8,.col-sm-8,.col-md-8,.col-lg-8,.col-xs-9,.col-sm-9,.col-md-9,.col-lg-9,.col-xs-10,.col-sm-10,.col-md-10,.col-lg-10,.col-xs-11,.col-sm-11,.col-md-11,.col-lg-11,.col-xs-12,.col-sm-12,.col-md-12,.col-lg-12{padding-right:0px;padding-left:0px}</style>
+
+    </head>
+
+    <body>
+        <header class="navbar navbar-static-top bs-docs-nav main-header">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/" title="Home" class="title">Daniel Rodriguez</a></li>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                    <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/pages/about.html" title="About">About</a></li>
+                            <li><a href="http://github.com/danielfrg" title="danielfrg's Github" rel="me">Github</a></li>
+                            <li><a href="http://twitter.com/danielfrg" title="danielfrg Twitter" rel="me">Twitter</a></li>
+                            <li><a href="/archives.html" title="Archive">Archive</a></li>
+                            <li><a href="/feeds/all.atom.xml" title="danielfrg.github.io RSS feed" rel="me">RSS</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div id="wrap">
+<div class="container post">
+    <article>
+        <header>
+            <h1>Review: Harvard Data Science - Fall 2013</h1>
+            <time datetime="article.date.isoformat()" pubdate>November 23, 2013</time>
+        </header>
+
+        <div class="article_content">
+            <p>A few weeks/months ago I found on HackerNews that Harvard was publishing all their <a href="http://cs109.org/">Data Science course content</a> (lectures, videos, labs, homeworks) online. I couldn't miss the opportunity to find what are they teaching, it was a nice experience to see how much I have learned and what else I am missing. Also, when I saw that everything was on python I knew they are doing it right!</p>
+<p>The homeworks are IPython notebooks, the books are what I consider every Data Scientist should read: <a href="http://shop.oreilly.com/product/0636920023784.do">Python for Data Analysis</a>, <a href="http://shop.oreilly.com/product/0636920018483.do">Machine Learning for Hackers</a>, <a href="http://nbviewer.ipython.org/urls/raw.github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/master/Prologue/Prologue.ipynb">Probabilistic Programming and Bayesian methods for Hackers</a>.</p>
+<p>The homeworks were amazing and useful, I haven't seen all the videos (yet) but the ones I did were amazing. Below I do a little review of each homework, the stuff I learned and stuff that I think should be different.</p>
+<p>Initially I wanted to use this opportunity to get into <a href="http://julialang.org/">Julia</a>, but the amount of libraries that are available on python and not on Julia was to high for me to drive me back into python (once again).</p>
+<h2>Homework 0</h2>
+<p><a href="http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/harvard-cs109-fall-2013/master/homeworks/HW0/HW0_mysolution.ipynb">My solution</a></p>
+<p>Basic introduction to python and some of it scientific libraries.</p>
+<p>Things I changed:
+Use beautifulsoup4 instead of 3, not sure why they decided to go with an deprecated version.</p>
+<h2>Homework 1</h2>
+<p><a href="http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/harvard-cs109-fall-2013/master/homeworks/HW1/HW1_mysolution.ipynb">My solution</a></p>
+<p>The main idea was to scrape data from the web, in my opinion one of the most important things a Data Scientist can do is to grab its own data, it gives a big boost to analysis if the person responsible for the analysis decides upfront what data is needed. Is doesn't need to be perfect at first, but usually helps <strong>a lot</strong>.</p>
+<p>The final problem shows the properties of bootstrapping, a must know. Also some simple problems to get started with matplotlib.</p>
+<p>I knew about <a href="http://www.clips.ua.ac.be/pattern">pattern</a> but never had the chance to play with it. I learned that includes a xml/html parser that creates a DOM so one can access the different fields/tags, I usually use <a href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/">beautifulsoup</a> for html and <a href="http://lxml.de/">lxml</a> for xml but is nice to have an alternative.</p>
+<p>I had no idea about <a href="http://docs.python.org/2/library/fnmatch.html">fnmatch</a>, I always used regular expressions but I think that for simple matching tasks I am going to use fnmatch from now own and hopefully will save me some time.</p>
+<h2>Homework 2</h2>
+<p><a href="http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/harvard-cs109-fall-2013/master/homeworks/HW2/HW2_mysolution.ipynb">My solution</a></p>
+<p>A basic introduction to statistical models by doing a predictions the Obama campaign, very interesting exercise. I felt like Nate Silver and it was kind of the idea, show that is possible to do a simple but useful prediction doing a reasonable amount of work. As with a lot of work with data usually the 80% gets done in 20% of the time but the remaining 20% takes the remaining 80% of the time.</p>
+<p>What I changed:</p>
+<ol>
+<li>Used scipy.stats for probability calculations instead of doing those myself. DRY.</li>
+<li>I tried the new ggplot for python to do some of the plots faster, worked perfectly</li>
+</ol>
+<h2>Homework 3</h2>
+<p><a href="http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/harvard-cs109-fall-2013/master/homeworks/HW3/HW3_mysolution.ipynb">My solution</a></p>
+<p>Interesting problem of making a simple prediction of movies reviews intro two categories (fresh or rotten).</p>
+<p>I liked the problem but I think it would be a good idea to use <a href="http://nltk.org/">NLTK</a> instead of hand writing some of the functions and doing a hand made classifier using scikit-learn. I realize that it is <strong>really</strong> easy to do it using the Vectorizer and Naive Bayes classes and I had never done it before so it was a good learning experience, but an introduction to NLTK would be nice.</p>
+<p>The example is very easy to reproduce in NLTK as NLTKs author <a href="http://streamhacker.com/2010/05/10/text-classification-sentiment-analysis-naive-bayes-classifier">showed in his blog</a>. Is an old post but I was able to reproduce the results a few months ago and I was amazed by the results of a simple sentiment classifier. I believe the course missed an opportunity to teach this.</p>
+<p>I liked the cross-validation and specially the <strong>model calibration</strong> sections. Also the rotten tomatoes API is a pretty good source of data.</p>
+<h2>Homework 4</h2>
+<p><a href="http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/harvard-cs109-fall-2013/master/homeworks/HW4/HW4_mysolution.ipynb">My solution</a></p>
+<p>For sure the most interesting homework. Not only a nice collaborative filtering problem (with some bayesian analysis) but also an introduction to MapReduce jobs on hadoop using MRJob. I never used MRJob before so it was nice to use it for the first time <strong>but</strong> I don't think it will replace my love for  <a href="https://github.com/spotify/luigi">luigi</a>.</p>
+<p><a href="https://github.com/spotify/luigi">Luigi</a> is a nice and small library form the guys at spotify. It comes with hadoop support built in but at the same time can be extended to any kind of data jobs (e.g. postgres or simple text files). Since I found about luigi I have been writing a lot of code as pipelines and I could not be happier.</p>
+<p>MRJob killer feature is EMR support that luigi does not have currently. Another nice feature of MRJob is the first class documentation. Luigi on the other hand is limited to a Readme file and you will have to read the source code to discover some features, but it is worth it.</p>
+<p>I have to say that MRJob is very easy and to <strong>MapReduce only</strong> jobs is the way to go, I highly recommend it.</p>
+<p>My knowledge about collaborative filtering was (and still is) <strong>very</strong> limited so I only have to say that I loved to learn about it!</p>
+<h2>Homework 5</h2>
+<p><a href="http://nbviewer.ipython.org/urls/raw.github.com/danielfrg/harvard-cs109-fall-2013/master/homeworks/HW5/HW5_mysolution.ipynb">My solution</a></p>
+<p>Graphs was always that topic that for some reason I haven't dive into yet, but is definitely in my thing to learn list. So I took this opportunity to learn everything I could by watching the lectures and doing the homework.
+I also grabbed a copy of <a href="http://graphdatabases.com">graph databases by O'reilly</a> from the university library and I am very exited about it, I am a little behind on my reading so it might take a while.</p>
+<p>The homework was about the congress and the relation between them. Nothing fancy but interesting.
+Second homework that is about politics, I guess that the data is available but it would be nice to chose a different topic.</p>
+<h2>Conclusion</h2>
+<p>The objective of learning new stuff was accomplished. The course gave me perfect introduction to a variety of topics and I have more clear ideas on how to proceed from now own.</p>
+<p>I had a lot of fun doing the homeworks, I learned a lot of stuff I didn't knew before. The statistics sections were a little bit hard for me but that was the idea.  I felt really comfortable with a lot of the tools used so I know I am doing it right. Finally, now I know in what I need to focus more.</p>
+<p>The main conclusion I got is that there is still a lot to learn and the Data Science space keeps changing every day, that is the reason I like it: When I think I am good at something, I realize I am just getting started.</p>
+<p>Thanks to Harvard for publishing all the content online.</p>
+        </div>
+
+        <div class="meta">
+            <div>
+                    <a href="n/tag/python.html" class="tag">Python</a>
+                    <a href="n/tag/data.html" class="tag">Data</a>
+                    <a href="n/tag/nlp.html" class="tag">NLP</a>
+                    <a href="n/tag/statistics.html" class="tag">Statistics</a>
+                    <a href="n/tag/bayesian.html" class="tag">Bayesian</a>
+                    <a href="n/tag/graphs.html" class="tag">Graphs</a>
+            </div>
+        </div>
+    </article>
+</div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
+
+        </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-35523657-2', 'danielfrg.com');
+  ga('send', 'pageview');
+
+</script>
+
+    </body>
+</html>

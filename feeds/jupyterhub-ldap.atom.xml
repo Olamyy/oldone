@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Olamilekan Wahab</title><link href="n/" rel="alternate"></link><link href="n/feeds/jupyterhub-ldap.atom.xml" rel="self"></link><id>n/</id><updated>2016-09-03T00:00:00+00:00</updated><entry><title>Jupyter Hub on Kubernetes with LDAP</title><link href="n/blog/2016/09/03/jupyterhub-kubernetes-ldap/" rel="alternate"></link><published>2016-09-03T00:00:00+00:00</published><updated>2016-09-03T00:00:00+00:00</updated><author><name>Daniel Rodriguez</name></author><id>tag:,2016-09-03:n/blog/2016/09/03/jupyterhub-kubernetes-ldap/</id><summary type="html">&lt;p&gt;In this post I am going to show some initial work I did in the last day to deploy
+Jupyter Hub in Kubernetes with user auth based on LDAP.&lt;/p&gt;
+&lt;p&gt;I wasn't that much work considering that Jupyter Hub already had support for LDAP user auth and
+the modularity they have is amazing. It was quite straight forward to write a new spawner
+based on the existing one on the &lt;a href="https://github.com/jupyterhub/jupyterhub"&gt;Jupyter Hub github org&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;All the code in this post is at
+&lt;a href="https://github.com/danielfrg/jupyterhub-kubernetes_spawner"&gt;danielfrg/jupyterhub-kubernetes_spawner&lt;/a&gt;.
+Specifically in the &lt;code&gt;examples&lt;/code&gt; directory.&lt;/p&gt;
+&lt;p&gt;I consider this a nice example of a more production ready Jupyter Hub deployment being based on LDAP
+that for good or bad is everywhere and Kubernetes to deployment of the single user notebook servers.&lt;/p&gt;
+&lt;p&gt;Something I don't talk is SSL certificates because its very well supported on Jupyter Hub and
+I think there is enough information about them on the Jupyter Hub docs and online.
+And yes, I was lazy to do it :)&lt;/p&gt;
+&lt;h2&gt;Requirements&lt;/h2&gt;
+&lt;p&gt;Basically the only requirement to get this running is a Kubernetes cluster (credentials) and time.&lt;/p&gt;
+&lt;p&gt;By far the best way to get a Kubernetes cluster is to use the
+&lt;a href="https://cloud.google.com/container-engine/"&gt;Google Container Engine&lt;/a&gt; to create one.&lt;/p&gt;
+&lt;p&gt;From this point I am assuming you have one.&lt;/p&gt;
+&lt;h2&gt;LDAP&lt;/h2&gt;
+&lt;p&gt;LDAP will be the user directory that we are going to use authenticate in Jupyter Hub.
+Just as an example we are going to deploy &lt;code&gt;openlpad&lt;/code&gt; and &lt;code&gt;phpldapadmin&lt;/code&gt; as an UI also in the
+same Kubernetes cluster.&lt;/p&gt;
+&lt;p&gt;In the example directory I provide an &lt;code&gt;ldap.yml&lt;/code&gt; file that has a simple kubernetes deployment
+object and one service to expose the &lt;code&gt;phpldapadmin&lt;/code&gt; UI.&lt;/p&gt;
+&lt;p&gt;The deployment consist of only one Pod with two containers.&lt;/p&gt;
+&lt;p&gt;First container is &lt;code&gt;openldap&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;containers&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;openldap&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;image&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;osixia/openldap&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ports&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containerPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;389&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containerPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;636&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Second container is &lt;code&gt;phpldapadmin&lt;/code&gt;, disabling HTTPS (so port 80) and the LDAP host being &lt;code&gt;localhost&lt;/code&gt; since
+its the same Pod:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;phpldapadmin&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;image&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;osixia/phpldapadmin&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ports&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containerPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;80&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;env&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;PHPLDAPADMIN_HTTPS&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;value&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;false&amp;quot;&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;PHPLDAPADMIN_LDAP_HOSTS&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;value&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;localhost&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finaly one simple Kubernetes service to expose the &lt;code&gt;phpldapadmin&lt;/code&gt; UI:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;spec&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;type&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;LoadBalancer&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ports&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;port&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;80&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;targetPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;80&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;selector&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;app&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-ldap&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To deploy everything just need to run:&lt;/p&gt;
+&lt;div class="codehilite"&gt;
+&lt;pre class="bash"&gt;
+$ kubectl create -f ldap.yml
+deployment "jupyterhub-ldap" created
+service "jupyterhub-ldap-admin" created
+&lt;/div&gt;
+
+&lt;/pre&gt;
+
+&lt;p&gt;After that just wait for the Pod to be ready and the service to give you a public IP:&lt;/p&gt;
+&lt;div class="codehilite"&gt;
+&lt;pre class="bash"&gt;
+$ kubectl get deployments
+NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+jupyterhub-ldap    1         1         1            1           25s
+
+$ kubectl get service
+NAME                     CLUSTER-IP       EXTERNAL-IP       PORT(S)     AGE
+jupyterhub-ldap-admin    10.103.241.31    104.154.70.197    80/TCP      56s
+&lt;/div&gt;
+
+&lt;/pre&gt;
+
+&lt;p&gt;Now you can go to the External IP (&lt;code&gt;104.154.70.197&lt;/code&gt; in my case) and see the &lt;code&gt;phpldapadmin&lt;/code&gt; UI.&lt;/p&gt;
+&lt;p&gt;The default user is &lt;code&gt;admin&lt;/code&gt; with &lt;code&gt;dc=example&lt;/code&gt; and &lt;code&gt;dc=org&lt;/code&gt; (in LDAP lang that means
+DN=&lt;code&gt;cn=admin,dc=example,dc=org&lt;/code&gt; in the user field) with password of &lt;code&gt;admin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Just as an example and to see how the auth works later lest create a couple of users.&lt;/p&gt;
+&lt;p&gt;First we need a &lt;code&gt;Posix Group&lt;/code&gt; to place the users I chose: &lt;code&gt;jupyterhub&lt;/code&gt;.
+Under that group create a couple of &lt;code&gt;Generic: User Account&lt;/code&gt; the result should look something like this:&lt;/p&gt;
+&lt;p&gt;{% b64img articles/2016/08/jupyterhub-ldap/phpldapadmin.png "PHP LDAL my admin" %}&lt;/p&gt;
+&lt;p&gt;Thats all the work we need to do in the LDAP front.&lt;/p&gt;
+&lt;h2&gt;Jupyter Hub&lt;/h2&gt;
+&lt;p&gt;Jupyter Hub basically consists of two parts the
+&lt;a href="https://github.com/jupyterhub/configurable-http-proxy"&gt;configurable-http-proxy&lt;/a&gt;
+which is a small magic utility and the actual &lt;a href="https://github.com/jupyterhub/jupyterhub"&gt;Jupyter Hub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When you start the Jupyter Hub it will start the &lt;code&gt;configurable-http-proxy&lt;/code&gt; but
+I prefer to have each component in its own container like I show in the last deployment.&lt;/p&gt;
+&lt;p&gt;Before actually deploying the Jupyter Hub
+we need to create a Docker image that has the Jupyter Hub plugins for ldap and my Kubernetes spawner.
+We do this by extending the official &lt;code&gt;jupyterhub/jupyterhub&lt;/code&gt; image:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="s"&gt; jupyterhub/jupyterhub&lt;/span&gt;
+
+&lt;span class="k"&gt;RUN&lt;/span&gt; apt-get update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y curl
+&lt;span class="k"&gt;RUN&lt;/span&gt; pip install jupyterhub-ldapauthenticator
+&lt;span class="k"&gt;RUN&lt;/span&gt; pip install git+git://github.com/danielfrg/jupyterhub-kubernetes_spawner.git
+
+COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
+COPY start.sh /srv/jupyterhub/start.sh
+&lt;span class="k"&gt;RUN&lt;/span&gt; chmod +x /srv/jupyterhub/start.sh
+
+&lt;span class="k"&gt;CMD&lt;/span&gt;&lt;span class="s"&gt; [&amp;quot;/srv/jupyterhub/start.sh&amp;quot;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The only think that is missing is fill the &lt;code&gt;jupyterhub_config.py&lt;/code&gt; file with the missing values:
+Kubernetes auth and LDAP server location.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;JupyterHub&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;authenticator_class&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;ldapauthenticator.LDAPAuthenticator&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;LDAPAuthenticator&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bind_dn_template&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;cn={username},cn=jupyterhub,dc=example,dc=org&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;LDAPAuthenticator&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;server_address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{ LDAP_POD_ID }&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;LDAPAuthenticator&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;use_ssl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+
+&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;JupyterHub&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;spawner_class&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;kubernetes_spawner.KubernetesSpawner&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;KubernetesSpawner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{ KUBE_HOST }&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;KubernetesSpawner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{ KUBE_USER }&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;KubernetesSpawner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{ KUBE_PASS }&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;KubernetesSpawner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;verify_ssl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;KubernetesSpawner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hub_ip_from_service&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;jupyterhub&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The missing values are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;LDAP_POD_ID&lt;/code&gt;: Get this one from the Pod we created in the LDAP section:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="codehilite"&gt;
+&lt;pre class="bash"&gt;
+$ kubectl get Pods
+NAME                               READY     STATUS    RESTARTS   AGE
+jupyterhub-ldap-2860785391-pjiq7   2/2       Running   0          31m
+
+$ kubectl describe Pod jupyterhub-ldap-2860785391-pjiq7 | grep ip
+IP:         10.100.5.3
+&lt;/div&gt;
+
+&lt;/pre&gt;
+
+&lt;p&gt;My value is &lt;code&gt;10.100.5.3&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Note &lt;code&gt;cn={username},cn=jupyterhub,dc=example,dc=org&lt;/code&gt; has to match the structure created for the LDAP user entries.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;KUBE_HOST&lt;/code&gt;, &lt;code&gt;KUBE_USER&lt;/code&gt;, &lt;code&gt;KUBEPASS&lt;/code&gt;. Get those from &lt;code&gt;kubectl config view&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now we need to create the image:&lt;/p&gt;
+&lt;div class="codehilite"&gt;
+&lt;pre class="bash"&gt;
+$ docker build -t gcr.io/continuum-compute/jupyterhub-kube:0.2 .
+...
+
+$ gcloud docker push gcr.io/continuum-compute/jupyterhub-kube:0.2
+...
+&lt;/div&gt;
+
+&lt;/pre&gt;
+
+&lt;p&gt;Notice the tag of the container is &lt;code&gt;gcr.io/continuum-compute/jupyterhub-kube:0.2&lt;/code&gt; because
+I upload the image to the Google Container Registry but it could be a container on Docker Hub.&lt;/p&gt;
+&lt;p&gt;Thats it! Now we can deploy this image using the &lt;code&gt;hub.yml&lt;/code&gt; deployment file.&lt;/p&gt;
+&lt;p&gt;This deployment consists of one Pod with two containers.&lt;/p&gt;
+&lt;p&gt;First one is the &lt;code&gt;configurable-http-proxy&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;containers&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;proxy&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;image&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub/configurable-http-proxy&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ports&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containerPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;8000&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containerPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;8001&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;command&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;configurable-http-proxy&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--ip&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;0.0.0.0&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--api-ip&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;0.0.0.0&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--default-target&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;http://127.0.0.1:8081&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--error-target&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;http://127.0.0.1:8081/hub/error&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Second one is the actual Jupyter Hub server. Notice I use the image I created and uploaded before:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;image&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;gcr.io/continuum-compute/jupyterhub-kube:0.2&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ports&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containerPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;8081&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then two services to expose the APIs to the public&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;apiVersion&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;v1&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;kind&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Service&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;metadata&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;app&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;spec&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;type&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;LoadBalancer&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ports&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;port&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;80&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;targetPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;8000&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;selector&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;app&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub&lt;/span&gt;
+&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;apiVersion&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;v1&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;kind&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Service&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;metadata&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-api&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;app&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-api&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;spec&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;type&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;LoadBalancer&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ports&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;port&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;80&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;targetPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;8001&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;selector&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;app&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Use the file to create the deployment and wait for the Public IPs to be assigned:&lt;/p&gt;
+&lt;div class="codehilite"&gt;
+&lt;pre class="bash"&gt;
+$ kubectl create -f hub.yml
+deployment "jupyterhub" created
+service "jupyterhub" created
+service "jupyterhub-api" created
+
+$ sleep 20
+
+$ kubectl get service
+NAME                     CLUSTER-IP       EXTERNAL-IP       PORT(S)     AGE
+jupyterhub               10.103.254.164   130.211.158.251   80/TCP      2m
+jupyterhub-api           10.103.248.253   130.211.117.81    80/TCP      2m
+jupyterhub-ldap-admin    10.103.241.31    104.154.70.197    80/TCP      43m
+&lt;/div&gt;
+
+&lt;/pre&gt;
+
+&lt;p&gt;In your browser go to the external IP of the jupyterhub service in my case: &lt;code&gt;130.211.158.251&lt;/code&gt; and
+you should see the Jupyter Hub UI. Now you should be able to log in using any of the user entries
+in LDAP.&lt;/p&gt;
+&lt;p&gt;{% b64img articles/2016/08/jupyterhub-ldap/hub-login.png "JupyterHub login" %}&lt;/p&gt;
+&lt;p&gt;Note that it could take a minute to start the actual notebook server since the image
+that is pulled for the notebook is quite big but once the image is downloaded
+in the kubernetes cluster nodes it starts basically instantly.&lt;/p&gt;
+&lt;p&gt;As an experiment you can open an incognito window and login as another user.&lt;/p&gt;
+&lt;p&gt;Now you have two independent containers managed by Kubernetes and Jupyter Hub.&lt;/p&gt;
+&lt;p&gt;You can take a look at the running Pods now:&lt;/p&gt;
+&lt;div class="codehilite"&gt;
+&lt;pre class="bash"&gt;
+$ kubectl get Pods
+jupyterhub-bzaitlen                1/1       Running   0          1m
+jupyterhub-danielfrg               1/1       Running   0          7m
+...
+&lt;/div&gt;
+
+&lt;/pre&gt;
+
+&lt;p&gt;As expected stoping the server in the Jupyter Hub UI will stop the Pod.&lt;/p&gt;
+&lt;h2&gt;Future&lt;/h2&gt;
+&lt;p&gt;There is more work to be done the main issue is that even when Jupyter Hub is supposed to be a permanent
+place for you notebooks the current setup will create a new container every time and the notebooks will be lost.
+The solution to that is to share a persistent volume with the containers.&lt;/p&gt;
+&lt;p&gt;Also the notebook Pod are not started with any replication control. It would be nice to start them with one
+so Kubernetes will restart them if they fail for any reason.&lt;/p&gt;
+&lt;p&gt;Finally there is some small things that can be done to make the config a little friendlier, for example
+the LDAP host can be exposed as a service and user Kubernetes service discovery to find the correct location.
+Probably trying to autodetect if the Jupyter Hub is being run in Kubernetes plus some sane defaults is the way to go.&lt;/p&gt;</summary><category term="Jupyter Hub"></category><category term="Kubernetes"></category><category term="LDAP"></category><category term="Docker"></category></entry></feed>

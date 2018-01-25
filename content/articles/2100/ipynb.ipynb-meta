@@ -1,7 +1,0 @@
-Title: Jupyter notebook test
-Slug: jupyter-notebook-test
-Date: 2100-12-31
-Tags: Test
-Author: Daniel Rodriguez
-Include: requirejs,jquery,bokeh
-Status: draft

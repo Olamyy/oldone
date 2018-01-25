@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="author" content="Olamilekan Wahab">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <title>Jupyter Notebook Cloudera CSD | Olamilekan Wahab</title>
+
+        <link rel="alternate" type="application/atom+xml" title="Olamilekan Wahab blog atom feed" href="/feeds/all.atom.xml" />
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <style>.codehilite .hll { background-color: #404040 }
+.codehilite .c { color: #999999; font-style: italic } /* Comment */
+.codehilite .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.codehilite .g { color: #d0d0d0 } /* Generic */
+.codehilite .k { color: #6ab825; font-weight: bold } /* Keyword */
+.codehilite .l { color: #d0d0d0 } /* Literal */
+.codehilite .n { color: #d0d0d0 } /* Name */
+.codehilite .o { color: #d0d0d0 } /* Operator */
+.codehilite .x { color: #d0d0d0 } /* Other */
+.codehilite .p { color: #d0d0d0 } /* Punctuation */
+.codehilite .cm { color: #999999; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #cd2828; font-weight: bold } /* Comment.Preproc */
+.codehilite .c1 { color: #999999; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #e50808; font-weight: bold; background-color: #520000 } /* Comment.Special */
+.codehilite .gd { color: #d22323 } /* Generic.Deleted */
+.codehilite .ge { color: #d0d0d0; font-style: italic } /* Generic.Emph */
+.codehilite .gr { color: #d22323 } /* Generic.Error */
+.codehilite .gh { color: #ffffff; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #589819 } /* Generic.Inserted */
+.codehilite .go { color: #cccccc } /* Generic.Output */
+.codehilite .gp { color: #aaaaaa } /* Generic.Prompt */
+.codehilite .gs { color: #d0d0d0; font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #ffffff; text-decoration: underline } /* Generic.Subheading */
+.codehilite .gt { color: #d22323 } /* Generic.Traceback */
+.codehilite .kc { color: #6ab825; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #6ab825; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #6ab825; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #6ab825 } /* Keyword.Pseudo */
+.codehilite .kr { color: #6ab825; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #6ab825; font-weight: bold } /* Keyword.Type */
+.codehilite .ld { color: #d0d0d0 } /* Literal.Date */
+.codehilite .m { color: #3677a9 } /* Literal.Number */
+.codehilite .s { color: #ed9d13 } /* Literal.String */
+.codehilite .na { color: #bbbbbb } /* Name.Attribute */
+.codehilite .nb { color: #24909d } /* Name.Builtin */
+.codehilite .nc { color: #447fcf; text-decoration: underline } /* Name.Class */
+.codehilite .no { color: #40ffff } /* Name.Constant */
+.codehilite .nd { color: #ffa500 } /* Name.Decorator */
+.codehilite .ni { color: #d0d0d0 } /* Name.Entity */
+.codehilite .ne { color: #bbbbbb } /* Name.Exception */
+.codehilite .nf { color: #447fcf } /* Name.Function */
+.codehilite .nl { color: #d0d0d0 } /* Name.Label */
+.codehilite .nn { color: #447fcf; text-decoration: underline } /* Name.Namespace */
+.codehilite .nx { color: #d0d0d0 } /* Name.Other */
+.codehilite .py { color: #d0d0d0 } /* Name.Property */
+.codehilite .nt { color: #6ab825; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #40ffff } /* Name.Variable */
+.codehilite .ow { color: #6ab825; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #666666 } /* Text.Whitespace */
+.codehilite .mf { color: #3677a9 } /* Literal.Number.Float */
+.codehilite .mh { color: #3677a9 } /* Literal.Number.Hex */
+.codehilite .mi { color: #3677a9 } /* Literal.Number.Integer */
+.codehilite .mo { color: #3677a9 } /* Literal.Number.Oct */
+.codehilite .sb { color: #ed9d13 } /* Literal.String.Backtick */
+.codehilite .sc { color: #ed9d13 } /* Literal.String.Char */
+.codehilite .sd { color: #ed9d13 } /* Literal.String.Doc */
+.codehilite .s2 { color: #ed9d13 } /* Literal.String.Double */
+.codehilite .se { color: #ed9d13 } /* Literal.String.Escape */
+.codehilite .sh { color: #ed9d13 } /* Literal.String.Heredoc */
+.codehilite .si { color: #ed9d13 } /* Literal.String.Interpol */
+.codehilite .sx { color: #ffa500 } /* Literal.String.Other */
+.codehilite .sr { color: #ed9d13 } /* Literal.String.Regex */
+.codehilite .s1 { color: #ed9d13 } /* Literal.String.Single */
+.codehilite .ss { color: #ed9d13 } /* Literal.String.Symbol */
+.codehilite .bp { color: #24909d } /* Name.Builtin.Pseudo */
+.codehilite .vc { color: #40ffff } /* Name.Variable.Class */
+.codehilite .vg { color: #40ffff } /* Name.Variable.Global */
+.codehilite .vi { color: #40ffff } /* Name.Variable.Instance */
+.codehilite .il { color: #3677a9 } /* Literal.Number.Integer.Long */</style>
+        <style>body{margin:0;padding:0;font:15px 'Source Sans Pro',sans-serif;line-height:1.6em;color:#222;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}a{color:#007ee5;text-decoration:none}a:hover{color:#007ee5;text-decoration:none}header.main-header{background:none repeat scroll 0% 0% #2A66C0;margin-bottom:0px}header.main-header a{color:#fff}header.main-header .container{max-width:1000px}header.main-header .container nav a:hover{background-color:#2A66C0}article{margin:0}article header{margin-bottom:20px;padding-bottom:20px}article header h1{margin-bottom:2px;font-weight:700;color:#000}article header time{color:#9E9E9E;font-size:0.85em;float:right}article header time.left{color:#9E9E9E;font-size:0.85em;float:left}article p{font-size:16px;margin-bottom:20px;line-height:1.6em}article p.note{background:#f5f5f5;border:1px solid #ddd;padding:0.533em 0.733em}article p.update{background-color:#FEEFB3;border:1px solid #e6e68a;padding:0.533em 0.733em}article p.alert{background-color:#ffe2e2;border:1px solid #ffb2b2;padding:0.533em 0.733em}article ul,article ol{margin-top:0px;margin-bottom:25px}article li{font-size:16px;line-height:1.6em}article a:hover{text-decoration:underline}article blockquote{border-left:2px solid #c7c7cc;color:#666;margin:30px 0;padding:0 0 0 25px}article img{max-width:100%}article code{color:#333;background-color:#EEE;border-radius:0;font-size:13px}article .codehilite pre{border-radius:0;background-color:#202020;color:#d0d0d0}article .codehilite pre code{border:none}article .codehilite pre.bash{background-color:#000;color:#FFF}article .meta{font-size:11px}article .meta a:hover{text-decoration:none}article .meta div{margin-bottom:20px;display:block}article .meta a.tag{margin:0 10px 10px 0;padding:1px 12px;display:inline-block;font-size:12px;color:rgba(0,0,0,0.6);background:rgba(0,0,0,0.05)}article .meta a.tag:hover{background:rgba(0,0,0,0.15)}article .meta a.read_more,article .meta a.comments_btn{font-size:14px;font-weight:800;padding:10px 20px;color:#007EE5;background:#FFF;border:1px solid #007EE5}article .meta a.read_more:hover,article .meta a.comments_btn:hover{color:#FFF;background:#007EE5}.index{max-width:700px}.index article header h2{font-size:36px;margin-bottom:2px;font-weight:700}.index article header h2 a{color:#000}.index article header h2 a:hover{color:#007ee5;text-decoration:none}.index .separator{padding:40px 0 0 0;margin:0 0 40px 0;height:10px;border-bottom:solid 1px #CCC}.index .pagination{display:block;margin-bottom:100px}.index .pagination .left{text-align:right}.index .pagination .right{text-align:left}.index .pagination a{display:inline-block;border:2px solid #007EE5;margin:0 5px;padding:8px 20px;font-weight:bold;color:#007EE5}.index .pagination a:hover{color:#FFF;background:#007EE5}.post{max-width:700px}.post h2:before{content:"# ";font-weight:bold;color:#DDD}.post h3:before{content:"## ";font-weight:bold;color:#DDD}.post h4:before{content:"### ";font-weight:bold;color:#DDD}.post article .meta{margin:50px 0 100px}.list{max-width:700px}.list ul.double-list{margin:0 auto 60px;padding:0;list-style-type:none}.list ul.double-list li{padding:5px 0}.list ul.double-list li h2{font-size:1em;display:inline;font-weight:normal}.list ul.double-list li span{font-family:sans-serif;text-transform:uppercase;text-align:right;float:right;padding-top:3px;font-size:12px;color:#999}.full-width-content{padding-top:10px;padding-left:0px;padding-right:0px;margin-left:-20px;margin-right:-20px}.col-xs-1,.col-sm-1,.col-md-1,.col-lg-1,.col-xs-2,.col-sm-2,.col-md-2,.col-lg-2,.col-xs-3,.col-sm-3,.col-md-3,.col-lg-3,.col-xs-4,.col-sm-4,.col-md-4,.col-lg-4,.col-xs-5,.col-sm-5,.col-md-5,.col-lg-5,.col-xs-6,.col-sm-6,.col-md-6,.col-lg-6,.col-xs-7,.col-sm-7,.col-md-7,.col-lg-7,.col-xs-8,.col-sm-8,.col-md-8,.col-lg-8,.col-xs-9,.col-sm-9,.col-md-9,.col-lg-9,.col-xs-10,.col-sm-10,.col-md-10,.col-lg-10,.col-xs-11,.col-sm-11,.col-md-11,.col-lg-11,.col-xs-12,.col-sm-12,.col-md-12,.col-lg-12{padding-right:0px;padding-left:0px}</style>
+
+    </head>
+
+    <body>
+        <header class="navbar navbar-static-top bs-docs-nav main-header">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/" title="Home" class="title">Daniel Rodriguez</a></li>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                    <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/pages/about.html" title="About">About</a></li>
+                            <li><a href="http://github.com/danielfrg" title="danielfrg's Github" rel="me">Github</a></li>
+                            <li><a href="http://twitter.com/danielfrg" title="danielfrg Twitter" rel="me">Twitter</a></li>
+                            <li><a href="/archives.html" title="Archive">Archive</a></li>
+                            <li><a href="/feeds/all.atom.xml" title="danielfrg.github.io RSS feed" rel="me">RSS</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div id="wrap">
+<div class="container post">
+    <article>
+        <header>
+            <h1>Jupyter Notebook Cloudera CSD</h1>
+            <time datetime="article.date.isoformat()" pubdate>October 29, 2016</time>
+        </header>
+
+        <div class="article_content">
+            <p>Running a Jupyter Notebook is as simple as executing <code>jupyter notebook</code>, assuming you have the
+libraries installed: <code>pip install jupyter</code>.</p>
+<p>Doing this in a different environment (a Hadoop cluster) is basically the same. It requires
+a little bit more of sys admin experience (not much if you use the right tools)
+but problems really start when you don't have admin access to the cluster nodes.</p>
+<p>Some of the new ways of running a Jupyter Notebook use the
+<a href="https://docs.continuum.io/anaconda/cloudera">Anaconda Parcel</a>
+which is basically the
+<a href="https://www.continuum.io/downloads">Anaconda Distribution</a>
+packaged in a different format so Cloudera manager can installed.</p>
+<p>The "problem" with the parcel is that it only includes the libraries it doesn't manage services (start, stop, restart). So the parcel is great if you already have a notebook server (maybe a multi-user Jupyter Hub server) that has access to the cluster and all you are missing is libraries for your Spark job.</p>
+<p>Note that there are multiple solutions: Hue, Zeppelin or others, the Parcel works great with
+all of those since it will give you the libraries independent of the service.</p>
+<p>Ok, what if you have no notebook server and just want a simple Jupyter Notebook server to have
+the same experience you have in a laptop.</p>
+<p>A quick
+<a href="https://www.google.com/search?q=cloudera+jupyter+notebook">Google search on Cloudera + Jupyter Notebook</a>
+will give multiple results on how to run a Jupyter Notebook in a Cloudera Hadoop cluster.</p>
+<ol>
+<li><a href="http://blog.cloudera.com/blog/2014/08/how-to-use-ipython-notebook-with-apache-spark">http://blog.cloudera.com/blog/2014/08/how-to-use-ipython-notebook-with-apache-spark</a></li>
+<li><a href="http://www.cloudera.com/documentation/enterprise/5-5-x/topics/spark_ipython.html">http://www.cloudera.com/documentation/enterprise/5-5-x/topics/spark_ipython.html</a></li>
+<li><a href="https://blogs.msdn.microsoft.com/pliu/2016/06/19/run-jupyter-notebook-on-cloudera">https://blogs.msdn.microsoft.com/pliu/2016/06/19/run-jupyter-notebook-on-cloudera</a></li>
+</ol>
+<p>Some of these solution use the <a href="https://docs.continuum.io/anaconda/cloudera">Anaconda Parcel</a>
+and give a set of commands to start the Jupyter Notebook server manually.</p>
+<h2>Custom Service Descriptor (CSD)</h2>
+<p>One idea that me and some colleagues had was to start (and manage) the service using Cloudera manager,
+it would be great to have the service in the same location as you Impala, Kudu and so on services.
+Cloudera makes this very easy with a
+<a href="https://github.com/cloudera/cm_ext/wiki">Custom Service Descriptor (CSD)</a>.</p>
+<p>My biggest surprise was while looking at their
+<a href="https://github.com/cloudera/cm_ext/wiki/CSD-Primer">Hello World example</a>
+is starting a python http server with <code>python -m SimpleHTTPServer</code>, the Jupyter notebook is basically the same!</p>
+<p>It was <strong>very</strong> easy to change the example to make it run a Jupyter Notebook server.</p>
+<p>Basically all is needed is two files plus one optional icon file:</p>
+<div class="highlight"><pre><span></span>./JUPYTER-1.0/
+    descriptor/
+        service.sdl
+    scripts/
+        control.sh
+    images/
+        icon.png
+</pre></div>
+
+
+<p>The <code>service.sdl</code> is basically the example on the CSD docs with some small changes:</p>
+<ol>
+<li>Require the Anaconda Parcel. This is done using the <code>parcel</code> and <code>requiredTags</code> fields.
+Right now the Anaconda Parcel provides <code>spark-plugin</code> which is probably a copy paste error.</li>
+<li>A helper <code>externalLink</code> so the notebook server can be accessed via the Cloudera manager UI.</li>
+</ol>
+<p>This is the complete <code>service.sdl</code>:</p>
+<div class="highlight"><pre><span></span>{
+  &quot;name&quot; : &quot;JUPYTER&quot;,
+  &quot;label&quot; : &quot;Jupyter Notebook&quot;,
+  &quot;description&quot; : &quot;Jupyter Notebook&quot;,
+  &quot;version&quot; : &quot;1.0&quot;,
+  &quot;icon&quot; : &quot;images/jupyter.png&quot;,
+  &quot;runAs&quot; : {
+    &quot;user&quot; : &quot;root&quot;,
+    &quot;group&quot; : &quot;root&quot;
+  },
+  &quot;parcel&quot; : {
+    &quot;requiredTags&quot; : [&quot;spark-plugin&quot;]
+  },
+  &quot;roles&quot; : [
+    {
+       &quot;name&quot; : &quot;JUPYTER_NOTEBOOK_SERVER&quot;,
+       &quot;label&quot; : &quot;Jupyter Notebook server&quot;,
+       &quot;pluralLabel&quot; : &quot;Jupyter Notebook servers&quot;,
+       &quot;parameters&quot; : [
+        {
+          &quot;name&quot; : &quot;port_num&quot;,
+          &quot;label&quot; : &quot;Jupyter Notebook serving port&quot;,
+          &quot;description&quot; : &quot;The port number&quot;,
+          &quot;required&quot; : &quot;true&quot;,
+          &quot;type&quot; : &quot;port&quot;,
+          &quot;default&quot; : 8080
+        }
+      ],
+      &quot;startRunner&quot; : {
+         &quot;program&quot; : &quot;scripts/control.sh&quot;,
+         &quot;args&quot; : [ &quot;start&quot; ],
+         &quot;environmentVariables&quot; : {
+           &quot;JPY_NOTEBOOK_PORT&quot; : &quot;<span class="cp">${</span><span class="n">port_num</span><span class="cp">}</span>&quot;
+         }
+      },
+      &quot;externalLink&quot; : {
+        &quot;name&quot; : &quot;jupyter_notebook_web_ui&quot;,
+        &quot;label&quot; : &quot;Jupyter Notebook UI&quot;,
+        &quot;url&quot; : &quot;http://<span class="cp">${</span><span class="n">host</span><span class="cp">}</span>:<span class="cp">${</span><span class="n">port_num</span><span class="cp">}</span>&quot;,
+        &quot;secureUrl&quot; : &quot;https://<span class="cp">${</span><span class="n">host</span><span class="cp">}</span>:<span class="cp">${</span><span class="n">port_num</span><span class="cp">}</span>&quot;
+      }
+    }
+  ],
+  &quot;rolesWithExternalLinks&quot; : [&quot;JUPYTER_NOTEBOOK_SERVER&quot;]
+}
+</pre></div>
+
+
+<p>The <code>control.sh</code> is again the hello world example changing the execution command.</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nv">CMD</span><span class="o">=</span><span class="nv">$1</span>
+
+<span class="nv">ANACONDA_BIN_DIR</span><span class="o">=</span><span class="k">$(</span>dirname <span class="s2">&quot;</span><span class="si">${</span><span class="nv">CDH_PYTHON</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$ANACONDA_BIN_DIR</span>:<span class="nv">$PATH</span>
+
+<span class="k">case</span> <span class="nv">$CMD</span> in
+  <span class="o">(</span>start<span class="o">)</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Starting the Jupyter Notebook on port [</span><span class="nv">$JPY_NOTEBOOK_PORT</span><span class="s2">]&quot;</span>
+    <span class="nb">exec</span> <span class="nv">$ANACONDA_BIN_DIR</span>/jupyter notebook --no-browser --ip <span class="m">0</span>.0.0.0 --port <span class="nv">$JPY_NOTEBOOK_PORT</span>
+    <span class="p">;;</span>
+  <span class="o">(</span>*<span class="o">)</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Don&#39;t understand [</span><span class="nv">$CMD</span><span class="s2">]&quot;</span>
+    <span class="p">;;</span>
+<span class="k">esac</span>
+</pre></div>
+
+
+<p>The only thing to note here is that I know that the Anaconda Parcel exports the <code>CDH_PYTHON</code> environment variable.</p>
+<p>Thats it! just package the CSD into a jar following the
+<a href="https://github.com/cloudera/cm_ext/wiki/CSD-Primer">documentation</a>
+and upload it to the Cloudera manager instance.</p>
+<h2>How does it look</h2>
+<p>In a brand new Cloudera manager cluster you can add <em>"Jupyter Notebook"</em> as a new service:</p>
+<p>{% b64img articles/2016/10/jupyter-cloudera-csd/add-service.png "Add Jupyter Notebook service" %}</p>
+<p>As a regular service in Cloudera manager you can select on which node to install it:</p>
+<p>{% b64img articles/2016/10/jupyter-cloudera-csd/add-service-role.png "Jupyter Notebook service roles" %}</p>
+<p>Start the service and wait for it to be successful:</p>
+<p>{% b64img articles/2016/10/jupyter-cloudera-csd/start-service.png "Jupyter Notebook start service" %}</p>
+<p>Then its possible to see the service in the service list:</p>
+<p>{% b64img articles/2016/10/jupyter-cloudera-csd/service-list.png "Service list" %}</p>
+<p>Finally you can see the link to the notebook server on the service page:</p>
+<p>{% b64img articles/2016/10/jupyter-cloudera-csd/service-page.png "Service page" %}</p>
+<p>That link will take you to a regular Jupyter Notebook server managed by Cloudera manager.</p>
+<h2>Conclusions + future work</h2>
+<p>CSD are very easy to write but a little annoying to develop, its all good tho.</p>
+<p>Using this method you can get a simple Jupyter Notebook server that is managed by Cloudera manager.
+One big advantage of this method is that you probably already have a Cloudera cluster running
+and you don't have to worry about admin/root access to a cluster, as long as you have access to
+Cloudera manager.</p>
+<p>A nicer solution to have auth around the notebooks would be to start a Jupyter Hub server.
+This is not possible with the current Anaconda Parcel since the library is not part of the
+distribution.</p>
+<p>Modifying the Anaconda Parcel is currently not possible since unfortunately is not open source
+but most of the tooling and documentation is so its more a matter of putting the pieces together.</p>
+<p>Running the Jupyter Notebook server in the cluster has advantages and disadvantages but its not a requirement.
+Awesome tools like <a href="https://github.com/cloudera/livy">Livy</a> make it very easy to run the notebook locally and connect to a running spark cluster.</p>
+        </div>
+
+        <div class="meta">
+            <div>
+                    <a href="n/tag/jupyter.html" class="tag">Jupyter</a>
+                    <a href="n/tag/cloudera.html" class="tag">Cloudera</a>
+                    <a href="n/tag/csd.html" class="tag">CSD</a>
+            </div>
+        </div>
+    </article>
+</div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
+
+        </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-35523657-2', 'danielfrg.com');
+  ga('send', 'pageview');
+
+</script>
+
+    </body>
+</html>

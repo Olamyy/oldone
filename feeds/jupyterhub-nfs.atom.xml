@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Olamilekan Wahab</title><link href="n/" rel="alternate"></link><link href="n/feeds/jupyterhub-nfs.atom.xml" rel="self"></link><id>n/</id><updated>2016-09-10T00:00:00+00:00</updated><entry><title>Jupyter Hub on Kubernetes Part II: NFS</title><link href="n/blog/2016/09/10/jupyterhub-kubernetes-nfs/" rel="alternate"></link><published>2016-09-10T00:00:00+00:00</published><updated>2016-09-10T00:00:00+00:00</updated><author><name>Daniel Rodriguez</name></author><id>tag:,2016-09-10:n/blog/2016/09/10/jupyterhub-kubernetes-nfs/</id><summary type="html">&lt;p&gt;Second part of my JupyterHub deployment in Kubernetes experiment be sure to read &lt;a href="n/blog/2016/09/03/jupyterhub-kubernetes-ldap/"&gt;Part I&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Last time we got JupyterHub authenticating to LDAP and creating the single user notebooks in
+Kubernetes containers. As I mentioned in that post one big problem with that deployment
+was that the notebook files are gone when the pod is deleted
+so this time I add an NFS volume to the JupyterHub single user containers to
+persist the notebook data.&lt;/p&gt;
+&lt;p&gt;Also improved a little bit the deployment and code so to its no longer needed to build a custom image you
+can just pull two images from my docker hub registry and configure them using
+a &lt;a href="http://kubernetes.io/docs/user-guide/configmap"&gt;Kubernetes ConfigMap&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;All the code in this post is at
+&lt;a href="https://github.com/danielfrg/jupyterhub-kubernetes_spawner"&gt;danielfrg/jupyterhub-kubernetes_spawner&lt;/a&gt;.
+Specifically in the &lt;code&gt;example&lt;/code&gt; directory.&lt;/p&gt;
+&lt;h2&gt;NFS&lt;/h2&gt;
+&lt;p&gt;There is multiple options to have &lt;a href="http://kubernetes.io/docs/user-guide/persistent-volumes/"&gt;persistent data in Kubernetes containers&lt;/a&gt;.
+I chose NFS because its one of the few types that allows multiple containers to have read and write access
+(ReadWriteMany).
+Most of the persistent volume types have read and write access to only one container (ReadWriteOnce)
+and/or read only access to multiple containers (ReadOnlyMany).&lt;/p&gt;
+&lt;p&gt;I wanted to have all JupyterHub single user containers write their notebooks to the same location so its
+easier to do backups of the data but since the notebook servers are single user each one of those
+containers could use its own disk. On that case backup and maintenance is more complicated.&lt;/p&gt;
+&lt;p&gt;The following is heavily based on the &lt;a href="https://github.com/kubernetes/kubernetes/tree/master/examples/volumes/nfs"&gt;Kubernetes NFS documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In order to mount an NFS volume into the Kubernetes containers we need an NFS server but even before that we
+need a Volume that the NFS server can use to store the data.&lt;/p&gt;
+&lt;p&gt;In GCE we can use a persistent volume claim to ask for a Disk resource:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;apiVersion&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;v1&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;kind&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;PersistentVolumeClaim&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;metadata&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-storage&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;volume.alpha.kubernetes.io/storage-class&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;any&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;spec&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;accessModes&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="p p-Indicator"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ReadWriteOnce&amp;quot;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;]&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;resources&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;requests&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;storage&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;200Gi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When you execute this using &lt;code&gt;kubectl -f file.yaml&lt;/code&gt; GCE will create a new disk that you can see at the GCE
+cloud console, something like this:&lt;/p&gt;
+&lt;p&gt;{% b64img articles/2016/08/jupyterhub-nfs/gce-disk.png "GCE created disk" %}&lt;/p&gt;
+&lt;p&gt;Now that we have a Disk that the NFS server can use to store its data we create a Deployment of the NFS server
+and a service to expose it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;apiVersion&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;extensions/v1beta1&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;kind&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Deployment&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;metadata&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-nfs&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;spec&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;replicas&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;1&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;template&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;metadata&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;app&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-nfs&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;spec&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containers&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;nfs-server&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;image&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;gcr.io/google-samples/nfs-server:1.1&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ports&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;nfs&lt;/span&gt;
+            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containerPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;2049&lt;/span&gt;
+          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mountd&lt;/span&gt;
+            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containerPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;20048&lt;/span&gt;
+          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;rpcbind&lt;/span&gt;
+            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containerPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;111&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;securityContext&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+          &lt;span class="l l-Scalar l-Scalar-Plain"&gt;privileged&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;true&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;volumeMounts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mypvc&lt;/span&gt;
+            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mountPath&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;/exports&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;volumes&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mypvc&lt;/span&gt;
+          &lt;span class="l l-Scalar l-Scalar-Plain"&gt;persistentVolumeClaim&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;claimName&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-storage&lt;/span&gt;
+&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;kind&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Service&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;apiVersion&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;v1&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;metadata&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-nfs&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;spec&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ports&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;nfs&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;port&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;2049&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mountd&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;port&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;20048&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;rpcbind&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;port&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;111&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;selector&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;app&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-nfs&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;All this can be found in the &lt;code&gt;example/nfs.yml&lt;/code&gt; file when executed there should be a &lt;code&gt;jupyterhub-nfs&lt;/code&gt; service.&lt;/p&gt;
+&lt;div class="codehilite"&gt;
+&lt;pre class="bash"&gt;
+$ kubectl create -f example/nfs.yml
+...
+
+$ kubectl get services
+NAME                     CLUSTER-IP       EXTERNAL-IP       PORT(S)                      AGE
+jupyterhub-nfs           10.103.253.185   &lt;none&gt;            2049/TCP,20048/TCP,111/TCP   15h
+&lt;/div&gt;
+
+&lt;/pre&gt;
+
+&lt;p&gt;Now with the NFS service ready we need to create a Persistent Volume and another Persistent Volume Claim
+for the containers to use.
+There is a need for a small manual step here since at the moment its not possible to get a service IP
+from a Persistent Volume Object. So open &lt;code&gt;example/nfs2.yml&lt;/code&gt; and change &lt;code&gt;{{ X.X.X.X }}&lt;/code&gt; for the &lt;code&gt;jupyterhub-nfs&lt;/code&gt;
+service IP, in this case &lt;code&gt;10.103.253.185&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;nfs2.yml&lt;/code&gt; file also includes a small NGINX deployment with &lt;code&gt;autoindex on;&lt;/code&gt; to see the files on the
+server. Its the base &lt;code&gt;nginx&lt;/code&gt; image with a ConfigMap to change the default NGNIX conf file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;apiVersion&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;v1&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;kind&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ConfigMap&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;metadata&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-nfs-web-config&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;data&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;default.conf&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="p p-Indicator"&gt;|-&lt;/span&gt;
+    &lt;span class="no"&gt;server {&lt;/span&gt;
+        &lt;span class="no"&gt;listen   80;&lt;/span&gt;
+            &lt;span class="no"&gt;server_name  localhost;&lt;/span&gt;
+            &lt;span class="no"&gt;root /usr/share/nginx/html;&lt;/span&gt;
+            &lt;span class="no"&gt;location / {&lt;/span&gt;
+                &lt;span class="no"&gt;index none;&lt;/span&gt;
+                &lt;span class="no"&gt;autoindex on;&lt;/span&gt;
+                &lt;span class="no"&gt;autoindex_exact_size off;&lt;/span&gt;
+                &lt;span class="no"&gt;autoindex_localtime on;&lt;/span&gt;
+        &lt;span class="no"&gt;}&lt;/span&gt;
+    &lt;span class="no"&gt;}&lt;/span&gt;
+&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;apiVersion&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;extensions/v1beta1&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;kind&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Deployment&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;metadata&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-nfs-web&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;spec&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;replicas&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;1&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;template&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;metadata&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;app&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-nfs-web&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;spec&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containers&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;web&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;image&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;nginx&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ports&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;containerPort&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;80&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;volumeMounts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;nfs&lt;/span&gt;
+            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mountPath&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/usr/share/nginx/html&amp;quot;&lt;/span&gt;
+          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;config-volume&lt;/span&gt;
+            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mountPath&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/etc/nginx/conf.d/&amp;quot;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;volumes&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;nfs&lt;/span&gt;
+          &lt;span class="l l-Scalar l-Scalar-Plain"&gt;persistentVolumeClaim&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;claimName&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-nfs&lt;/span&gt;
+        &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;config-volume&lt;/span&gt;
+          &lt;span class="l l-Scalar l-Scalar-Plain"&gt;configMap&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-nfs-web-config&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Start the deployment and service and you should see a new &lt;code&gt;jupyterhub-nfs-web&lt;/code&gt; service&lt;/p&gt;
+&lt;div class="codehilite"&gt;
+&lt;pre class="bash"&gt;
+$ kubectl create -f example/nfs2.yml
+...
+
+$ kubectl get services
+NAME                     CLUSTER-IP       EXTERNAL-IP       PORT(S)                      AGE
+jupyterhub-nfs-web       10.103.241.248   104.197.178.53    80/TCP                       15h
+&lt;/div&gt;
+
+&lt;/pre&gt;
+
+&lt;p&gt;Going to that External IP you should see an empty NGINX file listing.&lt;/p&gt;
+&lt;p&gt;Thats it! You have a NFS server and the &lt;code&gt;kubernetes_spawer&lt;/code&gt; will take care of mounting it to the
+containers based on some settings.&lt;/p&gt;
+&lt;h2&gt;JupyterHub&lt;/h2&gt;
+&lt;p&gt;Last time we had the JupyterHub creating containers in Kubernetes now we have the same functionality
+but it should be easier to get it running and configured based on a Kubernetes ConfigMap and
+two example docker images I uploaded to &lt;a href="https://hub.docker.com/u/danielfrg"&gt;my docker registry&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In the last post it was needed to create custom a JupyterHub container images
+for each deployment, this image used to havethe &lt;code&gt;jupyterhub_config.py&lt;/code&gt; file with some values
+(credentials and ip addresses).
+I changed that deployment to user a Kubernetes ConfigMap that creates the config file so
+some base container images can be reused and just need to fill the missing values in the
+ConfigMap (&lt;code&gt;example/hub.yml&lt;/code&gt;).&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://hub.docker.com/r/danielfrg/jupyterhub-kube-ldap"&gt;danielfrg/jupyterhub-kube-ldap&lt;/a&gt;:
+Is based on &lt;a href="https://hub.docker.com/r/jupyterhub/jupyterhub"&gt;jupyterhub/jupyterhub&lt;/a&gt; and includes the
+&lt;a href="https://github.com/jupyterhub/ldapauthenticator"&gt;jupyterhub/ldapauthenticator&lt;/a&gt; and my &lt;a href="https://github.com/danielfrg/jupyterhub-kubernetes_spawner"&gt;jupyterhub-kubernetes_spawner&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://hub.docker.com/r/danielfrg/jupyterhub-kube-ldap-singleuser/"&gt;danielfrg/jupyterhub-kube-ldap-singleuser&lt;/a&gt;:
+Is based on &lt;a href="https://hub.docker.com/r/jupyterhub/singleuser/"&gt;jupyterhub/singleuser&lt;/a&gt; and just has different startup script to create the working notebook directory before starting the &lt;code&gt;jupyterhub-singleuser&lt;/code&gt; server&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;There is some missing values that need to be filled before starting the deployment
+but they are very easy to find.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;apiVersion&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;v1&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;kind&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ConfigMap&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;metadata&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-config-py&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;data&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;jupyterhub-config.py&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="p p-Indicator"&gt;|-&lt;/span&gt;
+    &lt;span class="no"&gt;c.JupyterHub.confirm_no_ssl = True&lt;/span&gt;
+    &lt;span class="no"&gt;c.JupyterHub.db_url = &amp;#39;sqlite:////tmp/jupyterhub.sqlite&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;c.JupyterHub.cookie_secret_file = &amp;#39;/tmp/jupyterhub_cookie_secret&amp;#39;&lt;/span&gt;
+
+    &lt;span class="no"&gt;c.JupyterHub.authenticator_class = &amp;#39;ldapauthenticator.LDAPAuthenticator&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;c.LDAPAuthenticator.bind_dn_template = &amp;#39;cn={username},cn=jupyterhub,dc=example,dc=org&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;# c.LDAPAuthenticator.server_address = &amp;#39;{{ LDAP_SERVICE_IP }}&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;c.LDAPAuthenticator.use_ssl = False&lt;/span&gt;
+
+    &lt;span class="no"&gt;c.JupyterHub.spawner_class = &amp;#39;kubernetes_spawner.KubernetesSpawner&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;# c.KubernetesSpawner.host = &amp;#39;{{ KUBE_HOST }}&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;# c.KubernetesSpawner.username = &amp;#39;{{ KUBE_USER }}&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;# c.KubernetesSpawner.password = &amp;#39;{{ KUBE_PASS }}&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;c.KubernetesSpawner.verify_ssl = False&lt;/span&gt;
+    &lt;span class="no"&gt;c.KubernetesSpawner.hub_ip_from_service = &amp;#39;jupyterhub&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;c.KubernetesSpawner.container_image = &amp;quot;danielfrg/jupyterhub-kube-ldap-singleuser:0.1&amp;quot;&lt;/span&gt;
+    &lt;span class="no"&gt;c.Spawner.notebook_dir = &amp;#39;/mnt/notebooks/%U&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;c.KubernetesSpawner.persistent_volume_claim_name = &amp;#39;jupyterhub-nfs&amp;#39;&lt;/span&gt;
+    &lt;span class="no"&gt;c.KubernetesSpawner.persistent_volume_claim_path = &amp;#39;/mnt&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Based on the default settings the Kubernetes spawner will user a Kubernetes Persistent Volume Claim and mount
+it under &lt;code&gt;/mnt&lt;/code&gt; then I just have to tell the Spawner what directory under &lt;code&gt;/mnt&lt;/code&gt; to use for the user notebooks,
+for example '/mnt/notebooks/danielfrg'.&lt;/p&gt;
+&lt;p&gt;Start the JupyterHub service same as before.&lt;/p&gt;
+&lt;div class="codehilite"&gt;
+&lt;pre class="bash"&gt;
+$ kubectl create -f hub.yml
+&lt;/div&gt;
+
+&lt;/pre&gt;
+
+&lt;p&gt;Wait for the service to give you an External IP and login as any LDAP user (see &lt;a href="n/blog/2016/09/03/jupyterhub-kubernetes-ldap/"&gt;Part I&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;After logging in a new pod will be created and mount the Persistent Volume Claim that uses the NFS Server.
+Create a couple of notebooks and in the &lt;code&gt;jupyterhub-nfs-web&lt;/code&gt; service you should see something like this.&lt;/p&gt;
+&lt;p&gt;{% b64img articles/2016/08/jupyterhub-nfs/nfs-web.png "NFS web files" %}&lt;/p&gt;
+&lt;p&gt;Now from the JupyterHub admin interface you should be able to terminate the server and start a new one&lt;br /&gt;
+and the notebooks should be persisted even when they will be a different Pod.&lt;/p&gt;
+&lt;h2&gt;Future&lt;/h2&gt;
+&lt;p&gt;I think that the persisting notebooks was the biggest issue with the previous deployment
+that was fixed but there is some security issues.&lt;/p&gt;
+&lt;p&gt;All the JupyterHub single user containers run using the same user (&lt;code&gt;root&lt;/code&gt; in this example) and the
+whole NFS is mounted to all the containers this means that all the users have access
+to all the (other users) notebooks. Even if by default it only shows the user notebooks its
+possible to access the files at &lt;code&gt;/mnt&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;There are some &lt;a href="http://www.tldp.org/HOWTO/NFS-HOWTO/security.html"&gt;possible solutions&lt;/a&gt;
+in the NFS side but it can also happen in the Kubernetes and Docker side, maybe
+with a custom Persistent Volume Claim per user (?). More work is needed here.&lt;/p&gt;
+&lt;p&gt;The second big (also security) issue right now is how the JupyterHub access the Kubernetes API.
+Right now its needed to put the credentials in the ConfigMap and I was planning on
+user Kubernetes secrets to make it a little bit more secure but thats not needed.&lt;/p&gt;
+&lt;p&gt;While I was building this post I found (as I should have expected) that Kubernetes thought about this
+issue and that it has the concept of
+&lt;a href="http://kubernetes.io/docs/user-guide/service-accounts/"&gt;Service Accounts&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;With a Service Account its possible to access the Kubernetes API without having to use the User Account
+credentials. These Service Account credentials can even be mounted (and are by default) to a container
+so it should be very easy to change the code to use them.&lt;/p&gt;
+&lt;p&gt;This removes the need to have a secondary User Account for the JupyterHub. Thanks Kubernetes!&lt;/p&gt;
+&lt;p&gt;This is probably the last (big) post about the this experiment but I plan to keep working on
+the &lt;a href="https://github.com/danielfrg/jupyterhub-kubernetes_spawner"&gt;kubernetes_spawner&lt;/a&gt; to make it better.
+At minimum I am for sure going to test and user the Service Account to make the deployment more secure.&lt;/p&gt;
+&lt;p class="update"&gt;
+&lt;strong&gt;Update:&lt;/strong&gt; I have added support for Kubernetes Service Accounts to the kubernetes_spawner.
+So user account credentials are no longer needed.
+
+For updated docs and information take a look at the example folder here:
+&lt;a href="https://github.com/danielfrg/jupyterhub-kubernetes_spawner/tree/master/examples/ldap_nfs"&gt;examples/ldap_nfs&lt;/a&gt;.
+&lt;/p&gt;</summary><category term="Jupyter Hub"></category><category term="Kubernetes"></category><category term="LDAP"></category><category term="Docker"></category><category term="NFS"></category></entry></feed>
