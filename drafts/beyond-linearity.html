@@ -6,7 +6,7 @@
         <meta name="author" content="Olamilekan Wahab">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Archives | Indent</title>
+        <title>Beyond Linearity | Indent</title>
 
         <link rel="alternate" type="application/atom+xml" title="Indent blog atom feed" href="/feeds/all.atom.xml" />
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
@@ -400,20 +400,136 @@ article .meta a.read_more:hover,article .meta a.comments_btn:hover {
         </header>
 
         <div id="wrap">
-<div class="container list">
+<div class="container post">
     <article>
-        <h1 style="margin-bottom: 30px;">Tag: Fourier</h1>
+        <header>
+            <h1>Beyond Linearity</h1>
+            <time datetime="article.date.isoformat()" pubdate>November 01, 2017</time>
+        </header>
 
-        <ul class="double-list">
-            <li>
-                <a href='/blog/2017/11/01/introduction-to-fourier-transform/'>
-                    <h2>Introduction To The Fast Fourier Transform In Python</h2>
-                    <span>01.11.2017</span>
-                </a>
-            </li>
-        </ul>
+        <img src="/images/linearity.png">
+        <div class="article_content">
+            <h3>Beyond Linearity</h3>
+<p>Before going any deep, let’s note the following:</p>
+<ol>
+<li>Two possible estimations can be carried out using the equation below. These are
+<strong>Prediction</strong> and <strong>Inference</strong></li>
+</ol>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/640/1*bpXEdJYFCHe8I-ml8Vlfqw.png" />
+<span class="figcaption_hack">Model function with Y representing prediction, X representing input and E , a
+measure of error.</span></p>
+<ol>
+<li>In <strong>prediction</strong>, the above function resolves to</li>
+</ol>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/640/1*JHpzzUWlm17T0u8mABbWlw.png" />
+<span class="figcaption_hack">In prediction, error term gets averaged to 0 so E=0</span></p>
+<p>Prediction is often carried in situations where sets of input variables, <strong>X</strong>,
+exist and the output <strong>Y</strong> cannot be easily deciphered. In this sense, <strong>Y
+</strong>is<strong> </strong>predicted using a <strong>function</strong> of <strong>X</strong> which can be either linear or
+non-linear.</p>
+<ol>
+<li><strong>Inference</strong> is much more interested in relationships. It’s carried out when
+an understanding of the way <strong>Y </strong>is affected as values in <strong>X </strong>change is
+required<strong>. </strong>More formally, in inference we attempt to understand the
+relationship between <strong>Y</strong> and <strong>X</strong> as <strong>X </strong>takes on different values, say,*
+<strong>*X.1,…, X.n .</strong></li>
+</ol>
+<p><br> </p>
+<p>Now, In machine learning, there’s a constant tussle between model <strong>accuracy</strong>,
+<strong>flexibility</strong> and <strong>interpretability</strong>. This tussle exists because highly
+accurate models are hard to interpret and easily interpretable models generally
+have low accuracy. The same logic applies to model flexibility and
+interpretability. Generally flexible methods are not very interpretable and vice
+versa. Choosing a side in this tussle happens to be one of the most important
+decision to make while building Machine Learning models. <em>Should we focus on
+making our predictions more accurate/flexible or more interpretable</em>?<em> How does
+our choice directly or indirectly affect our performance?</em></p>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/640/1*UfNy09IS0djZqA69jsaLng.png" />
+<span class="figcaption_hack">A table showing the trade-off between model flexibility and interpretability for
+various methods.</span></p>
+<p>From the table above, it can be inferred that linear models are easily
+interpretable. This gives them an advantage over approaches with less
+interpretability. Linear regression for example is quite easy to interpret since
+it's a representation of linear functions. Also, when the task at hand is
+<em>inference, </em>linear models are a good choice since they make it easy to
+understand the relationship between<strong> Y</strong> and <strong>X.1</strong> , . . . , <strong>X.n</strong></p>
+<p>However, they’re <strong>inflexible </strong>thereby very <strong>restrictive.</strong></p>
+        </div>
+
+        <div class="meta">
+            <div>
+                    <a href="/tag/maths.html" class="tag">Maths</a>
+                    <a href="/tag/python.html" class="tag">Python</a>
+                    <a href="/tag/fourier.html" class="tag">Fourier</a>
+            </div>
+        </div>
     </article>
+    <section>
+    <h1>Comments</h1>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'olamyy';
+            var disqus_identifier = '/blog/2017/11/01/simulating-chutes-and-ladders/';
+            var disqus_url = 'http://olamyy.github.io/blog/2017/11/01/simulating-chutes-and-ladders/';
+            var disqus_title = 'The Hypothesis';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+  </section>
 </div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
+
         </div>
 
 <script>
