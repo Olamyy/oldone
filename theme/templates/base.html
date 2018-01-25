@@ -15,6 +15,10 @@
         <style>{% include 'pygments.css' %}
         <style>{% include 'main.css' %}</style>
 
+          {% if EXTRA_HEADER %}
+            {{ EXTRA_HEADER }}
+          {% endif %}
+
         {% block extra_head %}{%endblock%}
     </head>
 
@@ -26,6 +30,7 @@
                 </div>
                 <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{ RESEARCH_PAGE }}" title="Papers">Research</a></li>
                         {% if ABOUT_PAGE %}
                             <li><a href="{{ ABOUT_PAGE }}" title="About">About</a></li>
                         {% endif %}

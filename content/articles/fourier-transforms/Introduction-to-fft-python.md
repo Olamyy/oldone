@@ -5,8 +5,7 @@ categories: python maths
 Date: 2017-11-01
 Tags: Maths,Python,Fourier
 image: fourier.jpg 
-
-
+Status: published
 
 NOTE : This is the first of a two part blog post on the topic.
 

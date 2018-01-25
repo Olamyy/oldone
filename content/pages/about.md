@@ -1,5 +1,9 @@
 title: About
 slug: about
+Status: published
+
+
+![Me]({filename}/images/about-me.jpg)
 
 
 Hi,

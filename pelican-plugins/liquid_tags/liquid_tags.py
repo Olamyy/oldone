@@ -21,6 +21,5 @@ def addLiquidTags(gen):
         )
 
 
-
 def register():
     signals.initialized.connect(addLiquidTags)
