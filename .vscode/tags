@@ -27,6 +27,7 @@ DEFAULT_HEADER_BG	../pelicanconf.py	/^DEFAULT_HEADER_BG = '\/images\/station1.jp
 DEFAULT_LANG	../pelican-plugins/ipynb/tests/pelican/pelicanconf_liquid.py	/^DEFAULT_LANG = 'en'$/;"	kind:variable	line:9
 DEFAULT_LANG	../pelican-plugins/ipynb/tests/pelican/pelicanconf_markup.py	/^DEFAULT_LANG = 'en'$/;"	kind:variable	line:9
 DEFAULT_LANG	../pelicanconf.py	/^DEFAULT_LANG = 'en'$/;"	kind:variable	line:12
+DEFAULT_METADATA	../pelicanconf.py	/^DEFAULT_METADATA = {$/;"	kind:variable	line:74
 DEFAULT_PAGINATION	../pelicanconf.py	/^DEFAULT_PAGINATION = 10$/;"	kind:variable	line:19
 DELETE_OUTPUT_DIRECTORY	../publishconf.py	/^DELETE_OUTPUT_DIRECTORY = True$/;"	kind:variable	line:19
 DEPLOY_PATH	../fabfile.py	/^DEPLOY_PATH = env.deploy_path$/;"	kind:variable	line:7
@@ -75,7 +76,7 @@ PLUGIN_PATHS	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^PLUGIN_PA
 PLUGIN_PATHS	../pelicanconf.py	/^PLUGIN_PATHS = ['pelican-plugins']$/;"	kind:variable	line:59
 READERS	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^READERS = {'html': None}$/;"	kind:variable	line:13
 RELATIVE_URLS	../publishconf.py	/^RELATIVE_URLS = False$/;"	kind:variable	line:14
-RESEARCH_PAGE	../pelicanconf.py	/^RESEARCH_PAGE = "\/pages\/about.html"$/;"	kind:variable	line:30
+RESEARCH_PAGE	../pelicanconf.py	/^RESEARCH_PAGE = "\/pages\/research.html"$/;"	kind:variable	line:30
 SHOW_ARCHIVES	../pelicanconf.py	/^SHOW_ARCHIVES = True$/;"	kind:variable	line:52
 SHOW_FEED	../pelicanconf.py	/^SHOW_FEED = True$/;"	kind:variable	line:53
 SITEMAP	../pelicanconf.py	/^SITEMAP = {$/;"	kind:variable	line:65
