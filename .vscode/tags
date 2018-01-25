@@ -1,0 +1,96 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ABOUT_PAGE	../pelicanconf.py	/^ABOUT_PAGE = '\/pages\/about.html'$/;"	kind:variable	line:47
+ARTICLE_DIRS	../pelicanconf.py	/^ARTICLE_DIRS = ['articles']$/;"	kind:variable	line:22
+ARTICLE_SAVE_AS	../pelicanconf.py	/^ARTICLE_SAVE_AS = 'blog\/{date:%Y}\/{date:%m}\/{date:%d}\/{slug}\/index.html'$/;"	kind:variable	line:28
+ARTICLE_URL	../pelicanconf.py	/^ARTICLE_URL = 'blog\/{date:%Y}\/{date:%m}\/{date:%d}\/{slug}\/'$/;"	kind:variable	line:27
+AUTHOR	../pelicanconf.py	/^AUTHOR = u'Daniel Rodriguez'$/;"	kind:variable	line:7
+CATEGORY_FEED_ATOM	../publishconf.py	/^CATEGORY_FEED_ATOM = 'feeds\/%s.atom.xml'$/;"	kind:variable	line:17
+DEFAULT_DATE_FORMAT	../pelicanconf.py	/^DEFAULT_DATE_FORMAT = '%B %d, %Y'$/;"	kind:variable	line:16
+DEFAULT_HEADER_BG	../pelicanconf.py	/^DEFAULT_HEADER_BG = '\/images\/station1.jpg'$/;"	kind:variable	line:46
+DEFAULT_LANG	../pelicanconf.py	/^DEFAULT_LANG = 'en'$/;"	kind:variable	line:12
+DEFAULT_PAGINATION	../pelicanconf.py	/^DEFAULT_PAGINATION = 10$/;"	kind:variable	line:19
+DELETE_OUTPUT_DIRECTORY	../publishconf.py	/^DELETE_OUTPUT_DIRECTORY = True$/;"	kind:variable	line:19
+DEPLOY_PATH	../fabfile.py	/^DEPLOY_PATH = env.deploy_path$/;"	kind:variable	line:7
+EXTRACT_TAG	../plugins/liquid_tags/mdx_liquid_tags.py	/^EXTRACT_TAG = re.compile(r'(?:\\s*)(\\S+)(?:\\s*)')$/;"	kind:variable	line:21
+FEED_ALL_ATOM	../publishconf.py	/^FEED_ALL_ATOM = 'feeds\/all.atom.xml'$/;"	kind:variable	line:16
+GITHUB_USERNAME	../pelicanconf.py	/^GITHUB_USERNAME = 'danielfrg'$/;"	kind:variable	line:49
+GOOGLE_ANALYTICS_CODE	../pelicanconf.py	/^GOOGLE_ANALYTICS_CODE = 'UA-35523657-2'$/;"	kind:variable	line:53
+GOOGLE_ANALYTICS_DOMAIN	../pelicanconf.py	/^GOOGLE_ANALYTICS_DOMAIN = 'danielfrg.com'$/;"	kind:variable	line:54
+IPYNB_EXTEND_STOP_SUMMARY_TAGS	../pelicanconf.py	/^IPYNB_EXTEND_STOP_SUMMARY_TAGS = [('h2', None), ('ol', None), ('ul', None)]$/;"	kind:variable	line:64
+LIQUID_TAG	../plugins/liquid_tags/mdx_liquid_tags.py	/^LIQUID_TAG = re.compile(r'\\{%.*?%\\}', re.MULTILINE | re.DOTALL)$/;"	kind:variable	line:20
+LOAD_CONTENT_CACHE	../pelicanconf.py	/^LOAD_CONTENT_CACHE = False$/;"	kind:variable	line:3
+LT_CONFIG	../plugins/liquid_tags/mdx_liquid_tags.py	/^LT_CONFIG = { 'CODE_DIR': 'code',$/;"	kind:variable	line:22
+LT_HELP	../plugins/liquid_tags/mdx_liquid_tags.py	/^LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin',$/;"	kind:variable	line:27
+LiquidTags	../plugins/liquid_tags/mdx_liquid_tags.py	/^class LiquidTags(markdown.Extension):$/;"	kind:class	line:61
+MARKDOWN	../pelicanconf.py	/^MARKDOWN = {$/;"	kind:variable	line:33
+MARKUP	../pelicanconf.py	/^MARKUP = ('md', 'ipynb')$/;"	kind:variable	line:14
+PAGE_DIRS	../pelicanconf.py	/^PAGE_DIRS = ['pages']$/;"	kind:variable	line:21
+PAGE_SAVE_AS	../pelicanconf.py	/^PAGE_SAVE_AS = '{category}\/{slug}.html'$/;"	kind:variable	line:30
+PAGE_URL	../pelicanconf.py	/^PAGE_URL = PAGE_SAVE_AS$/;"	kind:variable	line:31
+PLUGINS	../pelicanconf.py	/^PLUGINS = ['sitemap', 'ipynb.markup', 'ipynb.liquid', 'liquid_tags.youtube', 'liquid_tags.b64img']$/;"	kind:variable	line:58
+PLUGIN_PATHS	../pelicanconf.py	/^PLUGIN_PATHS = ['plugins']$/;"	kind:variable	line:57
+RELATIVE_URLS	../publishconf.py	/^RELATIVE_URLS = False$/;"	kind:variable	line:14
+SHOW_ARCHIVES	../pelicanconf.py	/^SHOW_ARCHIVES = True$/;"	kind:variable	line:50
+SHOW_FEED	../pelicanconf.py	/^SHOW_FEED = True$/;"	kind:variable	line:51
+SITEMAP	../pelicanconf.py	/^SITEMAP = {$/;"	kind:variable	line:60
+SITENAME	../pelicanconf.py	/^SITENAME = u'Daniel Rodriguez'$/;"	kind:variable	line:8
+SITEURL	../pelicanconf.py	/^SITEURL = ''$/;"	kind:variable	line:5
+SITEURL	../publishconf.py	/^SITEURL = 'n'$/;"	kind:variable	line:13
+STATIC_PATHS	../pelicanconf.py	/^STATIC_PATHS = ['images', 'favicon.ico', '404.html', 'robots.txt', 'CNAME']$/;"	kind:variable	line:43
+STATIC_PATHS	../pelicanconf.py	/^STATIC_PATHS = ['images']$/;"	kind:variable	line:25
+SUMMARY_MAX_LENGTH	../pelicanconf.py	/^SUMMARY_MAX_LENGTH = 150$/;"	kind:variable	line:18
+SYNTAX	../plugins/liquid_tags/b64img.py	/^SYNTAX = '{% b64img [class name(s)] [http[s]:\/]\/path\/to\/image [width [height]] [title text | "title text" ["alt text"]] %}'$/;"	kind:variable	line:34
+SYNTAX	../plugins/liquid_tags/youtube.py	/^SYNTAX = "{% youtube id [width height] %}"$/;"	kind:variable	line:27
+SitemapGenerator	../plugins/sitemap/sitemap.py	/^class SitemapGenerator(object):$/;"	kind:class	line:55
+THEME	../pelicanconf.py	/^THEME = 'theme'$/;"	kind:variable	line:24
+TIMEZONE	../pelicanconf.py	/^TIMEZONE = 'UTC'$/;"	kind:variable	line:10
+TWITTER_USERNAME	../pelicanconf.py	/^TWITTER_USERNAME = 'danielfrg'$/;"	kind:variable	line:48
+YOUTUBE	../plugins/liquid_tags/youtube.py	/^YOUTUBE = re.compile(r'([\\S]+)(\\s+([\\d%]+)\\s([\\d%]+))?')$/;"	kind:variable	line:29
+_LiquidTagsPreprocessor	../plugins/liquid_tags/mdx_liquid_tags.py	/^class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):$/;"	kind:class	line:33
+__init__	../plugins/liquid_tags/mdx_liquid_tags.py	/^    def __init__(self, config):$/;"	kind:member	line:63
+__init__	../plugins/liquid_tags/mdx_liquid_tags.py	/^    def __init__(self, configs):$/;"	kind:member	line:35
+__init__	../plugins/sitemap/sitemap.py	/^    def __init__(self, context, settings, path, theme, output_path, *null):$/;"	kind:member	line:57
+__init__.py	../plugins/__init__.py	1;"	kind:file	line:1
+__init__.py	../plugins/liquid_tags/__init__.py	1;"	kind:file	line:1
+__init__.py	../plugins/sitemap/__init__.py	1;"	kind:file	line:1
+_get_file	../plugins/liquid_tags/b64img.py	/^def _get_file(src):$/;"	kind:function	line:43
+_tags	../plugins/liquid_tags/mdx_liquid_tags.py	/^    _tags = {}$/;"	kind:variable	line:34
+addLiquidTags	../plugins/liquid_tags/liquid_tags.py	/^def addLiquidTags(gen):$/;"	kind:function	line:5
+b64img	../plugins/liquid_tags/b64img.py	/^def b64img(preprocessor, tag, markup):$/;"	kind:function	line:64
+b64img.py	../plugins/liquid_tags/b64img.py	1;"	kind:file	line:1
+base64image	../plugins/liquid_tags/b64img.py	/^def base64image(src):$/;"	kind:function	line:58
+build	../fabfile.py	/^def build():$/;"	kind:function	line:24
+cf_upload	../fabfile.py	/^def cf_upload():$/;"	kind:function	line:44
+clean	../fabfile.py	/^def clean():$/;"	kind:function	line:19
+dec	../plugins/liquid_tags/mdx_liquid_tags.py	/^        def dec(func):$/;"	kind:function	line:78
+dest_path	../fabfile.py	/^dest_path = '\/var\/www'$/;"	kind:variable	line:11
+extendMarkdown	../plugins/liquid_tags/mdx_liquid_tags.py	/^    def extendMarkdown(self, md, md_globals):$/;"	kind:member	line:85
+fabfile.py	../fabfile.py	1;"	kind:file	line:1
+format_date	../plugins/sitemap/sitemap.py	/^def format_date(date):$/;"	kind:function	line:46
+generate_output	../plugins/sitemap/sitemap.py	/^    def generate_output(self, writer):$/;"	kind:member	line:156
+get_generators	../plugins/sitemap/sitemap.py	/^def get_generators(generators):$/;"	kind:function	line:197
+liquid_tags.py	../plugins/liquid_tags/liquid_tags.py	1;"	kind:file	line:1
+makeExtension	../plugins/liquid_tags/mdx_liquid_tags.py	/^def makeExtension(configs=None):$/;"	kind:function	line:96
+mdx_liquid_tags.py	../plugins/liquid_tags/mdx_liquid_tags.py	1;"	kind:file	line:1
+pelicanconf.py	../pelicanconf.py	1;"	kind:file	line:1
+preview	../fabfile.py	/^def preview():$/;"	kind:function	line:41
+production	../fabfile.py	/^production = 'root@localhost:22'$/;"	kind:variable	line:10
+publish	../fabfile.py	/^def publish():$/;"	kind:function	line:53
+publishconf.py	../publishconf.py	1;"	kind:file	line:1
+rebuild	../fabfile.py	/^def rebuild():$/;"	kind:function	line:27
+regenerate	../fabfile.py	/^def regenerate():$/;"	kind:function	line:31
+register	../plugins/liquid_tags/liquid_tags.py	/^def register():$/;"	kind:function	line:25
+register	../plugins/liquid_tags/mdx_liquid_tags.py	/^    def register(cls, tag):$/;"	kind:member	line:76
+register	../plugins/sitemap/sitemap.py	/^def register():$/;"	kind:function	line:201
+reserve	../fabfile.py	/^def reserve():$/;"	kind:function	line:37
+run	../plugins/liquid_tags/mdx_liquid_tags.py	/^    def run(self, lines):$/;"	kind:member	line:38
+serve	../fabfile.py	/^def serve():$/;"	kind:function	line:34
+sitemap.py	../plugins/sitemap/sitemap.py	1;"	kind:file	line:1
+write_url	../plugins/sitemap/sitemap.py	/^    def write_url(self, page, fd):$/;"	kind:member	line:128
+youtube	../plugins/liquid_tags/youtube.py	/^def youtube(preprocessor, tag, markup):$/;"	kind:function	line:33
+youtube.py	../plugins/liquid_tags/youtube.py	1;"	kind:file	line:1

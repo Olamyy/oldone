@@ -2,10 +2,10 @@ from __future__ import unicode_literals
 
 LOAD_CONTENT_CACHE = False
 
-SITEURL = ''
+SITEURL = 'olamyy.github.io'
 # SITEURL = 'http://danielfrg.github.io'
-AUTHOR = u'Daniel Rodriguez'
-SITENAME = u'Daniel Rodriguez'
+AUTHOR = u'Olamilekan Wahab'
+SITENAME = u'Olamilekan Wahab'
 
 TIMEZONE = 'UTC'
 
