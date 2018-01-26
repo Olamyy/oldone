@@ -8,9 +8,18 @@ image: locally-weighted-regression.png
 Status: draft
 
 
-### Beyond Linearity
+Locally weighted regression is estimates a regression surface through a multivariate smoothing. 
 
-Before going any deep, let’s note the following:
+A couple of weeks back, I started a review of the linear models I have used over the years and it hit me that I never really understood how this algorithm works. This inspired me to do an investigation into their working principles of the algorithm.In this post, I would attempt to provide an overview of the algorithm using statistical inferences,a possible sklearn/numpy powered implementation and a benchmark of different implementations. 
 
-1.  Two possible estimations can be carried out using the equation below. These are
-**Prediction** and **Inference**
+This article would follow the trend below:
+
+* Regression 
+    * Regression Function
+    * Regression Algorithms
+* Locally Weight Regression
+    * Mathematical Proof
+    * Python Implementation
+    * Benchmark
+* Conclusion
+* Resources
