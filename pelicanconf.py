@@ -60,7 +60,7 @@ PLUGIN_PATHS = ['pelican-plugins']
 PLUGINS = ['sitemap', 'ipynb.markup', 'ipynb.liquid','liquid_tags.youtube', 'liquid_tags.b64img',
            'liquid_tags.img', 'liquid_tags.video',
            'liquid_tags.youtube', 'liquid_tags.vimeo',
-           'liquid_tags.include_code', 'liquid_tags.notebook']
+           'liquid_tags.include_code', 'liquid_tags.notebook', 'just_table', 'render_math']
 
 SITEMAP = {
     'format': 'xml'
@@ -74,3 +74,13 @@ NOTEBOOK_DIR = 'notebooks'
 DEFAULT_METADATA = {
     'status': 'draft',
 }
+
+
+
+"""
+
+
+
+
+
+"""
