@@ -42,13 +42,11 @@ The Backward/Inverse Transform represented as
 $$f(n)  = \sum_{m=0}^{N-1} F(m) \cdot e^{-i2 \pi mn \over N} $$        
 
 
-$$ f(n) $$ in both equations above is the value of the function $$ f $$ at point n. It can be either real or complex-valued.
-$$ F(m) $$ on the other hand, is the coefficient for the $$ m^{th} $$ wave component and can only be complex. 
+$ f(n) $ in both equations above is the value of the function $ f $ at point n. It can be either real or complex-valued.
+$ F(m) $ on the other hand, is the coefficient for the $ m^{th} $ wave component and can only be complex. 
 
 
-The movement from $$ f(n) $$ to $$ F(m) $$ defines a change in configuration from spacial to frequency based configurations. The Fourier coefficients at this point is represented as
-
-$$v_m  = {m \over t_s N} $$ where m=0, 1, 2, ..., $${N \over 2}$$    for positive frequencies and as $$v_m  = -{ (N - m + 1)\over t_s N} $$ where m=$${({N\over 2}) + 1}, {({N\over 2}) + 2}, {({N\over 2}) + 3}, ... , {({N\over 2})  + N}$$ for negative frequencies.
+The movement from $ f(n) $ to $ F(m) $ defines a change in configuration from spacial to frequency based configurations. The Fourier coefficients at this point is represented as $v_m  = {m \over t_s N} $ where m=0, 1, 2, ..., ${N \over 2}$    for positive frequencies and as $v_m  = -{ (N - m + 1)\over t_s N} $ where m=${({N\over 2}) + 1}, {({N\over 2}) + 2}, {({N\over 2}) + 3}, ... , {({N\over 2})  + N}$ for negative frequencies.
 
 
 
@@ -112,7 +110,7 @@ Why?
 Its easy. 
 
 To start with, the `dft_with_complex_input` is a rather simple implementation involving loops.
-Then it scales as an $$O[N^2]$$ whereas the standard numpy implementation scales as an  $$O[N log N]$$ .
+Then it scales as an $O[N^2]$ whereas the standard numpy implementation scales as an  $O[N log N]$ .
 
 
 
