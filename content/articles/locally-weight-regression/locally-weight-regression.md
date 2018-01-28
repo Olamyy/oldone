@@ -8,16 +8,14 @@ image: locally-weighted-regression.png
 Status: draft
 
 
-Locally weighted regression is estimates a regression surface through a multivariate smoothing. 
-
-A couple of weeks back, I started a review of the linear models I have used over the years and it hit me that I never really understood how the locally weight regression algorithm works. This encouraged me to do an investigation into the working principles of the algorithm.In this post, I would attempt to provide an overview of the algorithm using statistical inferences,a possible sklearn/numpy powered implementation and a benchmark of different implementations. 
+A couple of weeks back, I started a review of the linear models I've used over the years and it hit me that I never really understood how the locally weight regression algorithm works. This and the fact that sklearn had no support for it, encouraged me to do an investigation into the working principles of the algorithm.In this post, I would attempt to provide an overview of the algorithm using mathematical inference and introduce a possible Python implementation for it. 
 
 This article would follow the trend below:
 
 * Regression 
     * Regression Function
-    * Regression Algorithms 
     * Regression Assumptions
+    * The Linear Regression Algorithm
 * Locally Weight Regression
     * Mathematical Proof
     * Python Implementation
@@ -44,42 +42,84 @@ The following notations would be used throughout this article
 
 
 ## Regression
-Regression is the estimation of a continuous response variable based on the values of some other variable. The variable to be estimated is dependent on some other variable(s) in the function space. It is parametric in nature because it makes certain assumptions based on the available data. If the data follows those assumptions, regression gives incredible results. Otherwise, it struggles to provide convincing accuracy. 
+Regression is the estimation of a continuous response variable based on the values of some other variable. The variable to be estimated is dependent on the other variable(s) in the function space. It is parametric in nature because it makes certain assumptions on the available data. If the data follows these [assumptions](#regression-assumptions), regression gives incredible results. Otherwise, it struggles to provide convincing accuracy. 
+
+###Regression Assumptions
+
+As was mentioned above, regression works best when the assumptions made about the available data are true. 
+Some of these assumptions are:
+
+* There exists a linear relationship between $X$ and $y$. 
+
+    This assumes that a change in $X$ would lead to a corresponding change in $y$.
+    This assumptions is particularly important in linear regression of which locally weighted regression is a form.
+
+* There must be no correlation in the set of data in $X$. 
+
+    The presence of correlation in $y$ leads to a concept known as [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity). 
+    If variables are correlated, it becomes extremely difficult for the model to determine the true effect of $X$ on $Y$.
+
+* Independence of errors
+
+     This assumes that the errors of the response variables are uncorrelated with each other i.e the error at $h(x)^i$ must not indicate the error at $h(x)^{i+1}$.
+
+* $y$ must have a normal distribution to the error term
+
 
 ###Regression Function
-The regession function is a linear function used for estimating the target variable. It includes a dependent variable(target), a set of independent variables(features) and an unknown parameter. It's represented as:
+The regession function is a parametric function used for estimating the target variable. This function can either be linear or non-linear. Now, since this article's main focus is the locally weighted regression which is a form of the linear regression, there would be a focus on linear regression.
+
+Linear regression is an approach for modelling the linear relationship between a scalar $y$ and a set of variables $X$.
+The linear regression function includes a dependent variable(target), a set of independent variables(features) and an unknown parameter. It's represented as:
 
     
 $$ h_{\theta}(x) = \theta_{0} + \theta_{1} X_{1} + \theta_{2} X_{2}+ ... + \theta_{n} X_{n} \label{a}\tag{1}$$
 
-When evaluated, $h_{\theta}(x)$ in $\ref{a}$ above becomes $h(x)$. The regression function is called `linear regression` when only one independent variable $(X)$ is involved. In such cases, it becomes $ h_{\theta}(x) = \theta_{0} + \theta_{1} X_{1} + \epsilon_{1}$. It's called `multiple regression` when there are more than a single value for $X$.
+When evaluated, $h_{\theta}(x)$ in $\ref{a}$ above becomes $h(x)$. The regression function is called `simple regression` when only one independent variable $(X)$ is involved. In such cases, it becomes $$ h(x) = \theta_{0} + \theta_{1} X_{1} + \epsilon_{1} \tag{2}$$ It's called `multiple linear regression` when there is more than a single value for $X$.
 
-Also, when carefully looked at, the equation above is the equation of a line, more formally represented as $y = mx + c$ .Given this, to simplify the function, the intercept x_{0},is assumed to be $1$ so that the equation becomes:
+Additionally, the equation above is the equation of a line, more formally represented as $y = mx + c$ . Given this, to simplify the function, the intercept $X_{0}$ at $\theta_{0}$,is assumed to be $1$ so that it becomes a summation equation expressed as:
  
-$$ h_{\theta}(x) = \sum_{a}^{b} \theta_{i} X_{i} + \epsilon_{i} \label{b}\tag{2}$$ 
+$$ h(x) = \sum_{i=0}^{n} \theta_{i} X_{i} + \epsilon_{i} \label{b}\tag{3}$$ 
 
 
 An alternative representation of $\ref{b}$ when expressed in vector form is given as:
 
-$$ h_{\theta}(x) = θ^{{T}} x_{i} \label{c}\tag{3}$$ 
+$$ h(x) = θ^{{T}} x_{i} \label{c}\tag{4}$$ 
 
 
-###Regression Algorithms
+###The Linear Regression Algorithm
+The linear regression algorithm applies the regression function in one form or another in predicting values using `real` data.
+Since this prediction can never really be totally accurate, an error (represented as $\epsilon$ in $\ref{b}$ above) is generated.
+This error, formulated as $\epsilon = |y - h(x)|$ is the vertical distance from the actual $y$ value to our prediction ($h(x)$) for the same $x$.  The error has a direct relationship with the accuracy of the algorithm. This means the smaller the error, the higher the model accuracy and vice versa. As such, the algorithm attempts to minimize this error.     
+
+The process of minimizing the error involves selecting the most appropriate features($\theta$) to include in fitting the algorithm. 
+A popular approach for selecting $\theta$'s is making $h(x)$ as close to to $y$ as possible for each item in $(X, y)$. To do this, a function caled the `cost function` is used. The `cost function` measures the closeness of each $h(x)$ to its corresponding $y$.
+
+> The cost function calculates the `cost` of your regression algorithm.
 
 
-###Regression Assumptions
-While doing regress
+It's represented mathematically as:
 
-As we discussed above, regression is a parametric technique, so it makes assumptions. Let's look at the assumptions it makes:
+$$ J(\theta) = (\frac{1}{2}) \sum_{i=1}^{m} \left| \left(h(x)^i - y^i \right)^2\right|  $$
 
-* There exists a linear and additive relationship between dependent (DV) and independent variables (IV). 
-By linear, it means that the change in DV by 1 unit change in IV is constant. By additive, it refers to the effect of X on Y is independent of other variables.
 
-* There must be no correlation among independent variables. Presence of correlation in independent variables lead to Multicollinearity. If variables are correlated, it becomes extremely difficult for the model to determine the true effect of IVs on DV.
+So, essentially, the linear regression algorithm tries to choose the best $\theta$ to minimize $J(\theta)$ which would in turn reduce the measure of error.
+To do this, the algorithm starts by :
 
-* The error terms must possess constant variance. Absence of constant variance leads to heteroskedestacity.
+1. Choosing a base value for $\theta$. 
+2. Updating this value to make $J(\theta)$ smaller. 
 
-* The error terms must be uncorrelated i.e. error at ∈t must not indicate the at error at ∈t+1. Presence of correlation in error terms is known as Autocorrelation. It drastically affects the regression coefficients and standard error values since they are based on the assumption of uncorrelated error terms.
+This goes on for many iterations until the value of $J(\theta)$ converges to it's local minima. An implementation of the above steps is called the `gradient descent` algorithm. 
 
-* The dependent variable and the error terms must possess a normal distribution.
-Presence of these assumptions make regression quite restrictive. By restrictive I meant, the performance of a regression model is conditioned on fulfillment of these assumptions.
+The working principles of the gradient descent are beyond the scope of this article and would be covered in a different article in the near future. Alternatively, a very good resource on how they work is available in Sebastian Ruder's paper [here](http://ruder.io/optimizing-gradient-descent/index.html).
+
+In summary, to evaluate $h(x)$, i.e make a prediction, the linear regression algorithm:
+
+1. Fits $\theta$ to minimize $\sum_{i}(y^i - \theta^T x^i)^2$
+2. Ouputs $\theta^T x$.
+
+
+
+
+
+##Locally Weighted Regression
