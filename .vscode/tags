@@ -18,12 +18,14 @@ AUTHOR_FEED_ATOM	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^AUTHO
 AUTHOR_FEED_RSS	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^AUTHOR_FEED_RSS = None$/;"	kind:variable	line:20
 AUTHOR_SAVE_AS	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^AUTHOR_SAVE_AS = ''$/;"	kind:variable	line:25
 AUTO_INCREMENT_REGEX	../pelican-plugins/just_table/just_table.py	/^AUTO_INCREMENT_REGEX = re.compile(r"ai ?\\= ?\\" ?(1) ?\\"")$/;"	kind:variable	line:17
+AVERAGE_READING_WPM	../pelican-plugins/pelican-readtime/readtime.py	/^AVERAGE_READING_WPM = 275.0$/;"	kind:variable	line:7
 BeautifulSoup	../pelican-plugins/ipynb/core.py	/^    BeautifulSoup = None$/;"	kind:variable	line:33
 CAPTION_REGEX	../pelican-plugins/just_table/just_table.py	/^CAPTION_REGEX = re.compile("caption ?\\= ?\\"(.+?)\\"")$/;"	kind:variable	line:19
 CATEGORIES_SAVE_AS	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^CATEGORIES_SAVE_AS = ''$/;"	kind:variable	line:28
 CATEGORY_FEED_ATOM	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^CATEGORY_FEED_ATOM = None$/;"	kind:variable	line:17
 CATEGORY_FEED_ATOM	../publishconf.py	/^CATEGORY_FEED_ATOM = 'feeds\/%s.atom.xml'$/;"	kind:variable	line:17
 CATEGORY_SAVE_AS	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^CATEGORY_SAVE_AS = ''$/;"	kind:variable	line:23
+Content	../pelican-plugins/pelican-readtime/tests.py	/^class Content():$/;"	kind:class	line:43
 DEFAULT_DATE_FORMAT	../pelicanconf.py	/^DEFAULT_DATE_FORMAT = '%B %d, %Y'$/;"	kind:variable	line:16
 DEFAULT_HEADER_BG	../pelicanconf.py	/^DEFAULT_HEADER_BG = '\/images\/station1.jpg'$/;"	kind:variable	line:48
 DEFAULT_LANG	../pelican-plugins/ipynb/tests/pelican/pelicanconf_liquid.py	/^DEFAULT_LANG = 'en'$/;"	kind:variable	line:9
@@ -80,12 +82,15 @@ PLUGIN_PATHS	../pelican-plugins/ipynb/tests/pelican/pelicanconf_liquid.py	/^PLUG
 PLUGIN_PATHS	../pelican-plugins/ipynb/tests/pelican/pelicanconf_markup.py	/^PLUGIN_PATHS = ['..\/..\/..\/..\/plugins']$/;"	kind:variable	line:14
 PLUGIN_PATHS	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^PLUGIN_PATHS = ['..\/..\/']$/;"	kind:variable	line:31
 PLUGIN_PATHS	../pelicanconf.py	/^PLUGIN_PATHS = ['pelican-plugins']$/;"	kind:variable	line:59
+PLURAL_SECONDS	../pelican-plugins/pelican-readtime/tests.py	/^    PLURAL_SECONDS = "Seconds"$/;"	kind:variable	line:9
 READERS	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^READERS = {'html': None}$/;"	kind:variable	line:13
 RELATIVE_URLS	../publishconf.py	/^RELATIVE_URLS = False$/;"	kind:variable	line:14
 RESEARCH_PAGE	../pelicanconf.py	/^RESEARCH_PAGE = "\/pages\/research.html"$/;"	kind:variable	line:30
+SECONDS_IN_MINUTE	../pelican-plugins/pelican-readtime/readtime.py	/^SECONDS_IN_MINUTE = 60$/;"	kind:variable	line:8
 SEPARATOR_REGEX	../pelican-plugins/just_table/just_table.py	/^SEPARATOR_REGEX = re.compile("separator ?\\= ?\\"(.+?)\\"")$/;"	kind:variable	line:20
 SHOW_ARCHIVES	../pelicanconf.py	/^SHOW_ARCHIVES = True$/;"	kind:variable	line:52
 SHOW_FEED	../pelicanconf.py	/^SHOW_FEED = True$/;"	kind:variable	line:53
+SINGULAR_SECONDS	../pelican-plugins/pelican-readtime/tests.py	/^    SINGULAR_SECONDS = "Second"$/;"	kind:variable	line:8
 SITEMAP	../pelicanconf.py	/^SITEMAP = {$/;"	kind:variable	line:65
 SITENAME	../pelican-plugins/ipynb/tests/pelican/pelicanconf_liquid.py	/^SITENAME = u'ipynb-test'$/;"	kind:variable	line:6
 SITENAME	../pelican-plugins/ipynb/tests/pelican/pelicanconf_markup.py	/^SITENAME = u'ipynb-test'$/;"	kind:variable	line:6
@@ -136,6 +141,7 @@ TRANSLATION_FEED_ATOM	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	/^
 TWITTER_USERNAME	../pelicanconf.py	/^TWITTER_USERNAME = '__olamilekan__'$/;"	kind:variable	line:50
 TestFullRun	../pelican-plugins/liquid_tags/test_generation.py	/^class TestFullRun(unittest.TestCase):$/;"	kind:class	line:20
 TestNotebookTagRegex	../pelican-plugins/liquid_tags/test_notebook.py	/^class TestNotebookTagRegex(unittest.TestCase):$/;"	kind:class	line:8
+TestReadTime	../pelican-plugins/pelican-readtime/tests.py	/^class TestReadTime(unittest.TestCase):$/;"	kind:class	line:6
 VIDEO	../pelican-plugins/liquid_tags/video.py	/^VIDEO = re.compile(r'(\/\\S+|https?:\\S+)(\\s+(\/\\S+|https?:\\S+))?(\\s+(\/\\S+|https?:\\S+))?(\\s+(\\d+\\%?)\\s(\\d+\\%?))?(\\s+(\/\\S+|https?:\\S+))?')$/;"	kind:variable	line:31
 VIMEO	../pelican-plugins/liquid_tags/vimeo.py	/^VIMEO = re.compile(r'(\\S+)(\\s+(\\d+)\\s(\\d+))?')$/;"	kind:variable	line:33
 YOUTUBE	../pelican-plugins/liquid_tags/youtube.py	/^YOUTUBE = re.compile(r'([\\S]+)(\\s+([\\d%]+)\\s([\\d%]+))?')$/;"	kind:variable	line:32
@@ -144,10 +150,12 @@ __init__	../pelican-plugins/ipynb/markup.py	/^    def __init__(self):$/;"	kind:m
 __init__	../pelican-plugins/ipynb/markup.py	/^    def __init__(self, settings, filename):$/;"	kind:member	line:116
 __init__	../pelican-plugins/liquid_tags/mdx_liquid_tags.py	/^    def __init__(self, config):$/;"	kind:member	line:63
 __init__	../pelican-plugins/liquid_tags/mdx_liquid_tags.py	/^    def __init__(self, configs):$/;"	kind:member	line:35
+__init__	../pelican-plugins/pelican-readtime/tests.py	/^    def __init__(self, content_support):$/;"	kind:member	line:45
 __init__	../pelican-plugins/sitemap/sitemap.py	/^    def __init__(self, context, settings, path, theme, output_path, *null):$/;"	kind:member	line:59
 __init__.py	../pelican-plugins/ipynb/__init__.py	1;"	kind:file	line:1
 __init__.py	../pelican-plugins/just_table/__init__.py	1;"	kind:file	line:1
 __init__.py	../pelican-plugins/liquid_tags/__init__.py	1;"	kind:file	line:1
+__init__.py	../pelican-plugins/pelican-readtime/__init__.py	1;"	kind:file	line:1
 __init__.py	../pelican-plugins/sitemap/__init__.py	1;"	kind:file	line:1
 _draw_mode	../pelican-plugins/liquid_tags/diag.py	/^_draw_mode = 'PNG'$/;"	kind:variable	line:76
 _get_file	../pelican-plugins/liquid_tags/b64img.py	/^def _get_file(src):$/;"	kind:function	line:40
@@ -164,6 +172,8 @@ alt	../pelican-plugins/liquid_tags/test_flickr.py	/^          alt=None))$/;"	kin
 alt	../pelican-plugins/liquid_tags/test_flickr.py	/^          alt=None)),$/;"	kind:variable	line:39
 audio	../pelican-plugins/liquid_tags/audio.py	/^def audio(preprocessor, tag, markup):$/;"	kind:function	line:69
 audio.py	../pelican-plugins/liquid_tags/audio.py	1;"	kind:file	line:1
+author	../pelican-plugins/pelican-readtime/setup.py	/^    author='David Jenkins',$/;"	kind:variable	line:16
+author_email	../pelican-plugins/pelican-readtime/setup.py	/^    author_email='david.nicholas.jenkins@gmail.com',$/;"	kind:variable	line:17
 b64img	../pelican-plugins/liquid_tags/b64img.py	/^def b64img(preprocessor, tag, markup):$/;"	kind:function	line:59
 b64img.py	../pelican-plugins/liquid_tags/b64img.py	1;"	kind:file	line:1
 base64image	../pelican-plugins/liquid_tags/b64img.py	/^def base64image(src):$/;"	kind:function	line:53
@@ -171,7 +181,10 @@ blockdiag_parser	../pelican-plugins/liquid_tags/diag.py	/^def blockdiag_parser(p
 build	../fabfile.py	/^def build():$/;"	kind:function	line:24
 call	../pelican-plugins/liquid_tags/notebook.py	/^    call = preprocess # IPython < 2.0$/;"	kind:variable	line:247
 cf_upload	../fabfile.py	/^def cf_upload():$/;"	kind:function	line:44
+class_name	../pelican-plugins/pelican-readtime/readtime.py	/^def class_name(obj):$/;"	kind:function	line:85
+classifiers	../pelican-plugins/pelican-readtime/setup.py	/^    classifiers=[$/;"	kind:variable	line:21
 clean	../fabfile.py	/^def clean():$/;"	kind:function	line:19
+content_type_supported	../pelican-plugins/pelican-readtime/readtime.py	/^def content_type_supported(content):$/;"	kind:function	line:68
 core.py	../pelican-plugins/ipynb/core.py	1;"	kind:file	line:1
 create_html	../pelican-plugins/liquid_tags/audio.py	/^def create_html(markup):$/;"	kind:function	line:36
 create_html	../pelican-plugins/liquid_tags/giphy.py	/^def create_html(api_key, attrs):$/;"	kind:function	line:43
@@ -179,6 +192,7 @@ custom_highlighter	../pelican-plugins/ipynb/core.py	/^def custom_highlighter(sou
 custom_highlighter	../pelican-plugins/liquid_tags/notebook.py	/^def custom_highlighter(source, language='ipython', metadata=None):$/;"	kind:function	line:254
 dec	../pelican-plugins/liquid_tags/mdx_liquid_tags.py	/^        def dec(func):$/;"	kind:function	line:78
 default_value	../pelican-plugins/liquid_tags/notebook.py	/^    default_value = None$/;"	kind:variable	line:220
+description	../pelican-plugins/pelican-readtime/setup.py	/^    description='Plugin for Pelican that computes read time based on Medium\\'s readtime "algorithm."',$/;"	kind:variable	line:12
 dest_path	../fabfile.py	/^dest_path = '\/var\/www'$/;"	kind:variable	line:11
 diag	../pelican-plugins/liquid_tags/diag.py	/^def diag(code, command):$/;"	kind:function	line:123
 diag.py	../pelican-plugins/liquid_tags/diag.py	1;"	kind:file	line:1
@@ -203,6 +217,7 @@ get_generators	../pelican-plugins/sitemap/sitemap.py	/^def get_generators(genera
 get_gif	../pelican-plugins/liquid_tags/giphy.py	/^def get_gif(api_key, gif_id):$/;"	kind:function	line:35
 get_html_from_filepath	../pelican-plugins/ipynb/core.py	/^def get_html_from_filepath(filepath):$/;"	kind:function	line:69
 get_info	../pelican-plugins/liquid_tags/flickr.py	/^def get_info(photo_id, api_key):$/;"	kind:function	line:38
+get_time_from_seconds	../pelican-plugins/pelican-readtime/readtime.py	/^def get_time_from_seconds(read_time_seconds):$/;"	kind:function	line:53
 get_widget	../pelican-plugins/liquid_tags/soundcloud.py	/^def get_widget(track_url):$/;"	kind:function	line:33
 giphy	../pelican-plugins/liquid_tags/giphy.py	/^def giphy(preprocessor, tag, markup):$/;"	kind:function	line:78
 giphy.py	../pelican-plugins/liquid_tags/giphy.py	1;"	kind:file	line:1
@@ -219,17 +234,21 @@ img	../pelican-plugins/liquid_tags/img.py	/^def img(preprocessor, tag, markup):$
 img.py	../pelican-plugins/liquid_tags/img.py	1;"	kind:file	line:1
 include_code	../pelican-plugins/liquid_tags/include_code.py	/^def include_code(preprocessor, tag, markup):$/;"	kind:function	line:64
 include_code.py	../pelican-plugins/liquid_tags/include_code.py	1;"	kind:file	line:1
+include_package_data	../pelican-plugins/pelican-readtime/setup.py	/^    include_package_data=True,$/;"	kind:variable	line:20
 ipynb.py	../pelican-plugins/ipynb/ipynb.py	1;"	kind:file	line:1
 just_table.py	../pelican-plugins/just_table/just_table.py	1;"	kind:file	line:1
+license	../pelican-plugins/pelican-readtime/setup.py	/^    license='MIT',$/;"	kind:variable	line:15
 liquid.py	../pelican-plugins/ipynb/liquid.py	1;"	kind:file	line:1
 liquid_tags.py	../pelican-plugins/liquid_tags/liquid_tags.py	1;"	kind:file	line:1
 literal	../pelican-plugins/liquid_tags/literal.py	/^def literal(preprocessor, tag, markup):$/;"	kind:function	line:21
 literal.py	../pelican-plugins/liquid_tags/literal.py	1;"	kind:file	line:1
+long_description	../pelican-plugins/pelican-readtime/setup.py	/^    long_description=readme,$/;"	kind:variable	line:13
 main	../pelican-plugins/liquid_tags/giphy.py	/^def main(api_key, markup):$/;"	kind:function	line:59
 makeExtension	../pelican-plugins/liquid_tags/mdx_liquid_tags.py	/^def makeExtension(configs=None):$/;"	kind:function	line:96
 markup.py	../pelican-plugins/ipynb/markup.py	1;"	kind:file	line:1
 match_it	../pelican-plugins/liquid_tags/soundcloud.py	/^def match_it(markup):$/;"	kind:function	line:41
 mdx_liquid_tags.py	../pelican-plugins/liquid_tags/mdx_liquid_tags.py	1;"	kind:file	line:1
+name	../pelican-plugins/pelican-readtime/setup.py	/^    name='pelican-readtime',$/;"	kind:variable	line:10
 notebook	../pelican-plugins/ipynb/liquid.py	/^def notebook(preprocessor, tag, markup):$/;"	kind:function	line:15
 notebook	../pelican-plugins/liquid_tags/notebook.py	/^def notebook(preprocessor, tag, markup):$/;"	kind:function	line:270
 notebook.py	../pelican-plugins/liquid_tags/notebook.py	1;"	kind:file	line:1
@@ -237,21 +256,28 @@ pelicanconf.py	../pelican-plugins/liquid_tags/test_data/pelicanconf.py	1;"	kind:
 pelicanconf.py	../pelicanconf.py	1;"	kind:file	line:1
 pelicanconf_liquid.py	../pelican-plugins/ipynb/tests/pelican/pelicanconf_liquid.py	1;"	kind:file	line:1
 pelicanconf_markup.py	../pelican-plugins/ipynb/tests/pelican/pelicanconf_markup.py	1;"	kind:file	line:1
+pluralize	../pelican-plugins/pelican-readtime/readtime.py	/^def pluralize(measure, singular, plural):$/;"	kind:function	line:35
 preprocess	../pelican-plugins/liquid_tags/notebook.py	/^    def preprocess(self, nb, resources):$/;"	kind:member	line:236
 preview	../fabfile.py	/^def preview():$/;"	kind:function	line:41
 production	../fabfile.py	/^production = 'root@localhost:22'$/;"	kind:variable	line:10
 publish	../fabfile.py	/^def publish():$/;"	kind:function	line:53
 publishconf.py	../publishconf.py	1;"	kind:file	line:1
+py_modules	../pelican-plugins/pelican-readtime/setup.py	/^    py_modules=['readtime'],$/;"	kind:variable	line:18
 pygal_parser	../pelican-plugins/liquid_tags/pygalcharts.py	/^def pygal_parser(preprocessor, tag, markup):$/;"	kind:function	line:149
 pygalcharts.py	../pelican-plugins/liquid_tags/pygalcharts.py	1;"	kind:file	line:1
 read	../pelican-plugins/ipynb/markup.py	/^    def read(self, filepath):$/;"	kind:member	line:44
+read_time	../pelican-plugins/pelican-readtime/readtime.py	/^def read_time(content):$/;"	kind:function	line:11
+readme	../pelican-plugins/pelican-readtime/setup.py	/^    readme = readme_file.read()$/;"	kind:variable	line:6
+readtime.py	../pelican-plugins/pelican-readtime/readtime.py	1;"	kind:file	line:1
 rebuild	../fabfile.py	/^def rebuild():$/;"	kind:function	line:27
 regenerate	../fabfile.py	/^def regenerate():$/;"	kind:function	line:31
 register	../pelican-plugins/ipynb/markup.py	/^def register():$/;"	kind:function	line:20
 register	../pelican-plugins/just_table/just_table.py	/^def register():$/;"	kind:function	line:107
 register	../pelican-plugins/liquid_tags/liquid_tags.py	/^def register():$/;"	kind:function	line:24
 register	../pelican-plugins/liquid_tags/mdx_liquid_tags.py	/^    def register(cls, tag):$/;"	kind:member	line:76
+register	../pelican-plugins/pelican-readtime/readtime.py	/^def register():$/;"	kind:function	line:98
 register	../pelican-plugins/sitemap/sitemap.py	/^def register():$/;"	kind:function	line:270
+requires	../pelican-plugins/pelican-readtime/setup.py	/^    requires=['pelican'],$/;"	kind:variable	line:19
 reserve	../fabfile.py	/^def reserve():$/;"	kind:function	line:37
 run	../pelican-plugins/liquid_tags/mdx_liquid_tags.py	/^    def run(self, lines):$/;"	kind:member	line:38
 run_graphviz	../pelican-plugins/liquid_tags/graphviz.py	/^def run_graphviz(program, code, options=[], format='png'):$/;"	kind:function	line:60
@@ -259,6 +285,7 @@ run_pygal	../pelican-plugins/liquid_tags/pygalcharts.py	/^def run_pygal(data, op
 serve	../fabfile.py	/^def serve():$/;"	kind:function	line:34
 setUp	../pelican-plugins/liquid_tags/test_generation.py	/^    def setUp(self):$/;"	kind:member	line:23
 set_url_wrappers_modification_date	../pelican-plugins/sitemap/sitemap.py	/^    def set_url_wrappers_modification_date(self, wrappers):$/;"	kind:member	line:192
+setup.py	../pelican-plugins/pelican-readtime/setup.py	1;"	kind:file	line:1
 sitemap.py	../pelican-plugins/sitemap/sitemap.py	1;"	kind:file	line:1
 size	../pelican-plugins/liquid_tags/test_flickr.py	/^          size='large',$/;"	kind:variable	line:18
 size	../pelican-plugins/liquid_tags/test_flickr.py	/^          size='large',$/;"	kind:variable	line:22
@@ -280,6 +307,7 @@ tearDown	../pelican-plugins/liquid_tags/test_generation.py	/^    def tearDown(se
 test_audio.py	../pelican-plugins/liquid_tags/test_audio.py	1;"	kind:file	line:1
 test_basic_notebook_tag	../pelican-plugins/liquid_tags/test_notebook.py	/^    def test_basic_notebook_tag(self):$/;"	kind:member	line:26
 test_basic_notebook_tag_insensitive_to_whitespace	../pelican-plugins/liquid_tags/test_notebook.py	/^    def test_basic_notebook_tag_insensitive_to_whitespace(self):$/;"	kind:member	line:35
+test_content_type_supported	../pelican-plugins/pelican-readtime/tests.py	/^    def test_content_type_supported(self):$/;"	kind:member	line:19
 test_create_html	../pelican-plugins/liquid_tags/test_audio.py	/^def test_create_html(input, expected):$/;"	kind:function	line:37
 test_create_html	../pelican-plugins/liquid_tags/test_giphy.py	/^def test_create_html(mock_urlopen, input, expected):$/;"	kind:function	line:25
 test_flickr.py	../pelican-plugins/liquid_tags/test_flickr.py	1;"	kind:file	line:1
@@ -287,6 +315,7 @@ test_generage_html	../pelican-plugins/liquid_tags/test_flickr.py	/^def test_gene
 test_generate_with_ipython2	../pelican-plugins/liquid_tags/test_generation.py	/^    def test_generate_with_ipython2(self):$/;"	kind:member	line:69
 test_generate_with_ipython3	../pelican-plugins/liquid_tags/test_generation.py	/^    def test_generate_with_ipython3(self):$/;"	kind:member	line:37
 test_generation.py	../pelican-plugins/liquid_tags/test_generation.py	1;"	kind:file	line:1
+test_get_time_from_seconds_returns_correct_amount_of_time	../pelican-plugins/pelican-readtime/tests.py	/^    def test_get_time_from_seconds_returns_correct_amount_of_time(self):$/;"	kind:member	line:11
 test_giphy.py	../pelican-plugins/liquid_tags/test_giphy.py	1;"	kind:file	line:1
 test_match_it	../pelican-plugins/liquid_tags/test_soundcloud.py	/^def test_match_it(input, expected):$/;"	kind:function	line:16
 test_match_it_exception	../pelican-plugins/liquid_tags/test_soundcloud.py	/^def test_match_it_exception(input):$/;"	kind:function	line:25
@@ -296,11 +325,16 @@ test_notebook_tag_with_cells	../pelican-plugins/liquid_tags/test_notebook.py	/^ 
 test_notebook_tag_with_language_and_cells	../pelican-plugins/liquid_tags/test_notebook.py	/^    def test_notebook_tag_with_language_and_cells(self):$/;"	kind:member	line:72
 test_notebook_tag_with_language_and_cells_and_weird_spaces	../pelican-plugins/liquid_tags/test_notebook.py	/^    def test_notebook_tag_with_language_and_cells_and_weird_spaces(self):$/;"	kind:member	line:81
 test_notebook_tag_with_symbol_in_name_language	../pelican-plugins/liquid_tags/test_notebook.py	/^    def test_notebook_tag_with_symbol_in_name_language(self):$/;"	kind:member	line:62
+test_pluralize_minutes	../pelican-plugins/pelican-readtime/tests.py	/^    def test_pluralize_minutes(self):$/;"	kind:member	line:26
+test_pluralize_seconds	../pelican-plugins/pelican-readtime/tests.py	/^    def test_pluralize_seconds(self):$/;"	kind:member	line:34
 test_regex	../pelican-plugins/liquid_tags/test_audio.py	/^def test_regex(input, expected):$/;"	kind:function	line:16
 test_regex	../pelican-plugins/liquid_tags/test_flickr.py	/^def test_regex(input, expected):$/;"	kind:function	line:45
 test_soundcloud.py	../pelican-plugins/liquid_tags/test_soundcloud.py	1;"	kind:file	line:1
 test_source_url	../pelican-plugins/liquid_tags/test_flickr.py	/^def test_source_url(input, expected):$/;"	kind:function	line:57
+tests.py	../pelican-plugins/pelican-readtime/tests.py	1;"	kind:file	line:1
+url	../pelican-plugins/pelican-readtime/setup.py	/^    url='https:\/\/github.com\/JenkinsDev\/pelican-readtime',$/;"	kind:variable	line:14
 validate	../pelican-plugins/liquid_tags/notebook.py	/^    def validate(self, obj, value):$/;"	kind:member	line:222
+version	../pelican-plugins/pelican-readtime/setup.py	/^    version='0.1.2',$/;"	kind:variable	line:11
 video	../pelican-plugins/liquid_tags/video.py	/^def video(preprocessor, tag, markup):$/;"	kind:function	line:39
 video.py	../pelican-plugins/liquid_tags/video.py	1;"	kind:file	line:1
 vimeo	../pelican-plugins/liquid_tags/vimeo.py	/^def vimeo(preprocessor, tag, markup):$/;"	kind:function	line:37

@@ -60,7 +60,9 @@ PLUGIN_PATHS = ['pelican-plugins']
 PLUGINS = ['sitemap', 'ipynb.markup', 'ipynb.liquid','liquid_tags.youtube', 'liquid_tags.b64img',
            'liquid_tags.img', 'liquid_tags.video',
            'liquid_tags.youtube', 'liquid_tags.vimeo',
-           'liquid_tags.include_code', 'liquid_tags.notebook', 'just_table', 'render_math', 'readtime']
+           'liquid_tags.include_code', 'liquid_tags.notebook', 'just_table',
+           'better_figures_and_images',
+]
 
 SITEMAP = {
     'format': 'xml'
@@ -73,4 +75,9 @@ NOTEBOOK_DIR = 'notebooks'
 # EXTRA_HEADER = open('_nb_header.html').read().decode('utf-8')
 DEFAULT_METADATA = {
     'status': 'draft',
+}
+
+IMAGE_PROCESS = {
+    'article-image': ["scale_in 300 300 True"],
+    'thumb': ["crop 0 0 50% 50%", "scale_out 150 150 True", "crop 0 0 150 150"],
 }

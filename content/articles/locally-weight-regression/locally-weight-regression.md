@@ -19,7 +19,6 @@ This article would follow the trend below:
 * Locally Weight Regression
     * Mathematical Proof
     * Python Implementation
-    * Benchmark
     * Differences between LWR and Linear Regression
 * Conclusion
 * Resources
@@ -36,7 +35,7 @@ The following notations would be used throughout this article
 | $$ X $$         |Features         |  
 | $$ (X, y)   $$  |Training set  |
 | $$ n $$         |Number of features|
-| $$ X^i, y^i $$  |<sup>ith</sup> index of X and y |
+| $$ X_i, y_i $$  |<sup>ith</sup> index of X and y |
 | $$ m $$         |Number of training examples|
 
 
@@ -61,7 +60,7 @@ Some of these assumptions are:
 
 * Independence of errors
 
-     This assumes that the errors of the response variables are uncorrelated with each other i.e the error at $h(x)^i$ must not indicate the error at $h(x)^{i+1}$.
+     This assumes that the errors of the response variables are uncorrelated with each other i.e the error at $ h(x)_i $ should not indicate the error at any other point.
 
 * $y$ must have a normal distribution to the error term
 
@@ -70,12 +69,15 @@ Some of these assumptions are:
 The regession function is a parametric function used for estimating the target variable. This function can either be linear or non-linear. Now, since this article's main focus is the locally weighted regression which is a form of the linear regression, there would be a focus on linear regression.
 
 Linear regression is an approach for modelling the linear relationship between a scalar $y$ and a set of variables $X$.
-The linear regression function includes a dependent variable(target), a set of independent variables(features) and an unknown parameter. It's represented as:
 
-    
+![Unfitted scatter plot.](/images/scatter.png) Figure 1
+
+
+Given a function whose scatter plot is above, a linear regression can be modeled to it by finding the line of best fit. Finding the **line of best fit** in simpler terms is really just getting the best function to represent the relationship between the $X$ and $y$ variables. This function, mostly called the `linear regression function` or more generally the `hypothesis` is a linear function which includes a dependent variable(target), a set of independent variables(features) and an unknown parameter. It's represented as:
+
 $$ h_{\theta}(x) = \theta_{0} + \theta_{1} X_{1} + \theta_{2} X_{2}+ ... + \theta_{n} X_{n} \label{a}\tag{1}$$
 
-When evaluated, $h_{\theta}(x)$ in $\ref{a}$ above becomes $h(x)$. The regression function is called `simple regression` when only one independent variable $(X)$ is involved. In such cases, it becomes $$ h(x) = \theta_{0} + \theta_{1} X_{1} + \epsilon_{1} \tag{2}$$ It's called `multiple linear regression` when there is more than a single value for $X$.
+When evaluated, $h_{\theta}(x)$ in $\ref{a}$ above becomes $h(x)$. The regression function is called `simple linear regression` when only one independent variable $(X)$ is involved. In such cases, it becomes $$ h(x) = \theta_{0} + \theta_{1} X_{1} + \epsilon_{1} \tag{2}$$ It's called `multivariate linear regression` when there is more than a single value for $X$.
 
 Additionally, the equation above is the equation of a line, more formally represented as $y = mx + c$ . Given this, to simplify the function, the intercept $X_{0}$ at $\theta_{0}$,is assumed to be $1$ so that it becomes a summation equation expressed as:
  
@@ -100,7 +102,7 @@ A popular approach for selecting $\theta$'s is making $h(x)$ as close to to $y$ 
 
 It's represented mathematically as:
 
-$$ J(\theta) = (\frac{1}{2}) \sum_{i=1}^{m} \left| \left(h(x)^i - y^i \right)^2\right|  $$
+$$ J(\theta) = (\frac{1}{2}) \sum_{i=1}^{m} \left| \left(h(x)_i - y_i \right)^2\right|  $$
 
 
 So, essentially, the linear regression algorithm tries to choose the best $\theta$ to minimize $J(\theta)$ which would in turn reduce the measure of error.
@@ -115,11 +117,44 @@ The working principles of the gradient descent are beyond the scope of this arti
 
 In summary, to evaluate $h(x)$, i.e make a prediction, the linear regression algorithm:
 
-1. Fits $\theta$ to minimize $\sum_{i}(y^i - \theta^T x^i)^2$
+1. Fits $\theta$ to minimize $\sum_{i}(y_i - \theta^T x_i)^2$. 
+
+    Upon successful fitting, the graph of the function above becomes
+    ![Fitted scatter plot.](/images/fitted_scatter.png)
+
 2. Ouputs $\theta^T x$.
 
 
 
-
-
 ##Locally Weighted Regression
+
+
+![Unfitted LWR.](/images/unfitted_lwr.png) Figure 3
+![Unfitted LWR.](/images/fitted_lwr.png)   Figure 4
+
+In Figure 3 above, there's a relatively higher number of mountains in the input/output relationship. Attempting to fit this with linear regression would result in getting a very high error and a line of best fit that does not optimally fit the data as shown in Figure 4. This error results from the fact that linear regression generally struggles in fitting functions with non-linear relationships. These difficulties introduce a new approach for fittnig non-linear multivariate regression functions called "locally weighted regression".
+
+Locally weighted regression is a non-parametric variant of the linear regression for fitting data using multivariate smoothing. Often called **LOWESS** (locally weighted scatterplot smoothing), this algorithm is a mix of multiple local regression models on a meta **k-nearest-neighor**.
+It's mostly used in cases where linear regression does not perform well i.e finds it very hard to find a line of best fit. 
+
+It works by fitting simple models to localized subsets ,say $x$, of the data to build up a function that describes the deterministic part of the variation in the data. The points covered by each point (i.e neighorhood) $x$ is calculated using k-nearest-neighors.
+
+> For each selected $X_i$, LWR selects a point $x$ that acts as a neighorhood within which a local linear model is fitted.
+
+LOWESS while fitting the data, gives more weight to points within the neighorhood of $x$ and less weight to points further away from it. A user dependent value, called the **bandwidth** determines the size of the data to fit each local subset. 
+The biven weight $w$ at each point $i$ is calculated using:
+$$w_i = \exp(- \frac{(x_i - x ) ^ 2}{2 \tau ^ 2})$$
+
+$w_i$ depends on the point $X_i$ at which $x$ is being calculated. Since, a small $|x_i − x|$ is small yields $w(i)$ close to 1 and a large  $|x_i − x|$ yields a very small $w(i)$, the parameters($\theta$) calculated for the LOWESS by giving more weight to the points within the neighorhood of $x$.
+
+Essentially, this algorithm makes a prediction by:
+
+1. Fitting $\theta$ to minimize $\sum_{i}w_i(y_i - \theta^T x_i)^2$.
+
+    The fitting is done using either **weighted linear least squares** or the **weighted quadratic least squares**. The algorithm is called the LOESS when it's fitted using the **weighted quadratic least square** regression.
+
+2. Ouputs $\theta^T x$.
+
+
+
+###Python Implementation
