@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Indent</title><link>/</link><description></description><lastBuildDate>Wed, 01 Nov 2017 00:00:00 +0000</lastBuildDate><item><title>Introduction To The Fast Fourier Transform In Python</title><link>/blog/2017/11/01/introduction-to-fourier-transform/</link><description>&lt;p&gt;NOTE : This is the first of a two part blog post on the topic.&lt;/p&gt;
+<rss version="2.0"><channel><title>Indent</title><link>olamyy.github.io/</link><description></description><lastBuildDate>Wed, 01 Nov 2017 00:00:00 +0000</lastBuildDate><item><title>Introduction To The Fast Fourier Transform In Python</title><link>olamyy.github.io/blog/2017/11/01/introduction-to-fourier-transform/</link><description>&lt;p&gt;NOTE : This is the first of a two part blog post on the topic.&lt;/p&gt;
 &lt;p&gt;The Fast Fourier Transform is an algorithmic optimization of the Discrete Fourier Transform.&lt;/p&gt;
 &lt;p&gt;I came across it a couple of weeks back and found it quite interesting because it's based on a topic I had previously done in class but never really got to use. In this post, I would give a brief explanation of the FFT algorithm stating its mathematical background. In the blogpost following this, various uses-cases of the FFT in Python would explored.&lt;/p&gt;
 &lt;p&gt;The FFT algorithm is an implementation of the Discrete Fourier Transform which is a type of Fourier Transform. The other type is the  &lt;strong&gt;Inverse Discrete Fourier Transform&lt;/strong&gt;. It's an adaptation of the Fourier Transform, which in simple terms is an "attempt at digitizing the analog world".&lt;/p&gt;
@@ -15,10 +15,9 @@ The real part of this coefficient contains information about the waves' cosine a
 &lt;p&gt;$$F(m)  = {1 \over N}\sum_{n=0}^{N-1} f(n) \cdot e^{-i2 \pi mn \over N} $$  &lt;/p&gt;
 &lt;p&gt;The Backward/Inverse Transform represented as&lt;/p&gt;
 &lt;p&gt;$$f(n)  = \sum_{m=0}^{N-1} F(m) \cdot e^{-i2 \pi mn \over N} $$        &lt;/p&gt;
-&lt;p&gt;$$ f(n) $$ in both equations above is the value of the function $$ f $$ at point n. It can be either real or complex-valued.
-$$ F(m) $$ on the other hand, is the coefficient for the $$ m^{th} $$ wave component and can only be complex. &lt;/p&gt;
-&lt;p&gt;The movement from $$ f(n) $$ to $$ F(m) $$ defines a change in configuration from spacial to frequency based configurations. The Fourier coefficients at this point is represented as&lt;/p&gt;
-&lt;p&gt;$$v_m  = {m \over t_s N} $$ where m=0, 1, 2, ..., $${N \over 2}$$    for positive frequencies and as $$v_m  = -{ (N - m + 1)\over t_s N} $$ where m=$${({N\over 2}) + 1}, {({N\over 2}) + 2}, {({N\over 2}) + 3}, ... , {({N\over 2})  + N}$$ for negative frequencies.&lt;/p&gt;
+&lt;p&gt;$ f(n) $ in both equations above is the value of the function $ f $ at point n. It can be either real or complex-valued.
+$ F(m) $ on the other hand, is the coefficient for the $ m^{th} $ wave component and can only be complex. &lt;/p&gt;
+&lt;p&gt;The movement from $ f(n) $ to $ F(m) $ defines a change in configuration from spacial to frequency based configurations. The Fourier coefficients at this point is represented as $v_m  = {m \over t_s N} $ where m=0, 1, 2, ..., ${N \over 2}$    for positive frequencies and as $v_m  = -{ (N - m + 1)\over t_s N} $ where m=${({N\over 2}) + 1}, {({N\over 2}) + 2}, {({N\over 2}) + 3}, ... , {({N\over 2})  + N}$ for negative frequencies.&lt;/p&gt;
 &lt;h3&gt;Python Implementation&lt;/h3&gt;
 &lt;p&gt;Given its relevance in so many areas, there are a lot of wrappers for computing the &lt;strong&gt;DFT&lt;/strong&gt; in Python. &lt;strong&gt;Numpy&lt;/strong&gt; has its &lt;code&gt;numpy.fft&lt;/code&gt; function and &lt;strong&gt;scipy&lt;/strong&gt; has its &lt;code&gt;scipy.fftpack&lt;/code&gt; implementation of this algorithm. &lt;/p&gt;
 &lt;p&gt;Before looking at these use cases, let's attempt to write a dummy implementation of the &lt;strong&gt;DFT&lt;/strong&gt; in python.&lt;/p&gt;
@@ -71,7 +70,7 @@ $$ F(m) $$ on the other hand, is the coefficient for the $$ m^{th} $$ wave compo
 &lt;p&gt;Why?&lt;/p&gt;
 &lt;p&gt;Its easy. &lt;/p&gt;
 &lt;p&gt;To start with, the &lt;code&gt;dft_with_complex_input&lt;/code&gt; is a rather simple implementation involving loops.
-Then it scales as an $$O[N^2]$$ whereas the standard numpy implementation scales as an  $$O[N log N]$$ .&lt;/p&gt;
+Then it scales as an $O[N^2]$ whereas the standard numpy implementation scales as an  $O[N log N]$ .&lt;/p&gt;
 &lt;p&gt;An alternative implementation of the &lt;strong&gt;DFT&lt;/strong&gt; is shown below.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dft_with_input_pair&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;real_input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;imaginary_input&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;real_input&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;imaginary_input&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -121,4 +120,4 @@ It uses optimised numpy array functions.&lt;/p&gt;
 &lt;li&gt;numpy.fftshift: This shifts zero-frequency terms to the center of the array. For two-dimensional input, swaps first and third quadrants, and second and fourth quadrants.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;If you are able to get to this point, you should have a clear idea of what the FFT algorithm is and how it can be implemented in various forms in Python.
-In the accompanying post, I would look into each scipy and numpy fft function and give a detailed outline of their use-cases.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Olamilekan Wahab</dc:creator><pubDate>Wed, 01 Nov 2017 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:,2017-11-01:blog/2017/11/01/introduction-to-fourier-transform/</guid><category>Maths</category><category>Python</category><category>Fourier</category></item></channel></rss>
+In the accompanying post, I would look into each scipy and numpy fft function and give a detailed outline of their use-cases.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Olamilekan Wahab</dc:creator><pubDate>Wed, 01 Nov 2017 00:00:00 +0000</pubDate><guid isPermaLink="false">tag:,2017-11-01:olamyy.github.io/blog/2017/11/01/introduction-to-fourier-transform/</guid><category>Maths</category><category>Python</category><category>Fourier</category></item></channel></rss>
