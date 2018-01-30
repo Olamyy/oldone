@@ -18,7 +18,9 @@ The rest of this article will be organised as follows:
     * The Linear Regression Algorithm
 * Locally Weight Regression
     * Python Implementation
-    * Differences between LWR and Linear Regression
+        * StatsModel Implementation
+        * Alexandre Gramfort's implementation
+    * Benchmark
 * Conclusion
 * Resources
 
@@ -59,7 +61,7 @@ Some of these assumptions are:
 
 * Independence of errors
 
-     This assumes that the errors of the response variables are uncorrelated with each other i.e the error at $ h(x)_i $ should not indicate the error at any other point.
+     This assumes that the errors of the response variables are uncorrelated with each other i.e the error at $ h(x)_i $ should not indicate the error at any other point. $h(x)_i$ is the estimate of the true function between Y and X. It's discussed in more context below.
 
 * $y$ must have a normal distribution to the error term
 
@@ -176,25 +178,104 @@ Regardless of this challenge, there are currently 2 implementations of the LOWES
 
     This function takes input $y$ and $x$ and estimates each smooth $y_i$ closest to $(x_i, y_i)$ based on their values of $x$. It essentially uses a **weighted linear least square** approach to fitting the data. 
     A downside of this is that statsmodels combines fit and predict methods into one, and so doesn't allow prediction on new data.
+
+2. Alexandre Gramfort's implementation
+
+    [https://gist.github.com/agramfort/850437](https://gist.github.com/agramfort/850437)
+
+    This implementation is quite similar to the statsmodel implementation in that it supports only 1-D numpy arrays.
     
-    *Practice Case Scenario*:
-
-    Let $x$ be a set of 1000 random float between $-\tau$ and $\tau$.
-
-    Let $y$ be a function of the sine of x.
-
-    A scatter plot of the relationship between $x$ and $y$ is shown below:
-
-   ![Unfitted LWR.](/images/statsmodel_case.png) Figure 3
-
-   Now, to fit this scatter plot using statsmodel implementation of model, let's write a simple python function:
+    The function is:
 
 ``` python
 import numpy as np
-import statsmodels.api as sm
-lowess = sm.nonparametric.lowess
+from scipy import linalg
+
+
+def agramfort_lowess(x, y, f=2. / 3., iter=3):
+    """lowess(x, y, f=2./3., iter=3) -> yest
+
+    Lowess smoother: Robust locally weighted regression.
+    The lowess function fits a nonparametric regression curve to a scatterplot.
+    The arrays x and y contain an equal number of elements; each pair
+    (x[i], y[i]) defines a data point in the scatterplot. The function returns
+    the estimated (smooth) values of y.
+    
+    The smoothing span is given by f. A larger value for f will result in a
+    smoother curve. The number of robustifying iterations is given by iter. The
+    function will run faster with a smaller number of iterations.
+    """
+    n = len(x)
+    r = int(np.ceil(f * n))
+    h = [np.sort(np.abs(x - x[i]))[r] for i in range(n)]
+    w = np.clip(np.abs((x[:, None] - x[None, :]) / h), 0.0, 1.0)
+    w = (1 - w ** 3) ** 3
+    yest = np.zeros(n)
+    delta = np.ones(n)
+    for iteration in range(iter):
+        for i in range(n):
+            weights = delta * w[:, i]
+            b = np.array([np.sum(weights * y), np.sum(weights * y * x)])
+            A = np.array([[np.sum(weights), np.sum(weights * x)],
+                          [np.sum(weights * x), np.sum(weights * x * x)]])
+            beta = linalg.solve(A, b)
+            yest[i] = beta[0] + beta[1] * x[i]
+
+        residuals = y - yest
+        s = np.median(np.abs(residuals))
+        delta = np.clip(residuals / (6.0 * s), -1, 1)
+        delta = (1 - delta ** 2) ** 2
+
+    return yest
+
+```
+    
+
+###Benchmark
+To benchmark the 3 implementations, let's declare the following constants:
+1. Let $x$ be a set of 1000 random float between $-\tau$ and $\tau$.
+
+```python
 x = np.random.uniform(low = -2*np.pi, high = 2*np.pi, size=1000)
-y = np.sin(x) + np.random.normal(size=len(x))
+```
+
+2. Let $y$ be a function of the sine of x.
+
+``` python
+y =  np.sin(x)
+```
+
+A scatter plot of the relationship between $x$ and $y$ is shown below:
+
+   ![Unfitted LWR.](/images/statsmodel_case.png) Figure 3
+
+Now, predicting with lowess using :
+
+Statsmodel LOWESS:
+```python
+>>> from statsmodels.api.nonparametric import lowess
+>>> %timeit lowess(y, x, frac=2./3)
+1 loop, best of 3: 303 ms per loop
+```
+
+Alexandre Gramfort's implementation
+```python
+>>> %timeit agramfort_lowess(y, x)
+1 loop, best of 3: 837 ms per loop
 ```
 
 
+
+###Conclusion
+Though the pure LOWESS functions are hardly used in Python, I hope I've been able to provide a little intuition into how they work and possible implementation. 
+
+On why this is maths intensive, while I believe we can make-do with black-box implementations of fundamental tools constructed by our more algorithmically-minded colleagues, I am a firm believer that the more understanding we have about the low-level algorithms we're applying to our data, the better practitioners we'll be.
+
+
+###Resources
+1. [https://en.wikipedia.org/wiki/Linear_regression](https://en.wikipedia.org/wiki/Linear_regression)
+1. [https://jeremykun.com/2013/08/18/linear-regression/](https://jeremykun.com/2013/08/18/linear-regression/)
+1. [https://stackoverflow.com/questions/26804656/why-do-we-use-gradient-descent-in-linear-regression](https://stackoverflow.com/questions/26804656/why-do-we-use-gradient-descent-in-linear-regression)
+1. [https://en.wikipedia.org/wiki/Regression_analysis#Regression_models](https://en.wikipedia.org/wiki/Regression_analysis#Regression_models)
+1. [https://www.quora.com/In-what-situation-should-I-use-locally-weighted-linear-regression-when-I-do-predictions](https://www.quora.com/In-what-situation-should-I-use-locally-weighted-linear-regression-when-I-do-predictions)
+1. [https://www.quora.com/Why-is-that-in-locally-weighted-learning-models-we-tend-to-use-linear-regression-and-not-non-linear-ones](https://www.quora.com/Why-is-that-in-locally-weighted-learning-models-we-tend-to-use-linear-regression-and-not-non-linear-ones)
