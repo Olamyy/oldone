@@ -10,14 +10,13 @@ Status: draft
 
 A couple of weeks back, I started a review of the linear models I've used over the years and it hit me that I never really understood how the locally weight regression algorithm works. This and the fact that sklearn had no support for it, encouraged me to do an investigation into the working principles of the algorithm.In this post, I would attempt to provide an overview of the algorithm using mathematical inference and introduce a possible Python implementation for it. 
 
-This article would follow the trend below:
+The rest of this article will be organised as follows:
 
 * Regression 
     * Regression Function
     * Regression Assumptions
     * The Linear Regression Algorithm
 * Locally Weight Regression
-    * Mathematical Proof
     * Python Implementation
     * Differences between LWR and Linear Regression
 * Conclusion
@@ -77,16 +76,16 @@ Given a function whose scatter plot is above, a linear regression can be modeled
 
 $$ h_{\theta}(x) = \theta_{0} + \theta_{1} X_{1} + \theta_{2} X_{2}+ ... + \theta_{n} X_{n} \label{a}\tag{1}$$
 
-When evaluated, $h_{\theta}(x)$ in $\ref{a}$ above becomes $h(x)$. The regression function is called `simple linear regression` when only one independent variable $(X)$ is involved. In such cases, it becomes $$ h(x) = \theta_{0} + \theta_{1} X_{1} + \epsilon_{1} \tag{2}$$ It's called `multivariate linear regression` when there is more than a single value for $X$.
+When evaluated, $h_{\theta}(x)$ in $\ref{a}$ above becomes $h(x)$. The regression function is called `simple linear regression` when only one independent variable $(X)$ is involved. In such cases, it becomes $$ h(x) = \theta_{0} + \theta_{1} X_{1} + \epsilon_{1} \label{b}\tag{2}$$ It's called `multivariate linear regression` when there is more than a single value for $X$.
 
 Additionally, the equation above is the equation of a line, more formally represented as $y = mx + c$ . Given this, to simplify the function, the intercept $X_{0}$ at $\theta_{0}$,is assumed to be $1$ so that it becomes a summation equation expressed as:
  
-$$ h(x) = \sum_{i=0}^{n} \theta_{i} X_{i} + \epsilon_{i} \label{b}\tag{3}$$ 
+$$ h(x) = \sum_{i=0}^{n} \theta_{i} X_{i} + \epsilon_{i} \label{c}\tag{3}$$ 
 
 
-An alternative representation of $\ref{b}$ when expressed in vector form is given as:
+An alternative representation of $\ref{c}$ when expressed in vector form is given as:
 
-$$ h(x) = θ^{{T}} x_{i} \label{c}\tag{4}$$ 
+$$ h(x) = θ^{{T}} x_{i} \label{d}\tag{4}$$ 
 
 
 ###The Linear Regression Algorithm
@@ -102,7 +101,7 @@ A popular approach for selecting $\theta$'s is making $h(x)$ as close to to $y$ 
 
 It's represented mathematically as:
 
-$$ J(\theta) = (\frac{1}{2}) \sum_{i=1}^{m} \left| \left(h(x)_i - y_i \right)^2\right|  $$
+$$ J(\theta) = (\frac{1}{2}) \sum_{i=1}^{m} \left| \left(h(x)_i - y_i \right)^2\right|  \label{e}\tag{5}$$
 
 
 So, essentially, the linear regression algorithm tries to choose the best $\theta$ to minimize $J(\theta)$ which would in turn reduce the measure of error.
@@ -117,7 +116,7 @@ The working principles of the gradient descent are beyond the scope of this arti
 
 In summary, to evaluate $h(x)$, i.e make a prediction, the linear regression algorithm:
 
-1. Fits $\theta$ to minimize $\sum_{i}(y_i - \theta^T x_i)^2$. 
+1. Fits $\theta$ to minimize $\sum_{i}(y_i - \theta^T x_i)^2 \label{f}\tag{6}$. 
 
     Upon successful fitting, the graph of the function above becomes
     ![Fitted scatter plot.](/images/fitted_scatter.png)
@@ -132,7 +131,7 @@ In summary, to evaluate $h(x)$, i.e make a prediction, the linear regression alg
 ![Unfitted LWR.](/images/unfitted_lwr.png) Figure 3
 ![Unfitted LWR.](/images/fitted_lwr.png)   Figure 4
 
-In Figure 3 above, there's a relatively higher number of mountains in the input/output relationship. Attempting to fit this with linear regression would result in getting a very high error and a line of best fit that does not optimally fit the data as shown in Figure 4. This error results from the fact that linear regression generally struggles in fitting functions with non-linear relationships. These difficulties introduce a new approach for fittnig non-linear multivariate regression functions called "locally weighted regression".
+In Figure 3 above, there's a relatively higher number of mountains in the input/output relationship. Attempting to fit this with linear regression would result in getting a very high error and a line of best fit that does not optimally fit the data as shown in Figure 4. This error results from the fact that linear regression generally struggles in fitting functions with non-linear relationships. These difficulties introduce a new approach for fitting non-linear multivariate regression functions called "locally weighted regression".
 
 Locally weighted regression is a non-parametric variant of the linear regression for fitting data using multivariate smoothing. Often called **LOWESS** (locally weighted scatterplot smoothing), this algorithm is a mix of multiple local regression models on a meta **k-nearest-neighor**.
 It's mostly used in cases where linear regression does not perform well i.e finds it very hard to find a line of best fit. 
@@ -142,14 +141,14 @@ It works by fitting simple models to localized subsets ,say $x$, of the data to 
 > For each selected $X_i$, LWR selects a point $x$ that acts as a neighorhood within which a local linear model is fitted.
 
 LOWESS while fitting the data, gives more weight to points within the neighorhood of $x$ and less weight to points further away from it. A user dependent value, called the **bandwidth** determines the size of the data to fit each local subset. 
-The biven weight $w$ at each point $i$ is calculated using:
-$$w_i = \exp(- \frac{(x_i - x ) ^ 2}{2 \tau ^ 2})$$
+The given weight $w$ at each point $i$ is calculated using:
+$$w_i = \exp(- \frac{(x_i - x ) ^ 2}{2 \tau ^ 2}) \label{g}\tag{7}$$
 
-$w_i$ depends on the point $X_i$ at which $x$ is being calculated. Since, a small $|x_i − x|$ is small yields $w(i)$ close to 1 and a large  $|x_i − x|$ yields a very small $w(i)$, the parameters($\theta$) calculated for the LOWESS by giving more weight to the points within the neighorhood of $x$.
+$w_i$ depends on the point $x_i$ at which $x$ is being calculated. Since, a small $|x_i − x|$ yields a $w(i)$ close to 1 and a large  $|x_i − x|$ yields a very small $w(i)$, the parameter ($\theta$) is calculated for the LOWESS by giving more weight to the points within the neighorhood of $x$ than the points outside it.
 
 Essentially, this algorithm makes a prediction by:
 
-1. Fitting $\theta$ to minimize $\sum_{i}w_i(y_i - \theta^T x_i)^2$.
+1. Fitting $\theta$ to minimize $\sum_{i}w_i(y_i - \theta^T x_i)^2  \tag{8}$.       
 
     The fitting is done using either **weighted linear least squares** or the **weighted quadratic least squares**. The algorithm is called the LOESS when it's fitted using the **weighted quadratic least square** regression.
 
@@ -157,4 +156,45 @@ Essentially, this algorithm makes a prediction by:
 
 
 
-###Python Implementation
+###Python Implementation 
+
+
+The support for LOWESS in Python is rather poor. This is primarily because the algorithm is computationally intensive given that it has to fit $j$ number of lines at every point $x_i$ within the neighorhood of $x_i$.
+
+Regardless of this challenge, there are currently 2 implementations of the LOWESS algorithm in Python that I have come across. These are:
+
+1.  Statsmodel Implementation
+[http://www.statsmodels.org/devel/generated/statsmodels.nonparametric.smoothers_lowess.lowess.html](http://www.statsmodels.org/devel/generated/statsmodels.nonparametric.smoothers_lowess.lowess.html)
+
+    Statsmodel is a python package that provides a range of tools for carrying out statistical computation in Python.
+
+    It provides support for LOWESS in it's `statsmodel.nonparametric` module. Statsmodel supports
+
+    >A lowess function that outs smoothed estimates of endog at the given exog values from points (exog, endog)
+
+    The *exog* and *endog* expressions in the quote above represent 1-D numpy arrays.These arrays denote $x_i$ and $y_i$ from the equation
+
+    This function takes input $y$ and $x$ and estimates each smooth $y_i$ closest to $(x_i, y_i)$ based on their values of $x$. It essentially uses a **weighted linear least square** approach to fitting the data. 
+    A downside of this is that statsmodels combines fit and predict methods into one, and so doesn't allow prediction on new data.
+    
+    *Practice Case Scenario*:
+
+    Let $x$ be a set of 1000 random float between $-\tau$ and $\tau$.
+
+    Let $y$ be a function of the sine of x.
+
+    A scatter plot of the relationship between $x$ and $y$ is shown below:
+
+   ![Unfitted LWR.](/images/statsmodel_case.png) Figure 3
+
+   Now, to fit this scatter plot using statsmodel implementation of model, let's write a simple python function:
+
+``` python
+import numpy as np
+import statsmodels.api as sm
+lowess = sm.nonparametric.lowess
+x = np.random.uniform(low = -2*np.pi, high = 2*np.pi, size=1000)
+y = np.sin(x) + np.random.normal(size=len(x))
+```
+
+

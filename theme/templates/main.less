@@ -24,7 +24,7 @@ a:hover {
 }
 
 header.main-header {
-    background: none repeat scroll 0% 0% #2A66C0;
+    background: none repeat scroll 0% 0% #205F29;
     margin-bottom: 0px;
 
     a {
@@ -36,7 +36,7 @@ header.main-header {
 
         nav {
             a:hover {
-                background-color: #2A66C0;
+                background-color: #5C881C;
             }
         }
     }
@@ -44,6 +44,11 @@ header.main-header {
 
 article {
     margin: 0;
+
+    header.about {
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
 
     header {
         margin-bottom: 20px;
@@ -66,6 +71,24 @@ article {
             font-size: 0.85em;
             float: left;
         }
+    }
+
+    div.social-links {
+      ul {
+        padding: 0px;
+      }
+      li {
+        display: inline;
+	font-size: 20px;
+      	a {
+	  color: #000;
+	  padding: 10px;
+      	}
+	a:hover {
+          color: #666;
+	  text-decoration: none;
+	}
+      }
     }
 
     p {
@@ -124,23 +147,6 @@ article {
         font-size: 13px;
     }
 
-    .codehilite {
-        pre {
-            border-radius: 0;  // Bootstrap reset
-            background-color: #202020;
-            color: #d0d0d0;
-
-            code {
-                border: none;
-            }
-        }
-
-        pre.bash {
-            background-color: #000;
-            color: #FFF;
-        }
-    }
-
     .meta {
         font-size: 11px;
 
@@ -157,8 +163,8 @@ article {
             margin: 0 10px 10px 0;
             padding: 1px 12px;
             display: inline-block;
-            font-size: 12px;
-            color: rgba(0,0,0,0.6);;
+            font-size: 14px;
+            color: rgba(0,0,0,0.8);;
             background: rgba(0,0,0,0.05);
         }
 
@@ -170,14 +176,14 @@ article {
             font-size: 14px;
             font-weight: 800;
             padding: 10px 20px;
-            color: #007EE5;
+            color: #205F29;
             background: #FFF;
-            border: 1px solid #007EE5;
+            border: 1px solid #205F29;
         }
 
         a.read_more:hover, a.comments_btn:hover {
             color: #FFF;
-            background: #007EE5;
+            background: #5C881C;
         }
     }
 }
@@ -224,16 +230,16 @@ article {
 
         a {
             display: inline-block;
-            border: 2px solid #007EE5;
+            border: 2px solid #5C881C;
             margin: 0 5px;
             padding: 8px 20px;
             font-weight: bold;
-            color: #007EE5;
+            color: #5C881C;
         }
 
         a:hover {
             color: #FFF;
-            background: #007EE5;
+            background: #5C881C;
         }
     }
 }

@@ -56,13 +56,18 @@ GOOGLE_ANALYTICS_CODE = 'UA-35523657-2'
 GOOGLE_ANALYTICS_DOMAIN = 'danielfrg.com'
 
 # PLUGINS SETTINGS
-PLUGIN_PATHS = ['pelican-plugins']
-PLUGINS = ['sitemap', 'ipynb.markup', 'ipynb.liquid','liquid_tags.youtube', 'liquid_tags.b64img',
-           'liquid_tags.img', 'liquid_tags.video',
-           'liquid_tags.youtube', 'liquid_tags.vimeo',
-           'liquid_tags.include_code', 'liquid_tags.notebook', 'just_table',
-           'better_figures_and_images',
+
+PLUGIN_PATHS = ['./plugins', './plugins/pelican-plugins']
+PLUGINS = [
+    'summary',       # auto-summarizing articles
+    'feed_summary',  # use summaries for RSS, not full articles
+    'ipynb.liquid',  # for embedding notebooks
+    'liquid_tags.img',  # embedding images
+    'liquid_tags.video',  # embedding videos
+    'liquid_tags.include_code',  # including code blocks
+    'liquid_tags.literal'
 ]
+IGNORE_FILES = ['.ipynb_checkpoints']
 
 SITEMAP = {
     'format': 'xml'
