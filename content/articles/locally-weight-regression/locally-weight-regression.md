@@ -2,7 +2,7 @@ Title: Locally Weighted Regression
 author: Olamilekan Wahab
 Slug: locally-weighted-regression
 categories: python maths machine-learning
-Date: 2017-11-01
+Date: 2018-01-30
 Tags: Maths,Python,regression, lwr, 
 image: locally-weighted-regression.png 
 Status: published
