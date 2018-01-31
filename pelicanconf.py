@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 LOAD_CONTENT_CACHE = False
 
 SITEURL = ''
-# SITEURL = 'http://danielfrg.github.io'
 AUTHOR = u'Olamilekan Wahab'
 SITENAME = u'Indent'
 
@@ -52,7 +51,7 @@ GITHUB_USERNAME = 'olamyy'
 SHOW_ARCHIVES = True
 SHOW_FEED = True
 
-GOOGLE_ANALYTICS_CODE = 'UA-35523657-2'
+GOOGLE_ANALYTICS_CODE = 'UA-104393656-1'
 GOOGLE_ANALYTICS_DOMAIN = 'danielfrg.com'
 
 # PLUGINS SETTINGS
@@ -86,3 +85,4 @@ IMAGE_PROCESS = {
     'article-image': ["scale_in 300 300 True"],
     'thumb': ["crop 0 0 50% 50%", "scale_out 150 150 True", "crop 0 0 150 150"],
 }
+

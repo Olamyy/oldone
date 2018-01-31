@@ -5,10 +5,10 @@ categories: python maths machine-learning
 Date: 2017-11-01
 Tags: Maths,Python,regression, lwr, 
 image: locally-weighted-regression.png 
-Status: draft
+Status: published
 
 
-A couple of weeks back, I started a review of the linear models I've used over the years and it hit me that I never really understood how the locally weighted regression algorithm works. This and the fact that sklearn had no support for it, encouraged me to do an investigation into the working principles of the algorithm.In this post, I would attempt to provide an overview of the algorithm using mathematical inference and introduce a possible Python implementation for it. 
+A couple of weeks back, I started a review of the linear models I've used over the years and and I realized that I never really understood how the locally weighted regression algorithm works. This and the fact that `sklearn` had no support for it, encouraged me to do an investigation into the working principles of the algorithm.In this post, I would attempt to provide an overview of the algorithm using mathematical inference and list some of the implementations available in Python. 
 
 The rest of this article will be organised as follows:
 
@@ -56,7 +56,7 @@ Some of these assumptions are:
 
 * There must be no correlation in the set of data in $X$. 
 
-    The presence of correlation in $y$ leads to a concept known as [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity). 
+    The presence of correlation in $X$ leads to a concept known as [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity). 
     If variables are correlated, it becomes extremely difficult for the model to determine the true effect of $X$ on $Y$.
 
 * Independence of errors
@@ -67,14 +67,14 @@ Some of these assumptions are:
 
 
 ###Regression Function
-The regession function is a parametric function used for estimating the target variable. This function can either be linear or non-linear. Now, since this article's main focus is the locally weighted regression which is a form of the linear regression, there would be a focus on linear regression.
+The regession function is a parametric function used for estimating the target variable. This function can either be linear or non-linear. Now, since this article's main focus is the locally weighted regression which is a form of the linear regression, there would be a little more focus on linear regression.
 
 Linear regression is an approach for modelling the linear relationship between a scalar $y$ and a set of variables $X$.
 
 ![Unfitted scatter plot.](/images/scatter.png) Figure 1
 
 
-Given a function whose scatter plot is above, a linear regression can be modeled to it by finding the line of best fit. Finding the **line of best fit** in simpler terms is really just getting the best function to represent the relationship between the $X$ and $y$ variables. This function, mostly called the `linear regression function` or more generally the `hypothesis` is a linear function which includes a dependent variable(target), a set of independent variables(features) and an unknown parameter. It's represented as:
+Given a function whose scatter plot is above, a linear regression can be modeled to it by finding the line of best fit. Finding the **line of best fit** in simple terms is really just getting the best function to represent the relationship between the $X$ and $y$ variables. This function, mostly called the `linear regression function` or more generally the `hypothesis` is a linear function which includes a dependent variable(target), a set of independent variables(features) and an unknown parameter. It's represented as:
 
 $$ h_{\theta}(x) = \theta_{0} + \theta_{1} X_{1} + \theta_{2} X_{2}+ ... + \theta_{n} X_{n} \label{a}\tag{1}$$
 
@@ -133,14 +133,14 @@ In summary, to evaluate $h(x)$, i.e make a prediction, the linear regression alg
 ![Unfitted LWR.](/images/unfitted_lwr.png) Figure 3
 ![Unfitted LWR.](/images/fitted_lwr.png)   Figure 4
 
-In Figure 3 above, there's a relatively higher number of mountains in the input/output relationship. Attempting to fit this with linear regression would result in getting a very high error and a line of best fit that does not optimally fit the data as shown in Figure 4. This error results from the fact that linear regression generally struggles in fitting functions with non-linear relationships. These difficulties introduce a new approach for fitting non-linear multivariate regression functions called "locally weighted regression".
+Compared to Figure 1, Figure 3 above, has a relatively higher number of mountains in the input/output relationship. Attempting to fit this with linear regression would result in getting a very high error and a line of best fit that does not optimally fit the data as shown in Figure 4. This error results from the fact that linear regression generally struggles in fitting functions with non-linear relationships. These difficulties introduce a new approach for fitting non-linear multivariate regression functions called "locally weighted regression".
 
-Locally weighted regression is a non-parametric variant of the linear regression for fitting data using multivariate smoothing. Often called **LOWESS** (locally weighted scatterplot smoothing), this algorithm is a mix of multiple local regression models on a meta **k-nearest-neighor**.
+Locally weighted regression is a non-parametric variant of the linear regression for fitting data using multivariate smoothing. Often called `LOWESS` (locally weighted scatterplot smoothing), this algorithm is a mix of multiple local regression models on a meta `k-nearest-neighor`.
 It's mostly used in cases where linear regression does not perform well i.e finds it very hard to find a line of best fit. 
 
 It works by fitting simple models to localized subsets ,say $x$, of the data to build up a function that describes the deterministic part of the variation in the data. The points covered by each point (i.e neighorhood) $x$ is calculated using k-nearest-neighors.
 
-> For each selected $X_i$, LWR selects a point $x$ that acts as a neighorhood within which a local linear model is fitted.
+> For each selected $x_i$, LWR selects a point $x$ that acts as a neighorhood within which a local linear model is fitted.
 
 LOWESS while fitting the data, gives more weight to points within the neighorhood of $x$ and less weight to points further away from it. A user dependent value, called the **bandwidth** determines the size of the data to fit each local subset. 
 The given weight $w$ at each point $i$ is calculated using:
