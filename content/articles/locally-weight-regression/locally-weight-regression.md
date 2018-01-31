@@ -8,7 +8,7 @@ image: locally-weighted-regression.png
 Status: published
 
 
-A couple of weeks back, I started a review of the linear models I've used over the years and and I realized that I never really understood how the locally weighted regression algorithm works. This and the fact that `sklearn` had no support for it, encouraged me to do an investigation into the working principles of the algorithm.In this post, I would attempt to provide an overview of the algorithm using mathematical inference and list some of the implementations available in Python. 
+A couple of weeks back, I started a review of the linear models I've used over the years and and I realized that I never really understood how the locally weighted regression algorithm works. This and the fact that `sklearn` had no support for it, encouraged me to do an investigation into the working principles of the algorithm. In this post, I would attempt to provide an overview of the algorithm using mathematical inference and list some of the implementations available in Python. 
 
 The rest of this article will be organised as follows:
 
