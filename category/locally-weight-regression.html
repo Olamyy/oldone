@@ -6,7 +6,7 @@
         <meta name="author" content="Olamilekan Wahab">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Indent - Authors | Indent</title>
+        <title>Home | Indent</title>
 
         <link rel="alternate" type="application/atom+xml" title="Indent blog atom feed" href="/feeds/all.atom.xml" />
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
@@ -393,10 +393,98 @@ article .meta a.comments_btn:hover {
         </header>
 
         <div id="wrap">
-    <h1>Authors on Indent</h1>
+<div class="container index">
 
-    <ul>        <li><a href="olamyy.github.io/author/olamilekan-wahab.html">Olamilekan Wahab</a> (2)</li>
-    </ul>
+  <article>
+    <header>
+      <h2><a href="olamyy.github.io/blog/2017/11/01/locally-weighted-regression/">Locally Weighted Regression</a></h2>
+      <time datetime="" title="2017-11-01T00:00:00+00:00" pubdate>November 01, 2017</time>
+    </header>
+
+    <img src="olamyy.github.io/images/locally-weighted-regression.png">
+
+
+    <div class="article_content">
+      <p>A couple of weeks back, I started a review of the linear models I've used over the years and and I realized that I never really understood how the locally weighted regression algorithm works. This and the fact that <code>sklearn</code> had no support for it, encouraged me to do an investigation into the working principles of the algorithm.In this post, I would attempt to provide an overview of the algorithm using mathematical inference and list some of the implementations available in Python. </p>
+<p>The rest of this article will be organised as follows:</p>
+<ul>
+<li>Regression <ul>
+<li>Regression Function</li>
+<li>Regression Assumptions</li>
+<li>The Linear Regression Algorithm</li>
+</ul>
+</li>
+<li>Locally Weighted Regression<ul>
+<li>Python Implementation<ul>
+<li>StatsModel Implementation</li>
+<li>Alexandre Gramfort's implementation</li>
+</ul>
+</li>
+<li>Benchmark</li>
+</ul>
+</li>
+<li>Conclusion</li>
+<li>Resources</li>
+</ul>
+<h2>Notations</h2>
+<p>The following notations would be used throughout this article</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th align="center">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$$ y $$</td>
+<td align="center">Target Variable</td>
+</tr>
+<tr>
+<td>$$ X $$</td>
+<td align="center">Features</td>
+</tr>
+<tr>
+<td>$$ (X, y)   $$</td>
+<td align="center">Training set</td>
+</tr>
+<tr>
+<td>$$ n $$</td>
+<td align="center">Number of features</td>
+</tr>
+<tr>
+<td>$$ X_i, y_i $$</td>
+<td align="center"><sup>ith</sup> index of X and y ...</td></tr></tbody></table>
+    </div>
+
+    <div class="meta">
+      <div>
+        <a href="olamyy.github.io/blog/2017/11/01/locally-weighted-regression/" class="read_more">Read more &#8594;</a>
+      </div>
+
+      <div>
+            <a href="olamyy.github.io/tag/maths.html" class="tag">Maths</a>
+            <a href="olamyy.github.io/tag/python.html" class="tag">Python</a>
+            <a href="olamyy.github.io/tag/regression.html" class="tag">regression</a>
+            <a href="olamyy.github.io/tag/lwr.html" class="tag">lwr</a>
+      </div>
+
+    </div>
+
+  </article>
+  <div class="separator"></div>
+
+  <nav class="pagination row">
+    <div class="col-xs-6 left">
+    </div>
+    <div class="col-xs-6 right">
+    </div>
+  </nav>
+
+  </div>
+
+</div>
+
         </div>
 
 <script>

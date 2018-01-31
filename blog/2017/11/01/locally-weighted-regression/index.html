@@ -402,7 +402,7 @@ article .meta a.comments_btn:hover {
 
         <img src="olamyy.github.io/images/locally-weighted-regression.png">
         <div class="article_content">
-            <p>A couple of weeks back, I started a review of the linear models I've used over the years and it hit me that I never really understood how the locally weighted regression algorithm works. This and the fact that sklearn had no support for it, encouraged me to do an investigation into the working principles of the algorithm.In this post, I would attempt to provide an overview of the algorithm using mathematical inference and introduce a possible Python implementation for it. </p>
+            <p>A couple of weeks back, I started a review of the linear models I've used over the years and and I realized that I never really understood how the locally weighted regression algorithm works. This and the fact that <code>sklearn</code> had no support for it, encouraged me to do an investigation into the working principles of the algorithm.In this post, I would attempt to provide an overview of the algorithm using mathematical inference and list some of the implementations available in Python. </p>
 <p>The rest of this article will be organised as follows:</p>
 <ul>
 <li>Regression <ul>
@@ -472,7 +472,7 @@ This assumptions is particularly important in linear regression of which locally
 </li>
 <li>
 <p>There must be no correlation in the set of data in $X$. </p>
-<p>The presence of correlation in $y$ leads to a concept known as <a href="https://en.wikipedia.org/wiki/Multicollinearity">multicollinearity</a>. 
+<p>The presence of correlation in $X$ leads to a concept known as <a href="https://en.wikipedia.org/wiki/Multicollinearity">multicollinearity</a>. 
 If variables are correlated, it becomes extremely difficult for the model to determine the true effect of $X$ on $Y$.</p>
 </li>
 <li>
@@ -484,10 +484,10 @@ If variables are correlated, it becomes extremely difficult for the model to det
 </li>
 </ul>
 <h3>Regression Function</h3>
-<p>The regession function is a parametric function used for estimating the target variable. This function can either be linear or non-linear. Now, since this article's main focus is the locally weighted regression which is a form of the linear regression, there would be a focus on linear regression.</p>
+<p>The regession function is a parametric function used for estimating the target variable. This function can either be linear or non-linear. Now, since this article's main focus is the locally weighted regression which is a form of the linear regression, there would be a little more focus on linear regression.</p>
 <p>Linear regression is an approach for modelling the linear relationship between a scalar $y$ and a set of variables $X$.</p>
 <p><img alt="Unfitted scatter plot." src="/images/scatter.png" /> Figure 1</p>
-<p>Given a function whose scatter plot is above, a linear regression can be modeled to it by finding the line of best fit. Finding the <strong>line of best fit</strong> in simpler terms is really just getting the best function to represent the relationship between the $X$ and $y$ variables. This function, mostly called the <code>linear regression function</code> or more generally the <code>hypothesis</code> is a linear function which includes a dependent variable(target), a set of independent variables(features) and an unknown parameter. It's represented as:</p>
+<p>Given a function whose scatter plot is above, a linear regression can be modeled to it by finding the line of best fit. Finding the <strong>line of best fit</strong> in simple terms is really just getting the best function to represent the relationship between the $X$ and $y$ variables. This function, mostly called the <code>linear regression function</code> or more generally the <code>hypothesis</code> is a linear function which includes a dependent variable(target), a set of independent variables(features) and an unknown parameter. It's represented as:</p>
 <p>$$ h_{\theta}(x) = \theta_{0} + \theta_{1} X_{1} + \theta_{2} X_{2}+ ... + \theta_{n} X_{n} \label{a}\tag{1}$$</p>
 <p>When evaluated, $h_{\theta}(x)$ in $\ref{a}$ above becomes $h(x)$. The regression function is called <code>simple linear regression</code> when only one independent variable $(X)$ is involved. In such cases, it becomes $$ h(x) = \theta_{0} + \theta_{1} X_{1} + \epsilon_{1} \label{b}\tag{2}$$ It's called <code>multivariate linear regression</code> when there is more than a single value for $X$.</p>
 <p>Additionally, the equation above is the equation of a line, more formally represented as $y = mx + c$ . Given this, to simplify the function, the intercept $X_{0}$ at $\theta_{0}$,is assumed to be $1$ so that it becomes a summation equation expressed as:</p>
@@ -527,12 +527,12 @@ To do this, the algorithm starts by :</p>
 <h2>Locally Weighted Regression</h2>
 <p><img alt="Unfitted LWR." src="/images/unfitted_lwr.png" /> Figure 3
 <img alt="Unfitted LWR." src="/images/fitted_lwr.png" />   Figure 4</p>
-<p>In Figure 3 above, there's a relatively higher number of mountains in the input/output relationship. Attempting to fit this with linear regression would result in getting a very high error and a line of best fit that does not optimally fit the data as shown in Figure 4. This error results from the fact that linear regression generally struggles in fitting functions with non-linear relationships. These difficulties introduce a new approach for fitting non-linear multivariate regression functions called "locally weighted regression".</p>
-<p>Locally weighted regression is a non-parametric variant of the linear regression for fitting data using multivariate smoothing. Often called <strong>LOWESS</strong> (locally weighted scatterplot smoothing), this algorithm is a mix of multiple local regression models on a meta <strong>k-nearest-neighor</strong>.
+<p>Compared to Figure 1, Figure 3 above, has a relatively higher number of mountains in the input/output relationship. Attempting to fit this with linear regression would result in getting a very high error and a line of best fit that does not optimally fit the data as shown in Figure 4. This error results from the fact that linear regression generally struggles in fitting functions with non-linear relationships. These difficulties introduce a new approach for fitting non-linear multivariate regression functions called "locally weighted regression".</p>
+<p>Locally weighted regression is a non-parametric variant of the linear regression for fitting data using multivariate smoothing. Often called <code>LOWESS</code> (locally weighted scatterplot smoothing), this algorithm is a mix of multiple local regression models on a meta <code>k-nearest-neighor</code>.
 It's mostly used in cases where linear regression does not perform well i.e finds it very hard to find a line of best fit. </p>
 <p>It works by fitting simple models to localized subsets ,say $x$, of the data to build up a function that describes the deterministic part of the variation in the data. The points covered by each point (i.e neighorhood) $x$ is calculated using k-nearest-neighors.</p>
 <blockquote>
-<p>For each selected $X_i$, LWR selects a point $x$ that acts as a neighorhood within which a local linear model is fitted.</p>
+<p>For each selected $x_i$, LWR selects a point $x$ that acts as a neighorhood within which a local linear model is fitted.</p>
 </blockquote>
 <p>LOWESS while fitting the data, gives more weight to points within the neighorhood of $x$ and less weight to points further away from it. A user dependent value, called the <strong>bandwidth</strong> determines the size of the data to fit each local subset. 
 The given weight $w$ at each point $i$ is calculated using:
@@ -740,7 +740,7 @@ pre code {
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-35523657-2', 'danielfrg.com');
+  ga('create', 'UA-104393656-1', 'danielfrg.com');
   ga('send', 'pageview');
 
 </script>
