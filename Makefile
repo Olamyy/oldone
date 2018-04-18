@@ -69,6 +69,7 @@ else
 endif
 
 devserver:
+echo PORT
 ifdef PORT
 	$(BASEDIR)/develop_server.sh restart $(PORT)
 else
