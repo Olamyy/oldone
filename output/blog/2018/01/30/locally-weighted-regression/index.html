@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="author" content="Olamilekan Wahab">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <title>Locally Weighted Regression | Indent</title>
+
+        <link rel="alternate" type="application/atom+xml" title="Indent blog atom feed" href="/feeds/all.atom.xml" />
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <style>
+.highlight .hll { background-color: #ffffcc }
+.highlight .c { color: #60a0b0; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #007020; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .cm { color: #60a0b0; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #007020 } /* Comment.Preproc */
+.highlight .c1 { color: #60a0b0; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #60a0b0; background-color: #fff0f0 } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #808080 } /* Generic.Output */
+.highlight .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0040D0 } /* Generic.Traceback */
+.highlight .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #007020 } /* Keyword.Pseudo */
+.highlight .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #902000 } /* Keyword.Type */
+.highlight .m { color: #40a070 } /* Literal.Number */
+.highlight .s { color: #4070a0 } /* Literal.String */
+.highlight .na { color: #4070a0 } /* Name.Attribute */
+.highlight .nb { color: #007020 } /* Name.Builtin */
+.highlight .nc { color: #0e84b5; font-weight: bold } /* Name.Class */
+.highlight .no { color: #60add5 } /* Name.Constant */
+.highlight .nd { color: #555555; font-weight: bold } /* Name.Decorator */
+.highlight .ni { color: #d55537; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #007020 } /* Name.Exception */
+.highlight .nf { color: #06287e } /* Name.Function */
+.highlight .nl { color: #002070; font-weight: bold } /* Name.Label */
+.highlight .nn { color: #0e84b5; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #bb60d5 } /* Name.Variable */
+.highlight .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #40a070 } /* Literal.Number.Float */
+.highlight .mh { color: #40a070 } /* Literal.Number.Hex */
+.highlight .mi { color: #40a070 } /* Literal.Number.Integer */
+.highlight .mo { color: #40a070 } /* Literal.Number.Oct */
+.highlight .sb { color: #4070a0 } /* Literal.String.Backtick */
+.highlight .sc { color: #4070a0 } /* Literal.String.Char */
+.highlight .sd { color: #4070a0; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #4070a0 } /* Literal.String.Double */
+.highlight .se { color: #4070a0; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #4070a0 } /* Literal.String.Heredoc */
+.highlight .si { color: #70a0d0; font-style: italic } /* Literal.String.Interpol */
+.highlight .sx { color: #c65d09 } /* Literal.String.Other */
+.highlight .sr { color: #235388 } /* Literal.String.Regex */
+.highlight .s1 { color: #4070a0 } /* Literal.String.Single */
+.highlight .ss { color: #517918 } /* Literal.String.Symbol */
+.highlight .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #bb60d5 } /* Name.Variable.Class */
+.highlight .vg { color: #bb60d5 } /* Name.Variable.Global */
+.highlight .vi { color: #bb60d5 } /* Name.Variable.Instance */
+.highlight .il { color: #40a070 } /* Literal.Number.Integer.Long */</style>
+        <style>body {
+  margin: 0;
+  padding: 0;
+  font: 15px 'Source Sans Pro', sans-serif;
+  line-height: 1.6em;
+  color: #222;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: #007EE5;
+  text-decoration: none;
+}
+a:hover {
+  color: #007EE5;
+  text-decoration: none;
+}
+header.main-header {
+  background: none repeat scroll 0% 0% 	#808080;
+  margin-bottom: 0px;
+}
+header.main-header a {
+  color: #fff;
+}
+header.main-header .container {
+  max-width: 1000px;
+}
+
+article {
+  margin: 0;
+}
+article header.about {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+article header {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+article header h1 {
+  margin-bottom: 2px;
+  font-weight: 700;
+  color: #000;
+}
+article header time {
+  color: #9E9E9E;
+  font-size: 0.85em;
+  float: right;
+}
+article header time.left {
+  color: #9E9E9E;
+  font-size: 0.85em;
+  float: left;
+}
+article div.social-links ul {
+  padding: 0px;
+}
+article div.social-links li {
+  display: inline;
+  font-size: 20px;
+}
+article div.social-links li a {
+  color: #000;
+  padding: 10px;
+}
+article div.social-links li a:hover {
+  color: #666;
+  text-decoration: none;
+}
+article p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.6em;
+}
+article p.note {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 0.533em 0.733em;
+}
+article p.update {
+  background-color: #FEEFB3;
+  border: 1px solid #e6e68a;
+  padding: 0.533em 0.733em;
+}
+article p.alert {
+  background-color: #ffe2e2;
+  border: 1px solid #ffb2b2;
+  padding: 0.533em 0.733em;
+}
+article ul,
+article ol {
+  margin-top: 0px;
+  margin-bottom: 25px;
+}
+article li {
+  font-size: 16px;
+  line-height: 1.6em;
+}
+article a:hover {
+  text-decoration: underline;
+}
+article blockquote {
+  border-left: 2px solid #c7c7cc;
+  color: #666;
+  margin: 30px 0;
+  padding: 0 0 0 25px;
+}
+article img {
+  max-width: 100%;
+}
+article code {
+  color: #333;
+  border-radius: 0;
+  font-size: 13px;
+}
+article .meta {
+  font-size: 11px;
+}
+article .meta a:hover {
+  text-decoration: none;
+}
+article .meta div {
+  margin-bottom: 20px;
+  display: block;
+}
+article .meta a.tag {
+  margin: 0 10px 10px 0;
+  padding: 1px 12px;
+  display: inline-block;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.05);
+}
+article .meta a.tag:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+article .meta a.read_more,
+article .meta a.comments_btn {
+  font-size: 14px;
+  font-weight: 800;
+  padding: 10px 20px;
+  color: #205F29;
+  background: #FFF;
+  border: 1px solid #205F29;
+}
+article .meta a.read_more:hover,
+article .meta a.comments_btn:hover {
+  color: #FFF;
+  background: #5C881C;
+}
+.index {
+  max-width: 700px;
+}
+.index article header h2 {
+  font-size: 36px;
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+.index article header h2 a {
+  color: #000;
+}
+.index article header h2 a:hover {
+  color: #007EE5;
+  text-decoration: none;
+}
+.index .separator {
+  padding: 40px 0 0 0;
+  margin: 0 0 40px 0;
+  height: 10px;
+  border-bottom: solid 1px #CCC;
+}
+.index .pagination {
+  display: block;
+  margin-bottom: 100px;
+}
+.index .pagination .left {
+  text-align: right;
+}
+.index .pagination .right {
+  text-align: left;
+}
+.index .pagination a {
+  display: inline-block;
+  border: 2px solid #5C881C;
+  margin: 0 5px;
+  padding: 8px 20px;
+  font-weight: bold;
+  color: #5C881C;
+}
+.index .pagination a:hover {
+  color: #FFF;
+  background: #5C881C;
+}
+.post {
+  max-width: 700px;
+}
+.post h2:before {
+  content: "# ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post h3:before {
+  content: "## ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post h4:before {
+  content: "### ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post article .meta {
+  margin: 50px 0 100px;
+}
+.list {
+  max-width: 700px;
+}
+.list ul.double-list {
+  margin: 0 auto 60px;
+  padding: 0;
+  list-style-type: none;
+}
+.list ul.double-list li {
+  padding: 5px 0;
+}
+.list ul.double-list li h2 {
+  font-size: 1em;
+  display: inline;
+  font-weight: normal;
+}
+.list ul.double-list li span {
+  font-family: sans-serif;
+  text-transform: uppercase;
+  text-align: right;
+  float: right;
+  padding-top: 3px;
+  font-size: 12px;
+  color: #999;
+}
+.full-width-content {
+  padding-top: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.col-xs-1,
+.col-sm-1,
+.col-md-1,
+.col-lg-1,
+.col-xs-2,
+.col-sm-2,
+.col-md-2,
+.col-lg-2,
+.col-xs-3,
+.col-sm-3,
+.col-md-3,
+.col-lg-3,
+.col-xs-4,
+.col-sm-4,
+.col-md-4,
+.col-lg-4,
+.col-xs-5,
+.col-sm-5,
+.col-md-5,
+.col-lg-5,
+.col-xs-6,
+.col-sm-6,
+.col-md-6,
+.col-lg-6,
+.col-xs-7,
+.col-sm-7,
+.col-md-7,
+.col-lg-7,
+.col-xs-8,
+.col-sm-8,
+.col-md-8,
+.col-lg-8,
+.col-xs-9,
+.col-sm-9,
+.col-md-9,
+.col-lg-9,
+.col-xs-10,
+.col-sm-10,
+.col-md-10,
+.col-lg-10,
+.col-xs-11,
+.col-sm-11,
+.col-md-11,
+.col-lg-11,
+.col-xs-12,
+.col-sm-12,
+.col-md-12,
+.col-lg-12 {
+  padding-right: 0px;
+  padding-left: 0px;
+}</style>
+
+
+    </head>
+
+    <body>
+        <header class="navbar navbar-static-top bs-docs-nav main-header">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/" title="Home" class="title">Indent</a></li>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/pages/research.html" title="Papers">Research</a></li>
+                            <li><a href="/pages/about.html" title="About">About</a></li>
+                            <li><a href="http://github.com/olamyy" title="olamyy's Github" rel="me">Github</a></li>
+                            <li><a href="http://twitter.com/__olamilekan__" title="__olamilekan__ Twitter" rel="me">Twitter</a></li>
+                            <li><a href="/archives.html" title="Archive">Archive</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div id="wrap">
+<div class="container post">
+    <article>
+        <header>
+            <h1>Locally Weighted Regression</h1>
+            <time datetime="article.date.isoformat()" pubdate>January 30, 2018</time>
+        </header>
+
+        <img src="/images/locally-weighted-regression.png">
+        <div class="article_content">
+            <p>A couple of weeks back, I started a review of the linear models I've used over the years and and I realized that I never really understood how the locally weighted regression algorithm works. This and the fact that <code>sklearn</code> had no support for it, encouraged me to do an investigation into the working principles of the algorithm. In this post, I would attempt to provide an overview of the algorithm using mathematical inference and list some of the implementations available in Python. </p>
+<p>The rest of this article will be organised as follows:</p>
+<ul>
+<li>Regression <ul>
+<li>Regression Function</li>
+<li>Regression Assumptions</li>
+<li>The Linear Regression Algorithm</li>
+</ul>
+</li>
+<li>Locally Weighted Regression<ul>
+<li>Python Implementation<ul>
+<li>StatsModel Implementation</li>
+<li>Alexandre Gramfort's implementation</li>
+</ul>
+</li>
+<li>Benchmark</li>
+</ul>
+</li>
+<li>Conclusion</li>
+<li>Resources</li>
+</ul>
+<h2>Notations</h2>
+<p>The following notations would be used throughout this article</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th align="center">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$$ y $$</td>
+<td align="center">Target Variable</td>
+</tr>
+<tr>
+<td>$$ X $$</td>
+<td align="center">Features</td>
+</tr>
+<tr>
+<td>$$ (X, y)   $$</td>
+<td align="center">Training set</td>
+</tr>
+<tr>
+<td>$$ n $$</td>
+<td align="center">Number of features</td>
+</tr>
+<tr>
+<td>$$ X_i, y_i $$</td>
+<td align="center"><sup>ith</sup> index of X and y</td>
+</tr>
+<tr>
+<td>$$ m $$</td>
+<td align="center">Number of training examples</td>
+</tr>
+</tbody>
+</table>
+<h2>Regression</h2>
+<p>Regression is the estimation of a continuous response variable based on the values of some other variable. The variable to be estimated is dependent on the other variable(s) in the function space. It is parametric in nature because it makes certain assumptions on the available data. If the data follows these <a href="#regression-assumptions">assumptions</a>, regression gives incredible results. Otherwise, it struggles to provide convincing accuracy. </p>
+<h3>Regression Assumptions</h3>
+<p>As was mentioned above, regression works best when the assumptions made about the available data are true. 
+Some of these assumptions are:</p>
+<ul>
+<li>
+<p>There exists a linear relationship between $X$ and $y$. </p>
+<p>This assumes that a change in $X$ would lead to a corresponding change in $y$.
+This assumptions is particularly important in linear regression of which locally weighted regression is a form.</p>
+</li>
+<li>
+<p>There must be no correlation in the set of data in $X$. </p>
+<p>The presence of correlation in $X$ leads to a concept known as <a href="https://en.wikipedia.org/wiki/Multicollinearity">multicollinearity</a>. 
+If variables are correlated, it becomes extremely difficult for the model to determine the true effect of $X$ on $Y$.</p>
+</li>
+<li>
+<p>Independence of errors</p>
+<p>This assumes that the errors of the response variables are uncorrelated with each other i.e the error at $ h(x)_i $ should not indicate the error at any other point. $h(x)_i$ is the estimate of the true function between Y and X. It's discussed in more context below.</p>
+</li>
+<li>
+<p>$y$ must have a normal distribution to the error term</p>
+</li>
+</ul>
+<h3>Regression Function</h3>
+<p>The regession function is a parametric function used for estimating the target variable. This function can either be linear or non-linear. Now, since this article's main focus is the locally weighted regression which is a form of the linear regression, there would be a little more focus on linear regression.</p>
+<p>Linear regression is an approach for modelling the linear relationship between a scalar $y$ and a set of variables $X$.</p>
+<p><img alt="Unfitted scatter plot." src="/images/scatter.png" /> Figure 1</p>
+<p>Given a function whose scatter plot is above, a linear regression can be modeled to it by finding the line of best fit. Finding the <strong>line of best fit</strong> in simple terms is really just getting the best function to represent the relationship between the $X$ and $y$ variables. This function, mostly called the <code>linear regression function</code> or more generally the <code>hypothesis</code> is a linear function which includes a dependent variable(target), a set of independent variables(features) and an unknown parameter. It's represented as:</p>
+<p>$$ h_{\theta}(x) = \theta_{0} + \theta_{1} X_{1} + \theta_{2} X_{2}+ ... + \theta_{n} X_{n} \label{a}\tag{1}$$</p>
+<p>When evaluated, $h_{\theta}(x)$ in $\ref{a}$ above becomes $h(x)$. The regression function is called <code>simple linear regression</code> when only one independent variable $(X)$ is involved. In such cases, it becomes $$ h(x) = \theta_{0} + \theta_{1} X_{1} + \epsilon_{1} \label{b}\tag{2}$$ It's called <code>multivariate linear regression</code> when there is more than a single value for $X$.</p>
+<p>Additionally, the equation above is the equation of a line, more formally represented as $y = mx + c$ . Given this, to simplify the function, the intercept $X_{0}$ at $\theta_{0}$,is assumed to be $1$ so that it becomes a summation equation expressed as:</p>
+<p>$$ h(x) = \sum_{i=0}^{n} \theta_{i} X_{i} + \epsilon_{i} \label{c}\tag{3}$$ </p>
+<p>An alternative representation of $\ref{c}$ when expressed in vector form is given as:</p>
+<p>$$ h(x) = θ^{{T}} x_{i} \label{d}\tag{4}$$ </p>
+<h3>The Linear Regression Algorithm</h3>
+<p>The linear regression algorithm applies the regression function in one form or another in predicting values using <code>real</code> data.
+Since this prediction can never really be totally accurate, an error (represented as $\epsilon$ in $\ref{b}$ above) is generated.
+This error, formulated as $\epsilon = |y - h(x)|$ is the vertical distance from the actual $y$ value to our prediction ($h(x)$) for the same $x$.  The error has a direct relationship with the accuracy of the algorithm. This means the smaller the error, the higher the model accuracy and vice versa. As such, the algorithm attempts to minimize this error.     </p>
+<p>The process of minimizing the error involves selecting the most appropriate features($\theta$) to include in fitting the algorithm. 
+A popular approach for selecting $\theta$'s is making $h(x)$ as close to to $y$ as possible for each item in $(X, y)$. To do this, a function caled the <code>cost function</code> is used. The <code>cost function</code> measures the closeness of each $h(x)$ to its corresponding $y$.</p>
+<blockquote>
+<p>The cost function calculates the <code>cost</code> of your regression algorithm.</p>
+</blockquote>
+<p>It's represented mathematically as:</p>
+<p>$$ J(\theta) = (\frac{1}{2}) \sum_{i=1}^{m} \left| \left(h(x)_i - y_i \right)^2\right|  \label{e}\tag{5}$$</p>
+<p>So, essentially, the linear regression algorithm tries to choose the best $\theta$ to minimize $J(\theta)$ which would in turn reduce the measure of error.
+To do this, the algorithm starts by :</p>
+<ol>
+<li>Choosing a base value for $\theta$. </li>
+<li>Updating this value to make $J(\theta)$ smaller. </li>
+</ol>
+<p>This goes on for many iterations until the value of $J(\theta)$ converges to it's local minima. An implementation of the above steps is called the <code>gradient descent</code> algorithm. </p>
+<p>The working principles of the gradient descent are beyond the scope of this article and would be covered in a different article in the near future. Alternatively, a very good resource on how they work is available in Sebastian Ruder's paper <a href="http://ruder.io/optimizing-gradient-descent/index.html">here</a>.</p>
+<p>In summary, to evaluate $h(x)$, i.e make a prediction, the linear regression algorithm:</p>
+<ol>
+<li>
+<p>Fits $\theta$ to minimize $\sum_{i}(y_i - \theta^T x_i)^2 \label{f}\tag{6}$. </p>
+<p>Upon successful fitting, the graph of the function above becomes
+<img alt="Fitted scatter plot." src="/images/fitted_scatter.png" /></p>
+</li>
+<li>
+<p>Ouputs $\theta^T x$.</p>
+</li>
+</ol>
+<h2>Locally Weighted Regression</h2>
+<p><img alt="Unfitted LWR." src="/images/unfitted_lwr.png" /> Figure 3
+<img alt="Unfitted LWR." src="/images/fitted_lwr.png" />   Figure 4</p>
+<p>Compared to Figure 1, Figure 3 above, has a relatively higher number of mountains in the input/output relationship. Attempting to fit this with linear regression would result in getting a very high error and a line of best fit that does not optimally fit the data as shown in Figure 4. This error results from the fact that linear regression generally struggles in fitting functions with non-linear relationships. These difficulties introduce a new approach for fitting non-linear multivariate regression functions called "locally weighted regression".</p>
+<p>Locally weighted regression is a non-parametric variant of the linear regression for fitting data using multivariate smoothing. Often called <code>LOWESS</code> (locally weighted scatterplot smoothing), this algorithm is a mix of multiple local regression models on a meta <code>k-nearest-neighor</code>.
+It's mostly used in cases where linear regression does not perform well i.e finds it very hard to find a line of best fit. </p>
+<p>It works by fitting simple models to localized subsets ,say $x$, of the data to build up a function that describes the deterministic part of the variation in the data. The points covered by each point (i.e neighorhood) $x$ is calculated using k-nearest-neighors.</p>
+<blockquote>
+<p>For each selected $x_i$, LWR selects a point $x$ that acts as a neighorhood within which a local linear model is fitted.</p>
+</blockquote>
+<p>LOWESS while fitting the data, gives more weight to points within the neighorhood of $x$ and less weight to points further away from it. A user dependent value, called the <strong>bandwidth</strong> determines the size of the data to fit each local subset. 
+The given weight $w$ at each point $i$ is calculated using:
+$$w_i = \exp(- \frac{(x_i - x ) ^ 2}{2 \tau ^ 2}) \label{g}\tag{7}$$</p>
+<p>$w_i$ depends on the point $x_i$ at which $x$ is being calculated. Since, a small $|x_i − x|$ yields a $w(i)$ close to 1 and a large  $|x_i − x|$ yields a very small $w(i)$, the parameter ($\theta$) is calculated for the LOWESS by giving more weight to the points within the neighorhood of $x$ than the points outside it.</p>
+<p>Essentially, this algorithm makes a prediction by:</p>
+<ol>
+<li>
+<p>Fitting $\theta$ to minimize $\sum_{i}w_i(y_i - \theta^T x_i)^2  \tag{8}$.       </p>
+<p>The fitting is done using either <strong>weighted linear least squares</strong> or the <strong>weighted quadratic least squares</strong>. The algorithm is called the LOESS when it's fitted using the <strong>weighted quadratic least square</strong> regression.</p>
+</li>
+<li>
+<p>Ouputs $\theta^T x$.</p>
+</li>
+</ol>
+<h3>Python Implementation</h3>
+<p>The support for LOWESS in Python is rather poor. This is primarily because the algorithm is computationally intensive given that it has to fit $j$ number of lines at every point $x_i$ within the neighorhood of $x_i$.</p>
+<p>Regardless of this challenge, there are currently 2 implementations of the LOWESS algorithm in Python that I have come across. These are:</p>
+<ol>
+<li>
+<p>Statsmodel Implementation
+<a href="http://www.statsmodels.org/devel/generated/statsmodels.nonparametric.smoothers_lowess.lowess.html">http://www.statsmodels.org/devel/generated/statsmodels.nonparametric.smoothers_lowess.lowess.html</a></p>
+<p>Statsmodel is a python package that provides a range of tools for carrying out statistical computation in Python.</p>
+<p>It provides support for LOWESS in it's <code>statsmodel.nonparametric</code> module. Statsmodel supports</p>
+<blockquote>
+<p>A lowess function that outs smoothed estimates of endog at the given exog values from points (exog, endog)</p>
+</blockquote>
+<p>The <em>exog</em> and <em>endog</em> expressions in the quote above represent 1-D numpy arrays.These arrays denote $x_i$ and $y_i$ from the equation</p>
+<p>This function takes input $y$ and $x$ and estimates each smooth $y_i$ closest to $(x_i, y_i)$ based on their values of $x$. It essentially uses a <strong>weighted linear least square</strong> approach to fitting the data. 
+A downside of this is that statsmodels combines fit and predict methods into one, and so doesn't allow prediction on new data.</p>
+</li>
+<li>
+<p>Alexandre Gramfort's implementation</p>
+<p><a href="https://gist.github.com/agramfort/850437">https://gist.github.com/agramfort/850437</a></p>
+<p>This implementation is quite similar to the statsmodel implementation in that it supports only 1-D numpy arrays.</p>
+<p>The function is:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">linalg</span>
+
+
+<span class="k">def</span> <span class="nf">agramfort_lowess</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mf">2.</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">,</span> <span class="nb">iter</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;lowess(x, y, f=2./3., iter=3) -&gt; yest</span>
+
+<span class="sd">    Lowess smoother: Robust locally weighted regression.</span>
+<span class="sd">    The lowess function fits a nonparametric regression curve to a scatterplot.</span>
+<span class="sd">    The arrays x and y contain an equal number of elements; each pair</span>
+<span class="sd">    (x[i], y[i]) defines a data point in the scatterplot. The function returns</span>
+<span class="sd">    the estimated (smooth) values of y.</span>
+
+<span class="sd">    The smoothing span is given by f. A larger value for f will result in a</span>
+<span class="sd">    smoother curve. The number of robustifying iterations is given by iter. The</span>
+<span class="sd">    function will run faster with a smaller number of iterations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">f</span> <span class="o">*</span> <span class="n">n</span><span class="p">))</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]))[</span><span class="n">r</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">x</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="p">:])</span> <span class="o">/</span> <span class="n">h</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">w</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span>
+    <span class="n">yest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">iter</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">weights</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">w</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span> <span class="o">*</span> <span class="n">y</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">x</span><span class="p">)])</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span> <span class="o">*</span> <span class="n">x</span><span class="p">)],</span>
+                          <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span> <span class="o">*</span> <span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)]])</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+            <span class="n">yest</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yest</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">residuals</span><span class="p">))</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">residuals</span> <span class="o">/</span> <span class="p">(</span><span class="mf">6.0</span> <span class="o">*</span> <span class="n">s</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">delta</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">yest</span>
+</pre></div>
+
+
+<h3>Benchmark</h3>
+<p>To benchmark the 3 implementations, let's declare the following constants:
+1. Let $x$ be a set of 1000 random float between $-\tau$ and $\tau$.</p>
+<div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+
+
+<ol>
+<li>Let $y$ be a function of the sine of x.</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+
+<p>A scatter plot of the relationship between $x$ and $y$ is shown below:</p>
+<p><img alt="Unfitted LWR." src="/images/statsmodel_case.png" /> Figure 3</p>
+<p>Now, predicting with lowess using :</p>
+<p>Statsmodel LOWESS:</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">statsmodels.api.nonparametric</span> <span class="kn">import</span> <span class="n">lowess</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">%</span><span class="n">timeit</span> <span class="n">lowess</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frac</span><span class="o">=</span><span class="mf">2.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+<span class="mi">1</span> <span class="n">loop</span><span class="p">,</span> <span class="n">best</span> <span class="n">of</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">303</span> <span class="n">ms</span> <span class="n">per</span> <span class="n">loop</span>
+</pre></div>
+
+
+<p>Alexandre Gramfort's implementation</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="o">%</span><span class="n">timeit</span> <span class="n">agramfort_lowess</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="mi">1</span> <span class="n">loop</span><span class="p">,</span> <span class="n">best</span> <span class="n">of</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">837</span> <span class="n">ms</span> <span class="n">per</span> <span class="n">loop</span>
+</pre></div>
+
+
+<h3>Conclusion</h3>
+<p>Though the pure LOWESS functions are hardly used in Python, I hope I've been able to provide a little intuition into how they work and possible implementation. </p>
+<p>On why this is maths intensive, while I believe we can make-do with black-box implementations of fundamental tools constructed by our more algorithmically-minded colleagues, I am a firm believer that the more understanding we have about the low-level algorithms we're applying to our data, the better practitioners we'll be.</p>
+<h3>Resources</h3>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Linear_regression">https://en.wikipedia.org/wiki/Linear_regression</a></li>
+<li><a href="https://jeremykun.com/2013/08/18/linear-regression/">https://jeremykun.com/2013/08/18/linear-regression/</a></li>
+<li><a href="https://stackoverflow.com/questions/26804656/why-do-we-use-gradient-descent-in-linear-regression">https://stackoverflow.com/questions/26804656/why-do-we-use-gradient-descent-in-linear-regression</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Regression_analysis#Regression_models">https://en.wikipedia.org/wiki/Regression_analysis#Regression_models</a></li>
+<li><a href="https://www.quora.com/In-what-situation-should-I-use-locally-weighted-linear-regression-when-I-do-predictions">https://www.quora.com/In-what-situation-should-I-use-locally-weighted-linear-regression-when-I-do-predictions</a></li>
+<li><a href="https://www.quora.com/Why-is-that-in-locally-weighted-learning-models-we-tend-to-use-linear-regression-and-not-non-linear-ones">https://www.quora.com/Why-is-that-in-locally-weighted-learning-models-we-tend-to-use-linear-regression-and-not-non-linear-ones</a></li>
+</ol>
+        </div>
+
+        <div class="meta">
+            <div>
+                    <a href="/tag/maths.html" class="tag">Maths</a>
+                    <a href="/tag/python.html" class="tag">Python</a>
+                    <a href="/tag/regression.html" class="tag">regression</a>
+                    <a href="/tag/lwr.html" class="tag">lwr</a>
+            </div>
+        </div>
+    </article>
+    <section>
+    <h1>Comments</h1>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'olamyy';
+            var disqus_identifier = '/blog/2017/11/01/simulating-chutes-and-ladders/';
+            var disqus_url = 'http://olamyy.github.io/blog/2017/11/01/simulating-chutes-and-ladders/';
+            var disqus_title = 'The Hypothesis';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+  </section>
+</div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
+
+        </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-104393656-1', 'danielfrg.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+    </body>
+</html>
