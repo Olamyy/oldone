@@ -2,69 +2,79 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cb3aab7-629f-4fce-a7fe-cc502e21c902" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/repository.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/content/robots.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/environment.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabfile.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/theme/templates/analytics.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/theme/templates/archives.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/theme/templates/ipynb.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/theme/templates/page.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/theme/templates/tag.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/archives.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/author/olamilekan-wahab.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authors.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blog/2017/11/01/introduction-to-fourier-transform/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blog/2018/01/30/locally-weighted-regression/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/categories.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/category/fourier-transforms.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/category/locally-weight-regression.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drafts/beyond-linearity.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drafts/machine-learning-powered-recommendations.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feeds/all-en.atom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feeds/all.atom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feeds/fourier-transforms.atom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feeds/locally-weight-regression.atom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feeds/olamilekan-wahab.atom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feeds/olamilekan-wahab.rss.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/about-me.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/django.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/fitted_lwr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/fitted_scatter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/fourier.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/linearity.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/locally-weighted-regression.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/recsys.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/reg-func.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/scatter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/statsmodel_case.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/unfitted_lwr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/about.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/research.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tag/fourier.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tag/lwr.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tag/maths.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tag/python.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tag/regression.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tags.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/CNAME" beforeDir="false" afterPath="$PROJECT_DIR$/CNAME" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/archives.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/olamilekan-wahab.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authors.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/2017/11/01/introduction-to-fourier-transform/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/2018/01/30/locally-weighted-regression/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/categories.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/category/fourier-transforms.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/category/locally-weight-regression.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/drafts/beyond-linearity.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/drafts/machine-learning-powered-recommendations.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/content/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feeds/all-en.atom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/feeds/all.atom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/feeds/fourier-transforms.atom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/feeds/locally-weight-regression.atom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/feeds/olamilekan-wahab.atom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/feeds/olamilekan-wahab.rss.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/about-me.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/django.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/fitted_lwr.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/fitted_scatter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/fourier.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/linearity.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/locally-weighted-regression.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/recsys.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/reg-func.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/scatter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/statsmodel_case.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/unfitted_lwr.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/drafts/understanding-the-sklearn-design.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/drafts/understanding-the-sklearn-design.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/about.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/research.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/pages/about.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/pages/about.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/develop_server.sh" beforeDir="false" afterPath="$PROJECT_DIR$/develop_server.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/environment.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabfile.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pelicanconf.py" beforeDir="false" afterPath="$PROJECT_DIR$/pelicanconf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag/fourier.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag/lwr.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag/maths.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag/python.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag/regression.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tags.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/ipynb/tests/pelican/content/with-metadata.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/ipynb/tests/pelican/content/with-metadata.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/b64img.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/b64img.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/liquid_tags.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/liquid_tags.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/mdx_liquid_tags.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/mdx_liquid_tags.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/youtube.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/youtube.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/Readme.rst" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/Readme.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/sitemap.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/sitemap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/publishconf.py" beforeDir="false" afterPath="$PROJECT_DIR$/publishconf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/analytics.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/archives.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/article.html" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/article.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/ipynb.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/main.less" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/main.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/pygments.css" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/pygments.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/tag.html" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -75,7 +85,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="understanding-the-sklearn-design.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="understanding-the-sklearn-design.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
@@ -83,6 +93,15 @@
                 <caret line="280" column="42" selection-start-line="280" selection-start-column="42" selection-end-line="280" selection-end-column="42" />
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitmodules" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitmodules">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -191,12 +210,12 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="104" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1920" />
     <option name="height" value="1124" />
   </component>
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
@@ -211,24 +230,6 @@
             <path>
               <item name="repository" type="b2602c69:ProjectViewProjectNode" />
               <item name="repository" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="repository" type="b2602c69:ProjectViewProjectNode" />
-              <item name="repository" type="462c0819:PsiDirectoryNode" />
-              <item name="content" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="repository" type="b2602c69:ProjectViewProjectNode" />
-              <item name="repository" type="462c0819:PsiDirectoryNode" />
-              <item name="content" type="462c0819:PsiDirectoryNode" />
-              <item name="articles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="repository" type="b2602c69:ProjectViewProjectNode" />
-              <item name="repository" type="462c0819:PsiDirectoryNode" />
-              <item name="content" type="462c0819:PsiDirectoryNode" />
-              <item name="articles" type="462c0819:PsiDirectoryNode" />
-              <item name="understanding-the-sklearn-design" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="repository" type="b2602c69:ProjectViewProjectNode" />
@@ -256,6 +257,169 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+    </configuration>
+    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+    </configuration>
+    <configuration default="true" type="PyLettuceRunConfigurationType" factoryName="Lettuce">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration default="true" type="Python.FlaskServer" factoryName="Flask server">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_regexPattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Twisted Trial">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -271,7 +435,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1124" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32911393" />
@@ -280,8 +443,8 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="right" id="Mongo Explorer" order="3" weight="0.32960597" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.5355404" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973376" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.5355404" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973376" />
       <window_info anchor="right" id="R Packages" order="3" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="R Graphics" order="3" />
@@ -461,13 +624,6 @@
     <entry file="file://$PROJECT_DIR$/develop_server.sh">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitmodules">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CNAME">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -478,6 +634,166 @@
             <caret line="280" column="42" selection-start-line="280" selection-start-column="42" selection-end-line="280" selection-end-column="42" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="2580">
+            <caret line="172" column="71" lean-forward="true" selection-start-line="172" selection-start-column="71" selection-end-line="172" selection-end-column="71" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/preprocessing/tests/test_imputation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/preprocessing/imputation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2145">
+          <caret line="156" column="26" selection-start-line="156" selection-start-column="26" selection-end-line="156" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/scipy/sparse/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18315">
+          <caret line="1230" selection-start-line="1230" selection-end-line="1230" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/articles/locally-weight-regression/locally-weight-regression.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="540">
+            <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="16" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="1875">
+            <caret line="125" column="16" selection-start-line="125" selection-start-column="16" selection-end-line="125" selection-end-column="16" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/articles/locally-weight-regression/locally-weight-regression.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="540">
+            <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="16" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="1320">
+            <caret line="88" column="10" selection-start-line="88" selection-start-column="10" selection-end-line="88" selection-end-column="10" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/articles/locally-weight-regression/locally-weight-regression.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="885">
+            <caret line="59" column="26" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/articles/locally-weight-regression/locally-weight-regression.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="540">
+            <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="16" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/preprocessing/tests/test_imputation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/preprocessing/imputation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2145">
+          <caret line="156" column="26" selection-start-line="156" selection-start-column="26" selection-end-line="156" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/scipy/sparse/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18315">
+          <caret line="1230" selection-start-line="1230" selection-end-line="1230" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/random_projection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="249" column="18" selection-start-line="249" selection-start-column="8" selection-end-line="249" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="322">
+            <caret line="280" column="42" selection-start-line="280" selection-start-column="42" selection-end-line="280" selection-end-column="42" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pelicanconf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-620">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/publishconf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="e#48#87#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitmodules">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>

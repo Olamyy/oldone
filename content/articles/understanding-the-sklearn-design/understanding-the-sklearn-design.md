@@ -279,3 +279,5 @@ The sklearn API was majorly designed to be consistent. This means object that do
     1. `decision_function` for linear models to measure the distance between samples
     2. `score` to  measure the quality of the prediction. This method computes the coefficient of determination  in regression and the accuracy in classification.
     3. `predict_proba` to measure class probabilities.
+    
+4. Pipelines

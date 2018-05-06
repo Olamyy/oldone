@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="author" content="Olamilekan Wahab">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <title>Introduction To The Fast Fourier Transform In Python | Indent</title>
+
+        <link rel="alternate" type="application/atom+xml" title="Indent blog atom feed" href="/feeds/all.atom.xml" />
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <style>
+.highlight .hll { background-color: #ffffcc }
+.highlight .c { color: #60a0b0; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #007020; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .cm { color: #60a0b0; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #007020 } /* Comment.Preproc */
+.highlight .c1 { color: #60a0b0; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #60a0b0; background-color: #fff0f0 } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #808080 } /* Generic.Output */
+.highlight .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0040D0 } /* Generic.Traceback */
+.highlight .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #007020 } /* Keyword.Pseudo */
+.highlight .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #902000 } /* Keyword.Type */
+.highlight .m { color: #40a070 } /* Literal.Number */
+.highlight .s { color: #4070a0 } /* Literal.String */
+.highlight .na { color: #4070a0 } /* Name.Attribute */
+.highlight .nb { color: #007020 } /* Name.Builtin */
+.highlight .nc { color: #0e84b5; font-weight: bold } /* Name.Class */
+.highlight .no { color: #60add5 } /* Name.Constant */
+.highlight .nd { color: #555555; font-weight: bold } /* Name.Decorator */
+.highlight .ni { color: #d55537; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #007020 } /* Name.Exception */
+.highlight .nf { color: #06287e } /* Name.Function */
+.highlight .nl { color: #002070; font-weight: bold } /* Name.Label */
+.highlight .nn { color: #0e84b5; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #bb60d5 } /* Name.Variable */
+.highlight .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #40a070 } /* Literal.Number.Float */
+.highlight .mh { color: #40a070 } /* Literal.Number.Hex */
+.highlight .mi { color: #40a070 } /* Literal.Number.Integer */
+.highlight .mo { color: #40a070 } /* Literal.Number.Oct */
+.highlight .sb { color: #4070a0 } /* Literal.String.Backtick */
+.highlight .sc { color: #4070a0 } /* Literal.String.Char */
+.highlight .sd { color: #4070a0; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #4070a0 } /* Literal.String.Double */
+.highlight .se { color: #4070a0; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #4070a0 } /* Literal.String.Heredoc */
+.highlight .si { color: #70a0d0; font-style: italic } /* Literal.String.Interpol */
+.highlight .sx { color: #c65d09 } /* Literal.String.Other */
+.highlight .sr { color: #235388 } /* Literal.String.Regex */
+.highlight .s1 { color: #4070a0 } /* Literal.String.Single */
+.highlight .ss { color: #517918 } /* Literal.String.Symbol */
+.highlight .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #bb60d5 } /* Name.Variable.Class */
+.highlight .vg { color: #bb60d5 } /* Name.Variable.Global */
+.highlight .vi { color: #bb60d5 } /* Name.Variable.Instance */
+.highlight .il { color: #40a070 } /* Literal.Number.Integer.Long */        <style>body {
+  margin: 0;
+  padding: 0;
+  font: 15px 'Source Sans Pro', sans-serif;
+  line-height: 1.6em;
+  color: #222;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: #007EE5;
+  text-decoration: none;
+}
+a:hover {
+  color: #007EE5;
+  text-decoration: none;
+}
+header.main-header {
+  background: none repeat scroll 0% 0% 	#808080;
+  margin-bottom: 0px;
+}
+header.main-header a {
+  color: #fff;
+}
+header.main-header .container {
+  max-width: 1000px;
+}
+
+article {
+  margin: 0;
+}
+article header.about {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+article header {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+article header h1 {
+  margin-bottom: 2px;
+  font-weight: 700;
+  color: #000;
+}
+article header time {
+  color: #9E9E9E;
+  font-size: 0.85em;
+  float: right;
+}
+article header time.left {
+  color: #9E9E9E;
+  font-size: 0.85em;
+  float: left;
+}
+article div.social-links ul {
+  padding: 0px;
+}
+article div.social-links li {
+  display: inline;
+  font-size: 20px;
+}
+article div.social-links li a {
+  color: #000;
+  padding: 10px;
+}
+article div.social-links li a:hover {
+  color: #666;
+  text-decoration: none;
+}
+article p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.6em;
+}
+article p.note {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 0.533em 0.733em;
+}
+article p.update {
+  background-color: #FEEFB3;
+  border: 1px solid #e6e68a;
+  padding: 0.533em 0.733em;
+}
+article p.alert {
+  background-color: #ffe2e2;
+  border: 1px solid #ffb2b2;
+  padding: 0.533em 0.733em;
+}
+article ul,
+article ol {
+  margin-top: 0px;
+  margin-bottom: 25px;
+}
+article li {
+  font-size: 16px;
+  line-height: 1.6em;
+}
+article a:hover {
+  text-decoration: underline;
+}
+article blockquote {
+  border-left: 2px solid #c7c7cc;
+  color: #666;
+  margin: 30px 0;
+  padding: 0 0 0 25px;
+}
+article img {
+  max-width: 100%;
+}
+article code {
+  color: #333;
+  border-radius: 0;
+  font-size: 13px;
+}
+article .meta {
+  font-size: 11px;
+}
+article .meta a:hover {
+  text-decoration: none;
+}
+article .meta div {
+  margin-bottom: 20px;
+  display: block;
+}
+article .meta a.tag {
+  margin: 0 10px 10px 0;
+  padding: 1px 12px;
+  display: inline-block;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.05);
+}
+article .meta a.tag:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+article .meta a.read_more,
+article .meta a.comments_btn {
+  font-size: 14px;
+  font-weight: 800;
+  padding: 10px 20px;
+  color: #205F29;
+  background: #FFF;
+  border: 1px solid #205F29;
+}
+article .meta a.read_more:hover,
+article .meta a.comments_btn:hover {
+  color: #FFF;
+  background: #5C881C;
+}
+.index {
+  max-width: 700px;
+}
+.index article header h2 {
+  font-size: 36px;
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+.index article header h2 a {
+  color: #000;
+}
+.index article header h2 a:hover {
+  color: #007EE5;
+  text-decoration: none;
+}
+.index .separator {
+  padding: 40px 0 0 0;
+  margin: 0 0 40px 0;
+  height: 10px;
+  border-bottom: solid 1px #CCC;
+}
+.index .pagination {
+  display: block;
+  margin-bottom: 100px;
+}
+.index .pagination .left {
+  text-align: right;
+}
+.index .pagination .right {
+  text-align: left;
+}
+.index .pagination a {
+  display: inline-block;
+  border: 2px solid #5C881C;
+  margin: 0 5px;
+  padding: 8px 20px;
+  font-weight: bold;
+  color: #5C881C;
+}
+.index .pagination a:hover {
+  color: #FFF;
+  background: #5C881C;
+}
+.post {
+  max-width: 700px;
+}
+.post h2:before {
+  content: "# ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post h3:before {
+  content: "## ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post h4:before {
+  content: "### ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post article .meta {
+  margin: 50px 0 100px;
+}
+.list {
+  max-width: 700px;
+}
+.list ul.double-list {
+  margin: 0 auto 60px;
+  padding: 0;
+  list-style-type: none;
+}
+.list ul.double-list li {
+  padding: 5px 0;
+}
+.list ul.double-list li h2 {
+  font-size: 1em;
+  display: inline;
+  font-weight: normal;
+}
+.list ul.double-list li span {
+  font-family: sans-serif;
+  text-transform: uppercase;
+  text-align: right;
+  float: right;
+  padding-top: 3px;
+  font-size: 12px;
+  color: #999;
+}
+.full-width-content {
+  padding-top: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.col-xs-1,
+.col-sm-1,
+.col-md-1,
+.col-lg-1,
+.col-xs-2,
+.col-sm-2,
+.col-md-2,
+.col-lg-2,
+.col-xs-3,
+.col-sm-3,
+.col-md-3,
+.col-lg-3,
+.col-xs-4,
+.col-sm-4,
+.col-md-4,
+.col-lg-4,
+.col-xs-5,
+.col-sm-5,
+.col-md-5,
+.col-lg-5,
+.col-xs-6,
+.col-sm-6,
+.col-md-6,
+.col-lg-6,
+.col-xs-7,
+.col-sm-7,
+.col-md-7,
+.col-lg-7,
+.col-xs-8,
+.col-sm-8,
+.col-md-8,
+.col-lg-8,
+.col-xs-9,
+.col-sm-9,
+.col-md-9,
+.col-lg-9,
+.col-xs-10,
+.col-sm-10,
+.col-md-10,
+.col-lg-10,
+.col-xs-11,
+.col-sm-11,
+.col-md-11,
+.col-lg-11,
+.col-xs-12,
+.col-sm-12,
+.col-md-12,
+.col-lg-12 {
+  padding-right: 0px;
+  padding-left: 0px;
+}</style>
+
+
+    </head>
+
+    <body>
+        <header class="navbar navbar-static-top bs-docs-nav main-header">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/" title="Home" class="title">Indent</a></li>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/pages/research.html" title="Papers">Research</a></li>
+                            <li><a href="/pages/about.html" title="About">About</a></li>
+                            <li><a href="http://github.com/olamyy" title="olamyy's Github" rel="me">Github</a></li>
+                            <li><a href="http://twitter.com/__olamilekan__" title="__olamilekan__ Twitter" rel="me">Twitter</a></li>
+                            <li><a href="/archives.html" title="Archive">Archive</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div id="wrap">
+<div class="container post">
+    <article>
+        <header>
+            <h1>Introduction To The Fast Fourier Transform In Python</h1>
+            <time datetime="article.date.isoformat()" pubdate>November 01, 2017</time>
+        </header>
+
+        <img src="olamyy.github.io/images/fourier.jpg">
+
+        <div class="article_content">
+            <p>NOTE : This is the first of a two part blog post on the topic.</p>
+<p>The Fast Fourier Transform is an algorithmic optimization of the Discrete Fourier Transform.</p>
+<p>I came across it a couple of weeks back and found it quite interesting because it's based on a topic I had previously done in class but never really got to use. In this post, I would give a brief explanation of the FFT algorithm stating its mathematical background. In the blogpost following this, various uses-cases of the FFT in Python would explored.</p>
+<p>The FFT algorithm is an implementation of the Discrete Fourier Transform which is a type of Fourier Transform. The other type is the  <strong>Inverse Discrete Fourier Transform</strong>. It's an adaptation of the Fourier Transform, which in simple terms is an "attempt at digitizing the analog world".</p>
+<h3>The Fourier Transform</h3>
+<p>Everything can be described using a waveform. Waveforms are a function of time or any other variable(space for an example). The Fourier Transform provides a rather useful way of looking at these waveforms. 
+In its basic form, a Fourier Transform breaks down a waveform into sinusoids.This siusoids go a long way into proving that waves are not made of discrete number of frequencies but rather of a continuous range of frequencies. </p>
+<p>In mathematical terms, a Fourier Transform converts a time-based signal(wave, filter etc) into a sum of its sine and cosine waves with varying amplitude and wavelength.</p>
+<p>For each frequency of wave in the signal, it assigns a complex-valued coefficient. This is called the Fourier coefficient.
+The real part of this coefficient contains information about the waves' cosine amplitude and the imaginary part contains information about the waves' sine amplitude.</p>
+<h3>The Discrete Fourier Transform</h3>
+<p>The DFT is further divided into two.</p>
+<p>The Forward Transform represented as</p>
+<p>$$F(m)  = {1 \over N}\sum_{n=0}^{N-1} f(n) \cdot e^{-i2 \pi mn \over N} $$  </p>
+<p>The Backward/Inverse Transform represented as</p>
+<p>$$f(n)  = \sum_{m=0}^{N-1} F(m) \cdot e^{-i2 \pi mn \over N} $$        </p>
+<p>$ f(n) $ in both equations above is the value of the function $ f $ at point n. It can be either real or complex-valued.
+$ F(m) $ on the other hand, is the coefficient for the $ m^{th} $ wave component and can only be complex. </p>
+<p>The movement from $ f(n) $ to $ F(m) $ defines a change in configuration from spacial to frequency based configurations. The Fourier coefficients at this point is represented as $v_m  = {m \over t_s N} $ where m=0, 1, 2, ..., ${N \over 2}$    for positive frequencies and as $v_m  = -{ (N - m + 1)\over t_s N} $ where m=${({N\over 2}) + 1}, {({N\over 2}) + 2}, {({N\over 2}) + 3}, ... , {({N\over 2})  + N}$ for negative frequencies.</p>
+<h3>Python Implementation</h3>
+<p>Given its relevance in so many areas, there are a lot of wrappers for computing the <strong>DFT</strong> in Python. <strong>Numpy</strong> has its <code>numpy.fft</code> function and <strong>scipy</strong> has its <code>scipy.fftpack</code> implementation of this algorithm. </p>
+<p>Before looking at these use cases, let's attempt to write a dummy implementation of the <strong>DFT</strong> in python.</p>
+<div class="highlight"><pre><span></span> <span class="kn">import</span> <span class="nn">math</span> 
+ <span class="kn">import</span> <span class="nn">cmath</span>
+ <span class="kn">import</span> <span class="nn">numpy</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dft_with_complex_input</span><span class="p">(</span><span class="n">input_array</span><span class="p">):</span>
+    <span class="n">input_array_length</span><span class="p">,</span> <span class="n">dft_matrix</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_array</span><span class="p">),</span> <span class="p">[]</span> 
+    <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">input_array_length</span><span class="p">):</span>  
+        <span class="n">array_complex</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">input_array_length</span><span class="p">):</span>
+            <span class="n">angle</span> <span class="o">=</span> <span class="mi">2j</span> <span class="o">*</span> <span class="n">cmath</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">num</span> <span class="o">*</span> <span class="n">number</span> <span class="o">/</span> <span class="n">input_array_length</span> 
+            <span class="n">array_complex</span> <span class="o">+=</span> <span class="n">input_array</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">*</span> <span class="n">cmath</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">dft_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">array_complex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dft_matrix</span>
+</pre></div>
+
+
+<p>The above function iterates through each item in the input data and manually assigns them to fields in the <strong>DFT</strong> formula above. </p>
+<blockquote>
+<p>The input in this case has to be an array of real values.</p>
+</blockquote>
+<p>Checking the result by comparing it to numpy's FFT implementation, we get:</p>
+<div class="highlight"><pre><span></span><span class="n">test_data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">numpy</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">dft_with_complex_input</span><span class="p">(</span><span class="n">test_data</span><span class="p">),</span><span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">test_data</span><span class="p">))</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>True
+</pre></div>
+
+
+<p>Looks like everything is working fine</p>
+<p>Timing the <strong>dft_with_complex_input</strong> and the standard numpy implementation to view run_time differences, we get</p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">standard_dft_with_complex</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+<span class="o">%</span><span class="n">timeit</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>    1 loop, best of 3: 136 ms per loop
+    The slowest run took 16.43 times longer than the fastest. This could mean that an intermediate result is being cached.
+    100000 loops, best of 3: 11.7 µs per loop
+</pre></div>
+
+
+<p>From the time difference above, the <strong><strong>dft_with_complex_input</strong></strong> function is more than ten thousand times slower than the numpy implementation.</p>
+<p>Why?</p>
+<p>Its easy. </p>
+<p>To start with, the <code>dft_with_complex_input</code> is a rather simple implementation involving loops.
+Then it scales as an $O[N^2]$ whereas the standard numpy implementation scales as an  $O[N log N]$ .</p>
+<p>An alternative implementation of the <strong>DFT</strong> is shown below.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dft_with_input_pair</span><span class="p">(</span><span class="n">real_input</span><span class="p">,</span> <span class="n">imaginary_input</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">real_input</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">imaginary_input</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The lengths should be equal&quot;</span><span class="p">)</span>
+    <span class="n">input_array_length</span><span class="p">,</span> <span class="n">real_output</span><span class="p">,</span> <span class="n">imaginary_output</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inreal</span><span class="p">),</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">num_iterator_one</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">input_array_length</span><span class="p">):</span>
+        <span class="n">real_sum</span><span class="p">,</span> <span class="n">imaginary_sum</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">num_iterator_two</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">input_array_length</span><span class="p">):</span>  <span class="c1"># For each input element</span>
+            <span class="n">angle</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">num_iterator_two</span> <span class="o">*</span> <span class="n">num_iterator_one</span> <span class="o">/</span> <span class="n">input_array_length</span>
+            <span class="n">real_sum</span> <span class="o">+=</span>  <span class="n">real_input</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">+</span> <span class="n">imaginary_input</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+            <span class="n">imaginary_sum</span> <span class="o">+=</span> <span class="o">-</span><span class="n">real_input</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">+</span> <span class="n">imaginary_input</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">real_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">real_sum</span><span class="p">)</span>
+        <span class="n">imaginary_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imaginary_sum</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">outreal</span><span class="p">,</span> <span class="n">outimag</span><span class="p">)</span>
+</pre></div>
+
+
+<blockquote>
+<p>The above function uses a similar approach as the first one but uses a pair of real and imaginary input.</p>
+</blockquote>
+<p>A third implementation of the <strong>DFT</strong> in Python is shown below.
+It uses optimised numpy array functions.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dft_with_numpy</span><span class="p">(</span><span class="n">input_data</span><span class="p">):</span>
+    <span class="n">input_to_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">input_array_shape</span> <span class="o">=</span> <span class="n">input_to_array</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+    <span class="n">input_array_range</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">input_array_shape</span><span class="p">)</span>
+    <span class="n">input_array_rearrange</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">input_array_shape</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">output_matrix_vector</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2j</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">input_array_rearrange</span> <span class="o">*</span> <span class="n">input_array_range</span> <span class="o">/</span> <span class="n">input_array_shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">output_matrix_vector</span><span class="p">,</span> <span class="n">input_to_array</span><span class="p">)</span>
+</pre></div>
+
+
+<p>N.B : You can go ahead and check the output of each function on your own and also compare run times with that of the standard numpy and scipy implementations of the <strong>DFT</strong>.</p>
+<h3>Scipy FFT</h3>
+<p>Scipy has an extensive support for the  Discrete Fourier Transform. It provides support for 3 types of FFTs.</p>
+<ol>
+<li>Standard FFTs</li>
+<li>Real FFTs</li>
+<li>Hermitian FFTs</li>
+</ol>
+<h3>Numpy FFT</h3>
+<p>Like scipy, numpy has a very thorough and very documented support for the FFT. It provides support for FFT with 5 functions under the <code>numpy.fft</code> module. These functions are:</p>
+<ol>
+<li>numpy.fft.fft : This provides support for 1-Dimensional FFTs</li>
+<li>numpy.ifft2 : This provides support for inverse 2-Dimensional FFTs</li>
+<li>numpy.fftn : This provides support for n-D FFTs</li>
+<li>numpy.fftshift: This shifts zero-frequency terms to the center of the array. For two-dimensional input, swaps first and third quadrants, and second and fourth quadrants.</li>
+</ol>
+<p>If you are able to get to this point, you should have a clear idea of what the FFT algorithm is and how it can be implemented in various forms in Python.
+In the accompanying post, I would look into each scipy and numpy fft function and give a detailed outline of their use-cases.</p>
+        </div>
+
+        <div class="meta">
+            <div>
+                    <a href="olamyy.github.io/tag/maths.html" class="tag">Maths</a>
+                    <a href="olamyy.github.io/tag/python.html" class="tag">Python</a>
+                    <a href="olamyy.github.io/tag/fourier.html" class="tag">Fourier</a>
+            </div>
+        </div>
+    </article>
+    <section>
+    <h1>Comments</h1>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'olamyy';
+            var disqus_identifier = '/blog/2017/11/01/simulating-chutes-and-ladders/';
+            var disqus_url = 'http://olamyy.github.io/blog/2017/11/01/simulating-chutes-and-ladders/';
+            var disqus_title = 'The Hypothesis';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+  </section>
+</div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
+
+        </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-104393656-1', 'danielfrg.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+    </body>
+</html>
