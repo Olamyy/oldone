@@ -2,11 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cb3aab7-629f-4fce-a7fe-cc502e21c902" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/isso.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/blog/2017/11/01/introduction-to-fourier-transform/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/blog/2017/11/01/introduction-to-fourier-transform/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/blog/2018/01/30/locally-weighted-regression/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/blog/2018/01/30/locally-weighted-regression/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/blog/2018/03/17/extending-jupyter/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/blog/2018/03/17/extending-jupyter/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/drafts/beyond-linearity.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/drafts/beyond-linearity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/drafts/love-of-fractals.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/drafts/love-of-fractals.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/drafts/machine-learning-powered-recommendations.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/drafts/machine-learning-powered-recommendations.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/drafts/splitting-dilemma.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/drafts/splitting-dilemma.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output/drafts/understanding-the-sklearn-design.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/drafts/understanding-the-sklearn-design.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pelican.pid" beforeDir="false" afterPath="$PROJECT_DIR$/pelican.pid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/publishconf.py" beforeDir="false" afterPath="$PROJECT_DIR$/publishconf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/srv.pid" beforeDir="false" afterPath="$PROJECT_DIR$/srv.pid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/templates/article.html" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/article.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,23 +26,80 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="understanding-the-sklearn-design.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="735">
-                <caret line="354" column="140" selection-start-line="354" selection-start-column="140" selection-end-line="354" selection-end-column="140" />
-              </first_editor>
-              <second_editor />
+      <file leaf-file-name="publishconf.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/publishconf.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/base.py">
+      <file leaf-file-name="pelicanconf.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pelicanconf.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="27" selection-start-line="27" selection-end-line="27" />
+            <state relative-caret-position="710">
+              <caret line="76" column="11" selection-start-line="76" selection-start-column="11" selection-end-line="76" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="analytics.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/theme/templates/analytics.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="archives.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/theme/templates/archives.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="disqus_script.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugins/pelican-plugins/test_data/themes/notmyidea/templates/disqus_script.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="isso.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isso.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="19" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="article.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/theme/templates/article.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="64" selection-start-line="64" selection-end-line="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="develop_server.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/develop_server.sh">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="beyond-linearity.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/output/drafts/beyond-linearity.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret line="460" column="21" selection-start-line="460" selection-start-column="21" selection-end-line="460" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="understanding-the-sklearn-design.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/output/drafts/understanding-the-sklearn-design.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="339">
+              <caret line="485" column="50" selection-start-line="485" selection-start-column="50" selection-end-line="485" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -55,6 +121,9 @@
       <find>”</find>
       <find>were</find>
       <find>rolling</find>
+      <find>DIS</find>
+      <find>disqus_shortname</find>
+      <find>disqus</find>
     </findStrings>
     <replaceStrings>
       <replace>* Sc</replace>
@@ -63,6 +132,10 @@
     </replaceStrings>
     <dirStrings>
       <dir>/usr/local/lib/python3.6/site-packages/sklearn</dir>
+      <dir>$PROJECT_DIR$/output/drafts</dir>
+      <dir>$PROJECT_DIR$/output</dir>
+      <dir>$PROJECT_DIR$</dir>
+      <dir>$PROJECT_DIR$/theme</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -75,6 +148,11 @@
         <option value="$PROJECT_DIR$/pelicanconf.py" />
         <option value="$PROJECT_DIR$/.gitmodules" />
         <option value="$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md" />
+        <option value="$PROJECT_DIR$/publishconf.py" />
+        <option value="$PROJECT_DIR$/output/drafts/beyond-linearity.html" />
+        <option value="$PROJECT_DIR$/plugins/pelican-plugins/test_data/themes/notmyidea/templates/disqus_script.html" />
+        <option value="$PROJECT_DIR$/isso.sh" />
+        <option value="$PROJECT_DIR$/theme/templates/article.html" />
       </list>
     </option>
   </component>
@@ -109,25 +187,14 @@
             </path>
             <path>
               <item name="repository" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+              <item name="theme" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="repository" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.6 &gt;" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="repository" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.6 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="site-packages" type="b5f07198:RTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="repository" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.6 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="site-packages" type="b5f07198:RTreeStructureProvider$1" />
-              <item name="sklearn" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+              <item name="theme" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -330,7 +397,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1124" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32911393" />
@@ -339,12 +405,13 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="right" id="Mongo Explorer" order="3" weight="0.32960597" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.7458617" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24973376" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.43719572" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12939297" />
       <window_info anchor="right" id="R Packages" order="3" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="R Graphics" order="3" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
@@ -355,7 +422,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -365,47 +431,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="4200">
-            <caret line="280" column="42" selection-start-line="280" selection-start-column="42" selection-end-line="280" selection-end-column="42" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pelicanconf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/publishconf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-          <folding>
-            <element signature="e#48#87#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/random_projection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3615">
-          <caret line="249" column="18" selection-start-line="249" selection-start-column="8" selection-end-line="249" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitmodules">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -678,27 +703,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pelicanconf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitmodules">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/publishconf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
-          <folding>
-            <element signature="e#48#87#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -722,10 +730,80 @@
     <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="735">
+          <first_editor relative-caret-position="692">
             <caret line="354" column="140" selection-start-line="354" selection-start-column="140" selection-end-line="354" selection-end-column="140" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/theme/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/theme/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/theme/templates/page.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/theme/templates/tag.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/theme/templates/analytics.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/theme/templates/archives.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pelicanconf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="710">
+          <caret line="76" column="11" selection-start-line="76" selection-start-column="11" selection-end-line="76" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/publishconf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/drafts/understanding-the-sklearn-design.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="485" column="50" selection-start-line="485" selection-start-column="50" selection-end-line="485" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output/drafts/beyond-linearity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="460" column="21" selection-start-line="460" selection-start-column="21" selection-end-line="460" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/pelican-plugins/test_data/themes/notmyidea/templates/disqus_script.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/develop_server.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isso.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="19" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/theme/templates/article.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="64" selection-start-line="64" selection-end-line="64" />
         </state>
       </provider>
     </entry>
