@@ -2,79 +2,66 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cb3aab7-629f-4fce-a7fe-cc502e21c902" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/archives.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author/olamilekan-wahab.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/authors.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/blog/2017/11/01/introduction-to-fourier-transform/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/blog/2018/01/30/locally-weighted-regression/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/categories.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category/fourier-transforms.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category/locally-weight-regression.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drafts/beyond-linearity.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drafts/machine-learning-powered-recommendations.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/feeds/all-en.atom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/feeds/all.atom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/feeds/fourier-transforms.atom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/feeds/locally-weight-regression.atom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/feeds/olamilekan-wahab.atom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/feeds/olamilekan-wahab.rss.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/about-me.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/django.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/fitted_lwr.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/fitted_scatter.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/fourier.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/linearity.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/locally-weighted-regression.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/recsys.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/reg-func.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/scatter.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/statsmodel_case.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/unfitted_lwr.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/about.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/research.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tag/fourier.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tag/lwr.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tag/maths.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tag/python.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tag/regression.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tags.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/environment.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fabfile.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/templates/analytics.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/templates/archives.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/templates/ipynb.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/templates/page.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/templates/tag.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/repository.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/repository.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CNAME" beforeDir="false" afterPath="$PROJECT_DIR$/CNAME" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/pages/about.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/pages/about.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/robots.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/develop_server.sh" beforeDir="false" afterPath="$PROJECT_DIR$/develop_server.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/environment.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/archives.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/olamilekan-wahab.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/authors.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/2017/11/01/introduction-to-fourier-transform/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/2018/01/30/locally-weighted-regression/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/categories.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category/fourier-transforms.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/category/locally-weight-regression.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drafts/beyond-linearity.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/drafts/machine-learning-powered-recommendations.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/content/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feeds/all-en.atom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feeds/all.atom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feeds/fourier-transforms.atom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feeds/locally-weight-regression.atom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feeds/olamilekan-wahab.atom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feeds/olamilekan-wahab.rss.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/about-me.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/django.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/fitted_lwr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/fitted_scatter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/fourier.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/linearity.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/locally-weighted-regression.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/recsys.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/reg-func.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/scatter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/statsmodel_case.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/unfitted_lwr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/drafts/understanding-the-sklearn-design.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/drafts/understanding-the-sklearn-design.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/about.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/research.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pelicanconf.py" beforeDir="false" afterPath="$PROJECT_DIR$/pelicanconf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/ipynb/tests/pelican/content/with-metadata.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/ipynb/tests/pelican/content/with-metadata.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/b64img.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/b64img.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/liquid_tags.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/liquid_tags.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/mdx_liquid_tags.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/mdx_liquid_tags.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/youtube.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/youtube.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/Readme.rst" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/Readme.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/sitemap.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/sitemap/sitemap.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/publishconf.py" beforeDir="false" afterPath="$PROJECT_DIR$/publishconf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/analytics.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/archives.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/article.html" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/article.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/ipynb.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/main.less" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/main.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/page.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/pygments.css" beforeDir="false" afterPath="$PROJECT_DIR$/theme/templates/pygments.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/templates/tag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tag/fourier.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tag/lwr.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tag/maths.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tag/python.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tag/regression.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tags.html" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -89,7 +76,7 @@
         <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="322">
+              <first_editor relative-caret-position="4200">
                 <caret line="280" column="42" selection-start-line="280" selection-start-column="42" selection-end-line="280" selection-end-column="42" />
               </first_editor>
               <second_editor />
@@ -100,36 +87,16 @@
       <file leaf-file-name=".gitmodules" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitmodules">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="90">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Makefile" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Makefile">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="CNAME" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CNAME">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="develop_server.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/develop_server.sh">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="Pipfile" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Pipfile">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="pelicanconf.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pelicanconf.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-620">
+            <state relative-caret-position="345">
               <caret line="23" selection-start-line="23" selection-end-line="23" />
             </state>
           </provider>
@@ -150,7 +117,7 @@
       <file leaf-file-name="random_projection.py" pinned="false" current-in-tab="false">
         <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/random_projection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
+            <state relative-caret-position="555">
               <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
             </state>
           </provider>
@@ -159,7 +126,7 @@
       <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
         <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="99">
+            <state relative-caret-position="3615">
               <caret line="249" column="18" selection-start-line="249" selection-start-column="8" selection-end-line="249" selection-end-column="18" />
             </state>
           </provider>
@@ -223,7 +190,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -239,6 +205,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -449,7 +416,6 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="R Graphics" order="3" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
@@ -460,6 +426,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -469,6 +436,54 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="4200">
+            <caret line="280" column="42" selection-start-line="280" selection-start-column="42" selection-end-line="280" selection-end-column="42" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pelicanconf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/publishconf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="e#48#87#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/random_projection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3615">
+          <caret line="249" column="18" selection-start-line="249" selection-start-column="8" selection-end-line="249" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitmodules">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
@@ -594,15 +609,6 @@
           <caret line="249" column="18" selection-start-line="249" selection-start-column="8" selection-end-line="249" selection-end-column="18" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pelican.pid">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pipfile">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/pelicanconf.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -621,12 +627,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/develop_server.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CNAME">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
@@ -751,14 +751,14 @@
     </entry>
     <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/random_projection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
+        <state relative-caret-position="555">
           <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file:///usr/local/lib/python3.6/site-packages/sklearn/base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
+        <state relative-caret-position="3615">
           <caret line="249" column="18" selection-start-line="249" selection-start-column="8" selection-end-line="249" selection-end-column="18" />
         </state>
       </provider>
@@ -766,7 +766,7 @@
     <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="322">
+          <first_editor relative-caret-position="4200">
             <caret line="280" column="42" selection-start-line="280" selection-start-column="42" selection-end-line="280" selection-end-column="42" />
           </first_editor>
           <second_editor />
@@ -775,7 +775,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pelicanconf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-620">
+        <state relative-caret-position="345">
           <caret line="23" selection-start-line="23" selection-end-line="23" />
         </state>
       </provider>
@@ -792,8 +792,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitmodules">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
