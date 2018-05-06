@@ -1,13 +1,24 @@
-Title: The Sklearn API Design
+Title: The Sklearn API Design Principles
 author: Olamilekan Wahab
 Slug: understanding-the-sklearn-design
 categories: python sklearn machine-learning
-Date: 2017-11-01
+Date: 2018-05-05
 Tags: machine-learning,sklearn, python
 image: scikit.png 
 Status: draft
 
 
+__Hi__, 
+
+You should really read this to the end if:
+
+1. You've never really understood how sklearn modules/classes are structured.
+
+2. You're interested in contributing to sklearn.
+
+3. You need to understand the internals of sklearn, why some decisions were made and how some things work.
+
+---------------------------------------------
 Some weeks back, I decided to start contributing to the open source scikit-learn library. This decision led me to read a whole lot of sklearn's code, documentation , contribution and 
 online guides.
 
@@ -27,15 +38,8 @@ The rest of the article will be organised as follows:
             * Predictors
             * Transformers
             * Meta-estimators
-            * Pipelines
-            * Feature Unions
-            * Models and Model Selection
-        * Inspection
-        * Composition
-        * Defaults
-    * Extending scikit-learn
-    * Reading the scikit-learn code 
-    * Contributing to scikit-learn
+            * Pipelines and Feature Unions
+        * Other Principles
 * Conclusion
 * Resources  
 
@@ -154,7 +158,7 @@ For situations where models are to be built using text files or semi-stuctured p
  used now.
  
 ### Consistency
-The sklearn API was majorly designed to be consistent. This means object that do the same things were given a simple and consistent interface. Having a consistent API meant objects(sklearn objects)
+The sklearn API was majorly designed to be consistent. This means object that do the same things are given a simple and consistent interface. Having a consistent API meant objects(sklearn objects)
  had to be grouped based on a number of conditions.
  The available types of sklearn objects are:
  
@@ -175,8 +179,8 @@ The sklearn API was majorly designed to be consistent. This means object that do
      on the estimator object. Once learning is complete, this model sets its parameters(the learned parameters) gets exposed as class attributes with trailing underscore in their names(An example 
      is the `statistics_` attribute of the `Imputer` estimator.).
      
-     In situations were a user needs to implement his own meta-estimator, the `BaseEstimator` 
-       class and it's(the required classifier) 
+     In situations where a user needs to implement a custom estimator, the `BaseEstimator` 
+       class and it's(the required classifier's) 
        corresponding 
        `mixin` can be 
        subclassed as shown below.
@@ -186,7 +190,7 @@ The sklearn API was majorly designed to be consistent. This means object that do
         ## A regressor mixin is being used here because 
         ## the example is for a regressor Estimator.  
     
-        class ExampleClassifierEstimator(BaseEstimator, RegressorMixin):  
+        class ExampleRegressorEstimator(BaseEstimator, RegressorMixin):  
         """An example of an regressor estimator. 
         Take a good look at docstring of the constructor, fit and predict methods. """
     
@@ -203,7 +207,7 @@ The sklearn API was majorly designed to be consistent. This means object that do
             This should fit classifier. All the "work" should be done here.
     
             Note: assert is not a good choice here and you should rather
-            use try/except blog with exceptions. This is just for short syntax.
+            use try/except blog with exceptions.
              The y parameter must be set if the task is supervised learning.
             """
     
@@ -224,21 +228,25 @@ The sklearn API was majorly designed to be consistent. This means object that do
             pass
             
            
+           
    
        Meta estimators are a higher order estimators that are made from other(base) estimators. They require base estimators to be provided in their constructor. The most used example of 
-       meta-estimators are ensemble methods available via `sklearn.ensemble` 
-       In sklearn, each instance of a classifier (estimator) implements a corresponding meta-estimator.  An alternative approach to creating meta-estimators is to use the multiclass sklearn module and implementing any of the algorithms below:
-   
-    * one-vs-all
-    * one-vs-one
-    * error correcting output codes
-    
-    
-     In conclusion, always keep the following at the back of your mind when writing or working with estimators and meta-estimators:
-     
-     * Constructor parameters should have default values.
-     * Constructor shouldn't implement any form of logic(whether complex or not). Logic is best suited for the fit method.
-     * The `fit` method should handle all logic and return an instance of the class.
+      ,meta-estimators are ensemble methods available via `sklearn.ensemble` 
+      ,In sklearn, each instance of a classifier (estimator) implements a corresponding meta-estimator.  An alternative approach to creating meta-estimators is to use the multiclass sklearn module and 
+      implementing any of the algorithms below:
+       
+       * one-vs-all
+       * one-vs-one
+       * error correcting output codes
+        
+        In conclusion, always keep the following at the back of your mind when writing or working with estimators and meta-estimators:
+         
+       * Constructor parameters should have default values.
+       
+       * Constructor shouldn't implement any form of logic(whether complex or not).
+        Logic is best suited for the fit method.
+       
+       * The `fit` method should handle all logic and return an instance of the class.
      
     
 2. Transformers
@@ -279,3 +287,81 @@ The sklearn API was majorly designed to be consistent. This means object that do
     1. `decision_function` for linear models to measure the distance between samples
     2. `score` to  measure the quality of the prediction. This method computes the coefficient of determination  in regression and the accuracy in classification.
     3. `predict_proba` to measure class probabilities.
+    4. `predict_log_proba` to measure class probabilities.
+    
+4. Pipelines and Feature Unions
+
+    Pipelines in machine learning are chaining tools. They are used to chain processes together and follow execution from one end of the chain to the other. Sklearn provides support for pipeline
+    objects that accept a list of transformers and a single estimator. 
+    
+    The list of transformers handle intermediate steps(i.e feature extraction, dimensionality reduction, learning and making 
+    predictions) and (should) expose both a `fit` and a `transform` method. The estimator only has to implement a `fit` method. Calling a pipeline, recursively fits then transforms the data set 
+    till it gets to the estimator then it calls the fit method of the estimator.
+    
+    ![dense matrix.](/images/pipeline.png) 
+    
+    Figure 4: An example of a pipline diagram(Credits : [http://karlrosaen.com/ml/learning-log/2016-06-20/](http://karlrosaen.com/ml/learning-log/2016-06-20/))
+    
+    The final usage(features) of a pipeline depends on the attributes of the estimator in the pipeline. This means, if the estimator is a predictor pipeline, the pipeline can itself be used as a 
+    predictor. 
+    If the estimator is a transformer, then the pipeline is a transformer pipeline. 
+    
+    Feature Unions are quite similar to pipelines in the sense that they are also chaining tools. However unline pipelines, feature unions only chain together transformation processes.
+    This means they accept a list of transformers as input and expose a fit method which recursively calls the base transformers `fit` methods. The main advantage of feature union objects is that 
+    they can be used in place of transformers in pipelines.
+    
+    ![dense matrix.](/images/pipelines.png) 
+    
+    Figure 5: An example of a pipline.
+    
+    The `PCA` and `KernelPCA` transformers in the pipeline image above can be combined into a single FeatureUnion which can then be passed down to the SelectKBest estimator and then to the logistic 
+    regression predictor.
+    
+    ![dense matrix.](/images/feature_union.png) 
+    
+    Figure 6: An example of a feature union in a pipeline.
+    
+
+        from sklearn.pipeline import FeatureUnion , Pipeline 
+        from sklearn.decomposition import PCA, KernelPCA 
+        from sklearn.feature_selection import SelectKBest
+    
+        union = FeatureUnion([('pca', PCA()),('kpca', KernelPCA(kernel='rbf'))])
+    
+        pipeline = Pipeline([('feat union', union),
+        ('feat sel', SelectKBest(k=10)),
+        ('log reg', LogisticRegression(penalty='l2')) ]).fit(X train, y train).predict(X test)
+    
+    
+## Other Principles
+Asides consistency, a number of other principles the sklearn library tries to adhere by include:
+
+1. Inspection : This provides a reasonable interface to retrieve/inspect data from objects. For example, estimator hyperparameters are made to be directly accessible via public instance and their 
+learnt parameters are are also accessible via public instance variables with an underscore suffix 
+
+2. Composition
+    Blocks of code were placed together in an attempt to ensure reusability and reduce class proliferation. This, for example makes it easy to create a feature union from a sequence of transformers
+     and to create a pipeline from a sequence of feature unions, transformers and an estimator without necessarily having to write new classes each time.
+     
+3. Defaults:
+    Sensible defaults are set in all the objects in sklearn. This provides a fallback mechanisms for variables/attributes to fall back to in case they're not set by the user.
+    
+        
+## Conclusion
+   Sklearn is a very interesting and powerful machine learning library. Given the fact that it covers most machine learning methods, sklearn can be a bit daunting to get through at first. 
+   In this article, I have attempted to break down the majorly objects available in the library into simple understandable chunks that can be tackled at once. While, I did not cover every chunk in 
+   complete details, the resources section below provides a link to a number of articles/resources where more information can be gotten about them.
+   
+   If you do happen to have any question or comment, do feel free to leave one below or sync up with me on twitter at https://twitter.com/__olamilekan\__\. 
+      
+## Resources
+1. [https://github.com/scikit-learn/scikit-learn](https://github.com/scikit-learn/scikit-learn)
+2. [http://scikit-learn.org/stable/developers/index.html](http://scikit-learn.org/stable/developers/index.html)
+3. [Why does sklearn Imputer need to fit?](https://stackoverflow.com/questions/46691596/why-does-sklearn-imputer-need-to-fit)
+4. [https://github.com/scikit-learn-contrib/project-template/](https://github.com/scikit-learn-contrib/project-template/)
+5. [http://scikit-learn.org/stable/modules/classes.html](http://scikit-learn.org/stable/modules/classes.html)
+6. [http://scikit-learn.org/stable/modules/ensemble.html](http://scikit-learn.org/stable/modules/ensemble.html)
+7. [http://scikit-learn.org/dev/developers/contributing.html#rolling-your-own-estimator](http://scikit-learn.org/dev/developers/contributing.html#rolling-your-own-estimator)
+8. [http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html](http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html)
+9. [http://karlrosaen.com/ml/learning-log/2016-06-20/](http://karlrosaen.com/ml/learning-log/2016-06-20/)
+10. [https://arxiv.org/abs/1309.0238](https://arxiv.org/abs/1309.0238)
