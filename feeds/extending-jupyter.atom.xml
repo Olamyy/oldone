@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Indent</title><link href="/" rel="alternate"></link><link href="/feeds/extending-jupyter.atom.xml" rel="self"></link><id>/</id><updated>2018-03-17T00:00:00+00:00</updated><entry><title>Extending the jupyter notebook</title><link href="/blog/2018/03/17/extending-jupyter/" rel="alternate"></link><published>2018-03-17T00:00:00+00:00</published><updated>2018-03-17T00:00:00+00:00</updated><author><name>Olamilekan Wahab</name></author><id>tag:,2018-03-17:blog/2018/03/17/extending-jupyter/</id><summary type="html">&lt;p&gt;Originally called IPython when the only supported platform was python, the jupyter notebook is the go-to platform for interactive programming in various scripting languages. The currently supported 
+languages include &lt;a href="https://mybinder.org/v2/gh/ipython/ipython-in-depth/master?filepath=binder/Index.ipynb"&gt;python&lt;/a&gt;, &lt;a href="https://mybinder.org/v2/gh/binder-examples/r/master?filepath=index.ipynb"&gt;R&lt;/a&gt;, &lt;a href="https://mybinder.org/v2/gh/binder-examples/julia-python/master?filepath=julia.ipynb"&gt;Julia&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Fun Fact :  The name Jupyter is an acronym of these 3 languages :  &lt;strong&gt;JU&lt;/strong&gt;lia,  &lt;strong&gt;PYT&lt;/strong&gt;hon, and  &lt;strong&gt;R&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Some of the most used features of the jupyter notebook include keyboard shortcuts, pretty display, magic commands, shells, kernel supports,document exports, live coding and a host of other features
+mentioned in this blogpost &lt;a href="https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;What led to this article?&lt;/h1&gt;
+&lt;p&gt;Last week, I was working in a notebook and needed to:&lt;br /&gt;
+I. Dynamically skip some cells&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Problem 1" src="/images/jupyter-problem-1.png" /&gt; &lt;/p&gt;
+&lt;p&gt;Problem 1: Going to the cell and selecting "Run Cell" would have taken care of this but it wasn't dynamic. &lt;/p&gt;
+&lt;p&gt;II. Run some cells before others &lt;/p&gt;
+&lt;p&gt;&lt;img alt="Problem 2" src="/images/jupyter-problem-2.png" /&gt; Problem 2&lt;/p&gt;
+&lt;p&gt;III. Trigger a run in a cell from another cell.&lt;/p&gt;
+&lt;p&gt;After looking at all keyboard shortcuts and features in jupyter, I realized there was no available support for this. &lt;/p&gt;
+&lt;p&gt;Luckily for me, after digging deeper, I came across &lt;a href="http://2017.pyconuk.org/sessions/talks/extending-jupyter-notebook/"&gt;this PyConUK talk&lt;/a&gt; that introduced the idea of extending jupyter and this 
+was where I kicked off my research into this topic&lt;/p&gt;
+&lt;p&gt;The rest of the article would be laid out this way:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Terminologies&lt;/p&gt;
+&lt;p&gt;i. Notebook Document&lt;/p&gt;
+&lt;p&gt;ii. Kernels&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kernel Extensions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;IPython Kernel Extensions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Notebook Extensions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Notebook Server Extensions&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;&lt;strong&gt;Terminologies&lt;/strong&gt;&lt;/h3&gt;
+&lt;h3&gt;Notebook Document&lt;/h3&gt;
+&lt;p&gt;A notebook document is the entry point of code in a jupyter notebook. Produced by the jupyter notebook app, notebook documents are made of executable cells that support code and text(in 
+various formats) entry in various formats. These cells are draggable and can output code results in various formats(plots, images, texts, tables e.t.c)&lt;/p&gt;
+&lt;h3&gt;Kernels&lt;/h3&gt;</summary><category term="Python"></category><category term="Jupyter"></category><category term="Ipython"></category><category term="Software"></category><category term="Tool"></category></entry></feed>
