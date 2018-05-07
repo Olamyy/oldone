@@ -6,7 +6,7 @@
         <meta name="author" content="Olamilekan Wahab">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>The Data Splitting Dilemma | Indent</title>
+        <title>Archives | Indent</title>
 
         <link rel="alternate" type="application/atom+xml" title="Indent blog atom feed" href="/feeds/all.atom.xml" />
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
@@ -394,128 +394,20 @@ article .meta a.comments_btn:hover {
         </header>
 
         <div id="wrap">
-<div class="container post">
+<div class="container list">
     <article>
-        <header>
-            <h1>The Data Splitting Dilemma</h1>
-            <time datetime="article.date.isoformat()" pubdate>November 01, 2017</time>
-        </header>
+        <h1 style="margin-bottom: 30px;">Tag: sklearn</h1>
 
-        <img src="/images/scikit.png">
-        <div class="article_content">
-            <p>Splitting data the right way is arguably one of the less discussed topics in Machine Learning. 
-0Being less discussed results in either doing it all wrong
-or not 
-This article is an attempt at explaining the topic, its importance and various ways of effectively splitting data.
-The rest of the article would be structured in the format below:</p>
-<ol>
-<li>
-<p>What is data splitting?</p>
-</li>
-<li>
-<p>Why should data be split?</p>
-</li>
-<li>
-<p>Methods of splitting data</p>
-<ol>
-<li>
-<p>Random</p>
-</li>
-<li>
-<p>Cross Validation</p>
-</li>
-<li></li>
-</ol>
-</li>
-</ol>
-<h3>1. What is Data Splitting?</h3>
-<p>One of the first decisions to make when modeling is to decide which samples will be used to evaluate performance. Ideally, the model should be evaluated on samples that were not used to build or fine-tune the model, so that they provide an unbiased sense of model effectiveness. When a large amount of data is at hand, a set of samples can be set aside to evaluate the final model. The “training” data set is the general term for the samples used to create the model, while the “test” or “validation” data set is used to qualify performance.</p>
-        </div>
-
-        <div class="meta">
-            <div>
-                    <a href="/tag/machine-learning.html" class="tag">machine-learning</a>
-                    <a href="/tag/sklearn.html" class="tag">sklearn</a>
-                    <a href="/tag/python.html" class="tag">python</a>
-            </div>
-        </div>
+        <ul class="double-list">
+            <li>
+                <a href='/blog/2018/05/05/understanding-the-sklearn-design/'>
+                    <h2>The Sklearn API Design Principles</h2>
+                    <span>05.05.2018</span>
+                </a>
+            </li>
+        </ul>
     </article>
-    <section>
-    <h1>Comments</h1>
-               <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I just read The Data Splitting Dilemma by @__olamilekan__" data-size="large">Share on twitter</a>
-        <div id="disqus_thread"></div>
-        <script>
-
-        /**
-        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-        /*
-        var disqus_config = function () {
-        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-        };
-        */
-        (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-        s.src = 'https://indent.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-        })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-  </section>
 </div>
-
-<style type="text/css">
-{
-    max-width: 700px;
-}
-
-.text_cell .prompt {
-    display: none;
-}
-
-div.cell {
-    padding: 0;
-}
-
-div.text_cell_render {
-    padding: 0;
-}
-
-div.prompt {
-    font-size: 13px;
-}
-
-div.input_prompt {
-    padding: .7em 0.2em;
-}
-
-div.output_prompt {
-    padding: .4em .2em;
-}
-
-div.input_area {
-    margin: .2em 0.4em;
-    max-width: 580px;
-}
-
-table.dataframe {
-    font-family: Arial, sans-serif;
-    font-size: 13px;
-    line-height: 20px;
-}
-
-table.dataframe th, td {
-    padding: 4px;
-    text-align: left;
-}
-
-pre code {
-    background-color: inherit;
-}</style>
-
         </div>
 
 <script>

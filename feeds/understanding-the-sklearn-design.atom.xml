@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Indent</title><link href="/" rel="alternate"></link><link href="/feeds/understanding-the-sklearn-design.atom.xml" rel="self"></link><id>/</id><updated>2018-05-05T00:00:00+00:00</updated><entry><title>The Sklearn API Design Principles</title><link href="/blog/2018/05/05/understanding-the-sklearn-design/" rel="alternate"></link><published>2018-05-05T00:00:00+00:00</published><updated>2018-05-05T00:00:00+00:00</updated><author><name>Olamilekan Wahab</name></author><id>tag:,2018-05-05:blog/2018/05/05/understanding-the-sklearn-design/</id><summary type="html">&lt;p&gt;&lt;strong&gt;Hi&lt;/strong&gt;, &lt;/p&gt;
+&lt;p&gt;You should really read this to the end if:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;You've never really understood how sklearn modules/classes are structured.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You're interested in contributing to sklearn.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You need to understand the internals of sklearn, why some decisions were made and how some things work.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;p&gt;Some weeks back, I decided to start contributing to the open source scikit-learn library. This decision led me to read a whole lot of sklearn's code, documentation , contribution and 
+online guides.&lt;/p&gt;
+&lt;p&gt;This article is an attempt to document everything I learnt about the design principles behind the library.&lt;/p&gt;
+&lt;p&gt;The rest of the article will be organised as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What is a scikit in python? &lt;ul&gt;
+&lt;li&gt;Examples of scikits&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Scikit-learn&lt;ul&gt;
+&lt;li&gt;What is scikit-learn?&lt;/li&gt;
+&lt;li&gt;A little history&lt;/li&gt;
+&lt;li&gt;Data representation&lt;/li&gt;
+&lt;li&gt;API Design Principles&lt;ul&gt;
+&lt;li&gt;Consistency&lt;ul&gt;
+&lt;li&gt;Estimators&lt;/li&gt;
+&lt;li&gt;Predictors&lt;/li&gt;
+&lt;li&gt;Transformers&lt;/li&gt;
+&lt;li&gt;Meta-estimators&lt;/li&gt;
+&lt;li&gt;Pipelines and Feature Unions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Other Principles&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Conclusion&lt;/li&gt;
+&lt;li&gt;Resources  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;What is a scikit in python?&lt;/h2&gt;
+&lt;p&gt;A scikit, short for SciPy Toolkit(or the more expressive, Scientifica Python Toolkit) is a any open sourced software for Python written to supplement Scipy. Scikits are essentially add on packages 
+that are related to either science, engineering or research in one field or another. They're usually BSD licensed and are built upon existing libraries like scipy and numpy. A package can be called
+a scikit when :&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;It is too specialized on a field or topic to part of SciPy.&lt;/li&gt;
+&lt;li&gt;It is GPL licensed (This makes it incompatible with SciPy’s BSD license).&lt;/li&gt;
+&lt;li&gt;It's meant to be part of Scipy but is still actively being developed.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Example of scikits&lt;/h3&gt;
+&lt;p&gt;Some of the most widly used example scikit packages are:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Machine Learning Specific&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://scikit-learn.org/"&gt;Scikit-learn&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-neuralnetwork"&gt;Scikit-neuralnetwork&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-splearn"&gt;scikit-splearn&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-metrics"&gt;scikit-metrics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-tensor"&gt;scikit-tensor&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-surprise"&gt;scikit-surprise&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-stack"&gt;scikit-stack&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-graph"&gt;scikit-graph&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-keras"&gt;scikit-keras&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Media Specific Scikits&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-image"&gt;Scikit-image&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-sound"&gt;Scikit-sound&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-video"&gt;Scikit-video&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-xray"&gt;Scikit-xray&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Data Specific&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-dataaccess"&gt;Scikit-dataacces&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://github.com/pandas/pandas-dev"&gt;Pandas&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-data"&gt;Scikit-data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-datasets"&gt;Scikit-datasets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-discovery"&gt;Scikit-discovery&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Visualization Specific Scikits&lt;ul&gt;
+&lt;li&gt;&lt;a href=""&gt;Matplotlib&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-visualizations"&gt;Scikit-visualizations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-vi"&gt;Scikit-vi&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-vis"&gt;Scikit-vis&lt;/a&gt;   &lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-viz"&gt;Scikit-viz&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikits.appspot.com/scikit-plot"&gt;Scikit-plot&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;While the list above covers some popular scikits, the official &lt;a href="http://scikits.appspot.com/scikits"&gt;scikit appspot website&lt;/a&gt; links to a whole lot of other scikits.&lt;/p&gt;
+&lt;h2&gt;Scikit-learn&lt;/h2&gt;
+&lt;h3&gt;What is scikit-learn?&lt;/h3&gt;
+&lt;p&gt;Scikit-learn(shortened as sklearn) is an open source library that provides a consistent API for using traditional state of the art Machine Learning algorithms/methods in Python.&lt;/p&gt;
+&lt;p&gt;Majorly written in Python, some of sklearn's internal algorithms are written in Cython using third party bindings like LIBSVM and 
+LIBLINEAR. Sklearn's major python dependencies are scipy, numpy and matplotlib. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="sklearn dependency tree." src="/images/sklearn.png" /&gt; &lt;/p&gt;
+&lt;p&gt;Figure 1 : This shows a dependency tree for the sklearn library.&lt;/p&gt;
+&lt;h2&gt;A little history&lt;/h2&gt;
+&lt;p&gt;During the Google Summer of Code in 2007, David Cournapeau decided to put together a number of algorithms he has been using over time into a python module. A while after this, Matthieu Brucher joined
+the project and decided to use it for computational work in his thesis. This gave sklearn more light and in no time(2010 to be specific), &lt;a href=""&gt;INRA&lt;/a&gt; got involved in it and the first major release was 
+published in the same year.&lt;/p&gt;
+&lt;h2&gt;Data Representation&lt;/h2&gt;
+&lt;p&gt;Machine learning data in different fields, languages, etc. is generally represented as a pair of matrices with numerical values, say $X$ and $y$. The $X$ variables often represent the input values and
+the $y$ variables represent the output values. Each row of these matrices  to one sample of the dataset and each column to one variable of the problem.
+Sklearn as expected also follows the same form for representing data internally. To represent data, it classifies all data under 3 types of data:&lt;/p&gt;
+&lt;h4&gt;1. Sparse Data&lt;/h4&gt;
+&lt;p&gt;A sparse data is any dataset that mostly contains more zeros that non-zero entries. To be a bit technical, a vector is $k$-sparse if it contains at most $k$ nonzero entries. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="sparse matrix." src="/images/sparse_matrix.png" /&gt; &lt;/p&gt;
+&lt;p&gt;Figure 2 : An example of a sparse matrix.&lt;/p&gt;
+&lt;p&gt;Sklearn represents sparse data as scipy sparse matrices. It does this because:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Storing all zero values in a sparse matrix is a computational waste.&lt;/li&gt;
+&lt;li&gt;It is much more efficient to operate only on elements that will return nonzero values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To avoid these, sklearn uses a scipy algorithm called Compressed Sparse Row (CSR). This essentially compresses the memory footprint of the matrix object and speeds up insert and retrieval processes
+ to optimize the operation of many sklearn's algorithms. &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Sklearn has a number of algorithms that support sparse matrix operations. If you ever need to check if an algorithm supports sparse data, check the documentation of the  &lt;code&gt;fit&lt;/code&gt; method of it's 
+ class. If it has an &lt;code&gt;X: {array-like, sparse matrix}&lt;/code&gt; entry, then it supports sparse data entry.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;For a much more thorough understanding of how scipy sparse matrices work, you can check out &lt;a href="https://github.com/dziganto/Data_Science_Fundamentals"&gt;David Ziganto's&lt;/a&gt; article &lt;a href="https://dziganto.github.io/Sparse-Matrices-For-Efficient-Machine-Learning/"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;2. Dense Data&lt;/h4&gt;
+&lt;p&gt;A dense data contains mostly non-zero entries. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="dense matrix." src="/images/dense.jpg" /&gt; &lt;/p&gt;
+&lt;p&gt;Figure 3 : An example of a dense matrix.&lt;/p&gt;
+&lt;p&gt;Sklearn represents dense data as  multidimensional numpy arrays.
+   &lt;a href=""&gt;X's&lt;/a&gt; notes has a very thorough explanation of how this works.&lt;/p&gt;
+&lt;h4&gt;3. Non standard textual data&lt;/h4&gt;
+&lt;p&gt;For situations where models are to be built using text files or semi-stuctured python objects, sklearn attempts to &lt;code&gt;vectorize&lt;/code&gt; these files/objects into the more efficient numpy and scipy data types.&lt;/p&gt;
+&lt;h2&gt;API Design Principles&lt;/h2&gt;
+&lt;p&gt;In this section, I would discuss some of the design desicions that were made during the creation of the library, why they were made and how these decisions have influenced the way the library is 
+ used now.&lt;/p&gt;
+&lt;h3&gt;Consistency&lt;/h3&gt;
+&lt;p&gt;The sklearn API was majorly designed to be consistent. This means object that do the same things are given a simple and consistent interface. Having a consistent API meant objects(sklearn objects)
+ had to be grouped based on a number of conditions.
+ The available types of sklearn objects are:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt; 1. Estimators and Meta-estimators
+ 2. Transformers
+ 3. Predictors
+ 4. Pipelines
+ 5. Feature Unions
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Estimators and meta-estimators:&lt;/p&gt;
+&lt;p&gt;Estimator objects like you would expect are sklearn classes that estimate parameters in data. Both supervised and unsupervised sklearn algorithms provide support for estimators. Since estimator
+objects do some form of &lt;code&gt;learning&lt;/code&gt;, the initialization and learning phase of estimators are separated.
+If  &lt;code&gt;hyperparameter&lt;/code&gt; values are set during the initialization of estimators, the set values are used during learning. If not, the default values are used while learning.&lt;/p&gt;
+&lt;p&gt;Once initialized, estimators expose a &lt;code&gt;fit&lt;/code&gt; method where the estimation learning happens. The &lt;code&gt;fit&lt;/code&gt; method is called with one parameter(or two if the task being handled is a 
+supervised learning task. This parameter is the &lt;code&gt;label&lt;/code&gt; datasets.)  The &lt;code&gt;fit&lt;/code&gt; method when called learns by determining model-specific parameters from the training data and set these as attributes
+ on the estimator object. Once learning is complete, this model sets its parameters(the learned parameters) gets exposed as class attributes with trailing underscore in their names(An example 
+ is the &lt;code&gt;statistics_&lt;/code&gt; attribute of the &lt;code&gt;Imputer&lt;/code&gt; estimator.).&lt;/p&gt;
+&lt;p&gt;In situations where a user needs to implement a custom estimator, the &lt;code&gt;BaseEstimator&lt;/code&gt; 
+   class and it's(the required classifier's) 
+   corresponding 
+   &lt;code&gt;mixin&lt;/code&gt; can be 
+   subclassed as shown below.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.base&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BaseEstimator&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;RegressorMixin&lt;/span&gt;
+
+&lt;span class="c1"&gt;## A regressor mixin is being used here because &lt;/span&gt;
+&lt;span class="c1"&gt;## the example is for a regressor Estimator.&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ExampleRegressorEstimator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BaseEstimator&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;RegressorMixin&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;  
+&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;An example of an regressor estimator. &lt;/span&gt;
+&lt;span class="sd"&gt;Take a good look at docstring of the constructor, fit and predict methods. &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;    Called when initializing the classifier.&lt;/span&gt;
+&lt;span class="sd"&gt;     Set default hyperparameter values here.&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;    This should fit classifier. All the &amp;quot;work&amp;quot; should be done here.&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Note: assert is not a good choice here and you should rather&lt;/span&gt;
+&lt;span class="sd"&gt;    use try/except blog with exceptions.&lt;/span&gt;
+&lt;span class="sd"&gt;     The y parameter must be set if the task is supervised learning.&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;predict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Prediction Logic goes here. &lt;/span&gt;
+&lt;span class="sd"&gt;    Remember to always check if the &lt;/span&gt;
+&lt;span class="sd"&gt;    threshold attribute of your estimator is set. &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;score&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; This is only needed if the estimator is to be used with a GridSearchCV &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_params&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;deep&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;set_params&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;parameters&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Meta estimators are a higher order estimators that are made from other(base) estimators. They require base estimators to be provided in their constructor. The most used example of 
+  ,meta-estimators are ensemble methods available via &lt;code&gt;sklearn.ensemble&lt;/code&gt; 
+  ,In sklearn, each instance of a classifier (estimator) implements a corresponding meta-estimator.  An alternative approach to creating meta-estimators is to use the multiclass sklearn module and 
+  implementing any of the algorithms below:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;one-vs-all&lt;/li&gt;
+&lt;li&gt;one-vs-one&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;error correcting output codes&lt;/p&gt;
+&lt;p&gt;In conclusion, always keep the following at the back of your mind when writing or working with estimators and meta-estimators:&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Constructor parameters should have default values.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Constructor shouldn't implement any form of logic(whether complex or not).
+    Logic is best suited for the fit method.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;fit&lt;/code&gt; method should handle all logic and return an instance of the class.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Transformers&lt;/p&gt;
+&lt;p&gt;Transformer objects are somewhat &lt;code&gt;transmutational&lt;/code&gt; in nature. They exist to provide an interface for data modification or filtering within sklearn. Transformer objects mostly exists 
+along sides estimator objects. This means some objects have both estimator and transformation features availble to them.&lt;/p&gt;
+&lt;p&gt;Like estimators, transformers do not carry out any major logic in their constructor. Instead, they  expose a &lt;code&gt;transform&lt;/code&gt; method where the transformation happens. This method takes a dataset as 
+a parameter. Transformers also have a &lt;code&gt;fit_transform&lt;/code&gt; or &lt;code&gt;fit_predict&lt;/code&gt;(fit_predict for clustering transformers) method that both &lt;code&gt;fits&lt;/code&gt; and &lt;code&gt;transforms&lt;/code&gt; data in one go. Preprocessing, feature 
+selection, feature extraction and 
+dimensionality 
+reduction 
+algorithms are all provided as transformers within the sklearn.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;from sklearn.preprocessing import Imputer&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;imputer = Imputer()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;imputer.fit(X train)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;X_train = imputer.transform(X_train)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The above block can be made better as shown below:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;X_train = Imputer().fit(X_train).transform(X_train)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The above line can even made more better as shown below:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;X_train = Imputer().fit_transform(X_train)&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Predictors&lt;/p&gt;
+&lt;p&gt;Predictor objects are able to make predictions. They're basically estimators with a &lt;code&gt;predict&lt;/code&gt; method. Predictors returns the predicted label as output. 
+Asides prediction, some predictors expose methods to benchmark various aspects of the prediction. These methods can be any of:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;decision_function&lt;/code&gt; for linear models to measure the distance between samples&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;score&lt;/code&gt; to  measure the quality of the prediction. This method computes the coefficient of determination  in regression and the accuracy in classification.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;predict_proba&lt;/code&gt; to measure class probabilities.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;predict_log_proba&lt;/code&gt; to measure class probabilities.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pipelines and Feature Unions&lt;/p&gt;
+&lt;p&gt;Pipelines in machine learning are chaining tools. They are used to chain processes together and follow execution from one end of the chain to the other. Sklearn provides support for pipeline
+objects that accept a list of transformers and a single estimator. &lt;/p&gt;
+&lt;p&gt;The list of transformers handle intermediate steps(i.e feature extraction, dimensionality reduction, learning and making 
+predictions) and (should) expose both a &lt;code&gt;fit&lt;/code&gt; and a &lt;code&gt;transform&lt;/code&gt; method. The estimator only has to implement a &lt;code&gt;fit&lt;/code&gt; method. Calling a pipeline, recursively fits then transforms the data set 
+till it gets to the estimator then it calls the fit method of the estimator.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dense matrix." src="/images/pipeline.png" /&gt; &lt;/p&gt;
+&lt;p&gt;Figure 4: An example of a pipline diagram(Credits : &lt;a href="http://karlrosaen.com/ml/learning-log/2016-06-20/"&gt;http://karlrosaen.com/ml/learning-log/2016-06-20/&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;The final usage(features) of a pipeline depends on the attributes of the estimator in the pipeline. This means, if the estimator is a predictor pipeline, the pipeline can itself be used as a 
+predictor. 
+If the estimator is a transformer, then the pipeline is a transformer pipeline. &lt;/p&gt;
+&lt;p&gt;Feature Unions are quite similar to pipelines in the sense that they are also chaining tools. However unline pipelines, feature unions only chain together transformation processes.
+This means they accept a list of transformers as input and expose a fit method which recursively calls the base transformers &lt;code&gt;fit&lt;/code&gt; methods. The main advantage of feature union objects is that 
+they can be used in place of transformers in pipelines.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dense matrix." src="/images/pipelines.png" /&gt; &lt;/p&gt;
+&lt;p&gt;Figure 5: An example of a pipline.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;PCA&lt;/code&gt; and &lt;code&gt;KernelPCA&lt;/code&gt; transformers in the pipeline image above can be combined into a single FeatureUnion which can then be passed down to the SelectKBest estimator and then to the logistic 
+regression predictor.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dense matrix." src="/images/feature_union.png" /&gt; &lt;/p&gt;
+&lt;p&gt;Figure 6: An example of a feature union in a pipeline.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.pipeline&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;FeatureUnion&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Pipeline&lt;/span&gt; 
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.decomposition&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;PCA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;KernelPCA&lt;/span&gt; 
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.feature_selection&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;SelectKBest&lt;/span&gt;
+
+&lt;span class="n"&gt;union&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FeatureUnion&lt;/span&gt;&lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;pca&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;PCA&lt;/span&gt;&lt;span class="p"&gt;()),(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;kpca&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;KernelPCA&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rbf&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))])&lt;/span&gt;
+
+&lt;span class="n"&gt;pipeline&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Pipeline&lt;/span&gt;&lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;feat union&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;union&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;feat sel&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SelectKBest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;log reg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LogisticRegression&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;penalty&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;l2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt; &lt;span class="n"&gt;train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;train&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;predict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Other Principles&lt;/h2&gt;
+&lt;p&gt;Asides consistency, a number of other principles the sklearn library tries to adhere by include:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Inspection : This provides a reasonable interface to retrieve/inspect data from objects. For example, estimator hyperparameters are made to be directly accessible via public instance and their 
+learnt parameters are are also accessible via public instance variables with an underscore suffix &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Composition
+    Blocks of code were placed together in an attempt to ensure reusability and reduce class proliferation. This, for example makes it easy to create a feature union from a sequence of transformers
+     and to create a pipeline from a sequence of feature unions, transformers and an estimator without necessarily having to write new classes each time.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Defaults:
+    Sensible defaults are set in all the objects in sklearn. This provides a fallback mechanisms for variables/attributes to fall back to in case they're not set by the user.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Sklearn is a very interesting and powerful machine learning library. Given the fact that it covers most machine learning methods, sklearn can be a bit daunting to get through at first. 
+   In this article, I have attempted to break down the majorly objects available in the library into simple understandable chunks that can be tackled at once. While, I did not cover every chunk in 
+   complete details, the resources section below provides a link to a number of articles/resources where more information can be gotten about them.&lt;/p&gt;
+&lt;p&gt;If you do happen to have any question or comment, do feel free to leave one below or sync up with me on twitter at https://twitter.com/__olamilekan__. &lt;/p&gt;
+&lt;h2&gt;Resources&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://github.com/scikit-learn/scikit-learn"&gt;https://github.com/scikit-learn/scikit-learn&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikit-learn.org/stable/developers/index.html"&gt;http://scikit-learn.org/stable/developers/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stackoverflow.com/questions/46691596/why-does-sklearn-imputer-need-to-fit"&gt;Why does sklearn Imputer need to fit?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/scikit-learn-contrib/project-template/"&gt;https://github.com/scikit-learn-contrib/project-template/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikit-learn.org/stable/modules/classes.html"&gt;http://scikit-learn.org/stable/modules/classes.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikit-learn.org/stable/modules/ensemble.html"&gt;http://scikit-learn.org/stable/modules/ensemble.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikit-learn.org/dev/developers/contributing.html#rolling-your-own-estimator"&gt;http://scikit-learn.org/dev/developers/contributing.html#rolling-your-own-estimator&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html"&gt;http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://karlrosaen.com/ml/learning-log/2016-06-20/"&gt;http://karlrosaen.com/ml/learning-log/2016-06-20/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://arxiv.org/abs/1309.0238"&gt;https://arxiv.org/abs/1309.0238&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="machine-learning"></category><category term="sklearn"></category><category term="python"></category></entry></feed>

@@ -6,7 +6,7 @@
         <meta name="author" content="Olamilekan Wahab">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>The Data Splitting Dilemma | Indent</title>
+        <title>Extending the jupyter notebook | Indent</title>
 
         <link rel="alternate" type="application/atom+xml" title="Indent blog atom feed" href="/feeds/all.atom.xml" />
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
@@ -397,52 +397,74 @@ article .meta a.comments_btn:hover {
 <div class="container post">
     <article>
         <header>
-            <h1>The Data Splitting Dilemma</h1>
-            <time datetime="article.date.isoformat()" pubdate>November 01, 2017</time>
+            <h1>Extending the jupyter notebook</h1>
+            <time datetime="article.date.isoformat()" pubdate>March 17, 2018</time>
         </header>
 
-        <img src="/images/scikit.png">
+        <img src="/images/jupyter.png">
         <div class="article_content">
-            <p>Splitting data the right way is arguably one of the less discussed topics in Machine Learning. 
-0Being less discussed results in either doing it all wrong
-or not 
-This article is an attempt at explaining the topic, its importance and various ways of effectively splitting data.
-The rest of the article would be structured in the format below:</p>
+            <p>Originally called IPython when the only supported platform was python, the jupyter notebook is the go-to platform for interactive programming in various scripting languages. The currently supported 
+languages include <a href="https://mybinder.org/v2/gh/ipython/ipython-in-depth/master?filepath=binder/Index.ipynb">python</a>, <a href="https://mybinder.org/v2/gh/binder-examples/r/master?filepath=index.ipynb">R</a>, <a href="https://mybinder.org/v2/gh/binder-examples/julia-python/master?filepath=julia.ipynb">Julia</a>.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Fun Fact :  The name Jupyter is an acronym of these 3 languages :  <strong>JU</strong>lia,  <strong>PYT</strong>hon, and  <strong>R</strong>.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>Some of the most used features of the jupyter notebook include keyboard shortcuts, pretty display, magic commands, shells, kernel supports,document exports, live coding and a host of other features
+mentioned in this blogpost <a href="https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/">here</a></p>
+<h1>What led to this article?</h1>
+<p>Last week, I was working in a notebook and needed to:<br />
+I. Dynamically skip some cells</p>
+<p><img alt="Problem 1" src="/images/jupyter-problem-1.png" /> </p>
+<p>Problem 1: Going to the cell and selecting "Run Cell" would have taken care of this but it wasn't dynamic. </p>
+<p>II. Run some cells before others </p>
+<p><img alt="Problem 2" src="/images/jupyter-problem-2.png" /> Problem 2</p>
+<p>III. Trigger a run in a cell from another cell.</p>
+<p>After looking at all keyboard shortcuts and features in jupyter, I realized there was no available support for this. </p>
+<p>Luckily for me, after digging deeper, I came across <a href="http://2017.pyconuk.org/sessions/talks/extending-jupyter-notebook/">this PyConUK talk</a> that introduced the idea of extending jupyter and this 
+was where I kicked off my research into this topic</p>
+<p>The rest of the article would be laid out this way:</p>
 <ol>
 <li>
-<p>What is data splitting?</p>
+<p>Terminologies</p>
+<p>i. Notebook Document</p>
+<p>ii. Kernels</p>
 </li>
 <li>
-<p>Why should data be split?</p>
+<p>Kernel Extensions</p>
 </li>
 <li>
-<p>Methods of splitting data</p>
-<ol>
-<li>
-<p>Random</p>
+<p>IPython Kernel Extensions</p>
 </li>
 <li>
-<p>Cross Validation</p>
+<p>Notebook Extensions</p>
 </li>
-<li></li>
+<li>
+<p>Notebook Server Extensions</p>
+</li>
 </ol>
-</li>
-</ol>
-<h3>1. What is Data Splitting?</h3>
-<p>One of the first decisions to make when modeling is to decide which samples will be used to evaluate performance. Ideally, the model should be evaluated on samples that were not used to build or fine-tune the model, so that they provide an unbiased sense of model effectiveness. When a large amount of data is at hand, a set of samples can be set aside to evaluate the final model. The “training” data set is the general term for the samples used to create the model, while the “test” or “validation” data set is used to qualify performance.</p>
+<h3><strong>Terminologies</strong></h3>
+<h3>Notebook Document</h3>
+<p>A notebook document is the entry point of code in a jupyter notebook. Produced by the jupyter notebook app, notebook documents are made of executable cells that support code and text(in 
+various formats) entry in various formats. These cells are draggable and can output code results in various formats(plots, images, texts, tables e.t.c)</p>
+<h3>Kernels</h3>
         </div>
 
         <div class="meta">
             <div>
-                    <a href="/tag/machine-learning.html" class="tag">machine-learning</a>
-                    <a href="/tag/sklearn.html" class="tag">sklearn</a>
-                    <a href="/tag/python.html" class="tag">python</a>
+                    <a href="/tag/python.html" class="tag">Python</a>
+                    <a href="/tag/jupyter.html" class="tag">Jupyter</a>
+                    <a href="/tag/ipython.html" class="tag">Ipython</a>
+                    <a href="/tag/software.html" class="tag">Software</a>
+                    <a href="/tag/tool.html" class="tag">Tool</a>
             </div>
         </div>
     </article>
     <section>
     <h1>Comments</h1>
-               <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I just read The Data Splitting Dilemma by @__olamilekan__" data-size="large">Share on twitter</a>
+               <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I just read Extending the jupyter notebook by @__olamilekan__" data-size="large">Share on twitter</a>
         <div id="disqus_thread"></div>
         <script>
 
