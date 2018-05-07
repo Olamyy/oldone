@@ -5,7 +5,7 @@ categories: python jupyter ipython software tool
 Date: 2018-03-17
 Tags: Python, Jupyter, Ipython , Software, Tool
 image: jupyter.png
-Status: published
+Status: draft
 
 
 Originally called IPython when the only supported platform was python, the jupyter notebook is the go-to platform for interactive programming in various scripting languages. The currently supported 

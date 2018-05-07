@@ -5,7 +5,7 @@ categories: python sklearn machine-learning
 Date: 2018-05-05
 Tags: machine-learning,sklearn, python
 image: scikit.png 
-Status: draft
+Status: published
 
 
 __Hi__, 

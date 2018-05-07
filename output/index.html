@@ -398,46 +398,70 @@ article .meta a.comments_btn:hover {
 
   <article>
     <header>
-      <h2><a href="/blog/2018/03/17/extending-jupyter/">Extending the jupyter notebook</a></h2>
-      <time datetime="" title="2018-03-17T00:00:00+00:00" pubdate>March 17, 2018</time>
+      <h2><a href="/blog/2018/05/05/understanding-the-sklearn-design/">The Sklearn API Design Principles</a></h2>
+      <time datetime="" title="2018-05-05T00:00:00+00:00" pubdate>May 05, 2018</time>
     </header>
 
-    <img src="/images/jupyter.png">
+    <img src="/images/scikit.png">
 
 
     <div class="article_content">
-      <p>Originally called IPython when the only supported platform was python, the jupyter notebook is the go-to platform for interactive programming in various scripting languages. The currently supported 
-languages include <a href="https://mybinder.org/v2/gh/ipython/ipython-in-depth/master?filepath=binder/Index.ipynb">python</a>, <a href="https://mybinder.org/v2/gh/binder-examples/r/master?filepath=index.ipynb">R</a>, <a href="https://mybinder.org/v2/gh/binder-examples/julia-python/master?filepath=julia.ipynb">Julia</a>.</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>Fun Fact :  The name Jupyter is an acronym of these 3 languages :  <strong>JU</strong>lia,  <strong>PYT</strong>hon, and  <strong>R</strong>.</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>Some of the most used features of the jupyter notebook include keyboard shortcuts, pretty display, magic commands, shells, kernel supports,document exports, live coding and a host of other features
-mentioned in this blogpost <a href="https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/">here</a></p>
-<h1>What led to this article?</h1>
-<p>Last week, I was working in a notebook and needed to:<br />
-I. Dynamically skip some cells</p>
-<p><img alt="Problem 1" src="/images/jupyter-problem-1.png" /> </p>
-<p>Problem 1: Going to the cell and selecting "Run Cell" would have taken care of this but it wasn't dynamic. </p>
-<p>II. Run some cells before others </p>
-<p><img alt="Problem 2" src="/images/jupyter-problem-2.png" /> Problem 2</p>
-<p>III. Trigger a run in a cell from another cell.</p>
-<p>After looking at all keyboard ...</p>
+      <p><strong>Hi</strong>, </p>
+<p>You should really read this to the end if:</p>
+<ol>
+<li>
+<p>You've never really understood how sklearn modules/classes are structured.</p>
+</li>
+<li>
+<p>You're interested in contributing to sklearn.</p>
+</li>
+<li>
+<p>You need to understand the internals of sklearn, why some decisions were made and how some things work.</p>
+</li>
+</ol>
+<hr />
+<p>Some weeks back, I decided to start contributing to the open source scikit-learn library. This decision led me to read a whole lot of sklearn's code, documentation , contribution and 
+online guides.</p>
+<p>This article is an attempt to document everything I learnt about the design principles behind the library.</p>
+<p>The rest of the article will be organised as follows:</p>
+<ul>
+<li>What is a scikit in python? <ul>
+<li>Examples of scikits</li>
+</ul>
+</li>
+<li>Scikit-learn<ul>
+<li>What is scikit-learn?</li>
+<li>A little history</li>
+<li>Data representation</li>
+<li>API Design Principles<ul>
+<li>Consistency<ul>
+<li>Estimators</li>
+<li>Predictors</li>
+<li>Transformers</li>
+<li>Meta-estimators</li>
+<li>Pipelines and Feature Unions</li>
+</ul>
+</li>
+<li>Other Principles</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Conclusion</li>
+<li>Resources  </li>
+</ul>
+<h2>What is a scikit in python?</h2>
+<p>A scikit, short for SciPy ...</p>
     </div>
 
     <div class="meta">
       <div>
-        <a href="/blog/2018/03/17/extending-jupyter/" class="read_more">Read more &#8594;</a>
+        <a href="/blog/2018/05/05/understanding-the-sklearn-design/" class="read_more">Read more &#8594;</a>
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="read_more twitter-share-button" data-size="large" data-text="I just read" data-via="__olamilekan__" data-related="__olamilekan__" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>      <div>
          </div>
-            <a href="/tag/python.html" class="tag">Python</a>
-            <a href="/tag/jupyter.html" class="tag">Jupyter</a>
-            <a href="/tag/ipython.html" class="tag">Ipython</a>
-            <a href="/tag/software.html" class="tag">Software</a>
-            <a href="/tag/tool.html" class="tag">Tool</a>
+            <a href="/tag/machine-learning.html" class="tag">machine-learning</a>
+            <a href="/tag/sklearn.html" class="tag">sklearn</a>
+            <a href="/tag/python.html" class="tag">python</a>
       </div>
 
     </div>
