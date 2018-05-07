@@ -22,9 +22,10 @@
     <div class="meta">
       <div>
         <a href="{{ SITEURL }}/{{ article.url }}" class="read_more">Read more &#8594;</a>
-<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="read_more" data-size="large" data-text="I just read https://www.olamilekanwahab.com/{{ article.url }} by @__olamilekan__"
-   data-via="__olamilekan__" data-related="__olamilekan__" data-show-count="false">Share on Twitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>      <div>
-         </div>
+<a href="https://twitter.com/intent/tweet?text=I just read https://www.olamilekanwahab.com/{{ article.url }} by @__olamilekan__" class="read_more" data-size="large"
+>Share on Twitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+          <div>
           {% for tag in article.tags %}
             <a href="{{ SITEURL }}/{{ tag.url }}" class="tag">{{ tag }}</a>
           {% endfor %}

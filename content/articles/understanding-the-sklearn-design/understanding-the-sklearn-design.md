@@ -351,7 +351,7 @@ learnt parameters are also accessible via public instance variables with an unde
    In this article, I have attempted to break down the major objects available in the library into simple understandable chunks that can be tackled at once. While, I did not cover every chunk in 
    complete detail, the resources section below provides a link to a number of articles/resources where more information can be gotten about them.
    
-   If you do happen to have any question or comment, do feel free to leave one below or sync up with me on twitter at https://twitter.com/__olamilekan\__\. 
+   If you do happen to have any question or comment, do feel free to leave one below or sync up with me on [twitter](https://twitter.com/__olamilekan__). 
       
 ## Resources
 1. [https://github.com/scikit-learn/scikit-learn](https://github.com/scikit-learn/scikit-learn)
