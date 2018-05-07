@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Indent</title><link href="/" rel="alternate"></link><link href="/feeds/understanding-the-sklearn-design.atom.xml" rel="self"></link><id>/</id><updated>2018-05-05T00:00:00+00:00</updated><entry><title>The Sklearn API Design Principles</title><link href="/blog/2018/05/05/understanding-the-sklearn-design/" rel="alternate"></link><published>2018-05-05T00:00:00+00:00</published><updated>2018-05-05T00:00:00+00:00</updated><author><name>Olamilekan Wahab</name></author><id>tag:,2018-05-05:blog/2018/05/05/understanding-the-sklearn-design/</id><summary type="html">&lt;p&gt;&lt;strong&gt;Hi&lt;/strong&gt;, &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Indent</title><link href="olamilekanwahab.com/" rel="alternate"></link><link href="olamilekanwahab.com/feeds/understanding-the-sklearn-design.atom.xml" rel="self"></link><id>olamilekanwahab.com/</id><updated>2018-05-05T00:00:00+00:00</updated><entry><title>The Sklearn API Design Principles</title><link href="olamilekanwahab.com/blog/2018/05/05/understanding-the-sklearn-design/" rel="alternate"></link><published>2018-05-05T00:00:00+00:00</published><updated>2018-05-05T00:00:00+00:00</updated><author><name>Olamilekan Wahab</name></author><id>tag:,2018-05-05:olamilekanwahab.com/blog/2018/05/05/understanding-the-sklearn-design/</id><summary type="html">&lt;p&gt;&lt;strong&gt;Hi&lt;/strong&gt;, &lt;/p&gt;
 &lt;p&gt;You should really read this to the end if:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -44,7 +44,8 @@ online guides.&lt;/p&gt;
 &lt;li&gt;Resources  &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;What is a scikit in python?&lt;/h2&gt;
-&lt;p&gt;A scikit, short for SciPy Toolkit(or the more expressive, Scientifica Python Toolkit) is a any open sourced software for Python written to supplement Scipy. Scikits are essentially add on packages 
+&lt;p&gt;A scikit, short for SciPy Toolkit(or the more expressive, Scientifica Python Toolkit) is any open sourced software written in Python to supplement Scipy. Scikits are essentially add on 
+packages 
 that are related to either science, engineering or research in one field or another. They're usually BSD licensed and are built upon existing libraries like scipy and numpy. A package can be called
 a scikit when :&lt;/p&gt;
 &lt;ol&gt;
@@ -109,7 +110,7 @@ published in the same year.&lt;/p&gt;
 the $y$ variables represent the output values. Each row of these matrices  to one sample of the dataset and each column to one variable of the problem.
 Sklearn as expected also follows the same form for representing data internally. To represent data, it classifies all data under 3 types of data:&lt;/p&gt;
 &lt;h4&gt;1. Sparse Data&lt;/h4&gt;
-&lt;p&gt;A sparse data is any dataset that mostly contains more zeros that non-zero entries. To be a bit technical, a vector is $k$-sparse if it contains at most $k$ nonzero entries. &lt;/p&gt;
+&lt;p&gt;A sparse data is any dataset that mostly contains more zeros than non-zero entries. To be a bit technical, a vector is $k$-sparse if it contains at most $k$ nonzero entries. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="sparse matrix." src="/images/sparse_matrix.png" /&gt; &lt;/p&gt;
 &lt;p&gt;Figure 2 : An example of a sparse matrix.&lt;/p&gt;
 &lt;p&gt;Sklearn represents sparse data as scipy sparse matrices. It does this because:&lt;/p&gt;
@@ -208,17 +209,13 @@ supervised learning task. This parameter is the &lt;code&gt;label&lt;/code&gt; d
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Meta estimators are a higher order estimators that are made from other(base) estimators. They require base estimators to be provided in their constructor. The most used example of 
-  ,meta-estimators are ensemble methods available via &lt;code&gt;sklearn.ensemble&lt;/code&gt; 
-  ,In sklearn, each instance of a classifier (estimator) implements a corresponding meta-estimator.  An alternative approach to creating meta-estimators is to use the multiclass sklearn module and 
-  implementing any of the algorithms below:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;one-vs-all&lt;/li&gt;
-&lt;li&gt;one-vs-one&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;error correcting output codes&lt;/p&gt;
+&lt;p&gt;Meta estimators are a higher order estimators that are made from other (base) estimators. They require base estimators to be provided in their constructor. The most used example of 
+   meta-estimators are ensemble methods available via &lt;code&gt;sklearn.ensemble&lt;/code&gt;. 
+  In sklearn, each instance of a classifier (estimator) implements a corresponding meta-estimator. Custom meta-estimators can be created using the multiclass sklearn module and 
+  implementing any of the &lt;a href="http://mlwiki.org/index.php/One-vs-All_Classification"&gt;one-vs-all&lt;/a&gt;, &lt;a href="https://www.quora.com/Whats-an-intuitive-explanation-of-one-versus-one-classification-for-support-vector-machines"&gt;one-vs-one&lt;/a&gt;
+   or &lt;a href=""&gt;error correcting output&lt;/a&gt; algorithms.&lt;/p&gt;
 &lt;p&gt;In conclusion, always keep the following at the back of your mind when writing or working with estimators and meta-estimators:&lt;/p&gt;
-&lt;/li&gt;
+&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Constructor parameters should have default values.&lt;/p&gt;
 &lt;/li&gt;
@@ -241,14 +238,26 @@ selection, feature extraction and
 dimensionality 
 reduction 
 algorithms are all provided as transformers within the sklearn.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;from sklearn.preprocessing import Imputer&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;imputer = Imputer()&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;imputer.fit(X train)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;X_train = imputer.transform(X_train)&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.preprocessing&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Imputer&lt;/span&gt;
+
+&lt;span class="n"&gt;imputer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Imputer&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;imputer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt; &lt;span class="n"&gt;train&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;X_train&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;imputer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X_train&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;The above block can be made better as shown below:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;X_train = Imputer().fit(X_train).transform(X_train)&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;X_train = Imputer().fit(X_train).transform(X_train)
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;The above line can even made more better as shown below:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;X_train = Imputer().fit_transform(X_train)&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;X_train = Imputer().fit_transform(X_train)
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Predictors&lt;/p&gt;
@@ -258,7 +267,7 @@ Asides prediction, some predictors expose methods to benchmark various aspects o
 &lt;li&gt;&lt;code&gt;decision_function&lt;/code&gt; for linear models to measure the distance between samples&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;score&lt;/code&gt; to  measure the quality of the prediction. This method computes the coefficient of determination  in regression and the accuracy in classification.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;predict_proba&lt;/code&gt; to measure class probabilities.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;predict_log_proba&lt;/code&gt; to measure class probabilities.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;predict_log_proba&lt;/code&gt; to measure log of class probabilities.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -273,11 +282,11 @@ till it gets to the estimator then it calls the fit method of the estimator.&lt;
 &lt;p&gt;The final usage(features) of a pipeline depends on the attributes of the estimator in the pipeline. This means, if the estimator is a predictor pipeline, the pipeline can itself be used as a 
 predictor. 
 If the estimator is a transformer, then the pipeline is a transformer pipeline. &lt;/p&gt;
-&lt;p&gt;Feature Unions are quite similar to pipelines in the sense that they are also chaining tools. However unline pipelines, feature unions only chain together transformation processes.
+&lt;p&gt;Feature Unions are quite similar to pipelines in the sense that they are also chaining tools. However unlike pipelines, feature unions only chain together transformation processes.
 This means they accept a list of transformers as input and expose a fit method which recursively calls the base transformers &lt;code&gt;fit&lt;/code&gt; methods. The main advantage of feature union objects is that 
 they can be used in place of transformers in pipelines.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="dense matrix." src="/images/pipelines.png" /&gt; &lt;/p&gt;
-&lt;p&gt;Figure 5: An example of a pipline.&lt;/p&gt;
+&lt;p&gt;Figure 5: Example pipeline to illustrate how feature unions work. This pipeline has 3 transformers and an estimator.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;PCA&lt;/code&gt; and &lt;code&gt;KernelPCA&lt;/code&gt; transformers in the pipeline image above can be combined into a single FeatureUnion which can then be passed down to the SelectKBest estimator and then to the logistic 
 regression predictor.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="dense matrix." src="/images/feature_union.png" /&gt; &lt;/p&gt;
@@ -300,8 +309,8 @@ regression predictor.&lt;/p&gt;
 &lt;p&gt;Asides consistency, a number of other principles the sklearn library tries to adhere by include:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;Inspection : This provides a reasonable interface to retrieve/inspect data from objects. For example, estimator hyperparameters are made to be directly accessible via public instance and their 
-learnt parameters are are also accessible via public instance variables with an underscore suffix &lt;/p&gt;
+&lt;p&gt;Inspection: This provides a reasonable interface to retrieve/inspect data from objects. For example, estimator hyperparameters are made to be directly accessible via public instance and their 
+learnt parameters are also accessible via public instance variables with an underscore suffix &lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Composition
@@ -314,9 +323,9 @@ learnt parameters are are also accessible via public instance variables with an 
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Sklearn is a very interesting and powerful machine learning library. Given the fact that it covers most machine learning methods, sklearn can be a bit daunting to get through at first. 
-   In this article, I have attempted to break down the majorly objects available in the library into simple understandable chunks that can be tackled at once. While, I did not cover every chunk in 
-   complete details, the resources section below provides a link to a number of articles/resources where more information can be gotten about them.&lt;/p&gt;
+&lt;p&gt;Sklearn is a very interesting and powerful machine learning library. Given the fact that it covers most machine learning methods, sklearn can be a bit daunting to get through. 
+   In this article, I have attempted to break down the major objects available in the library into simple understandable chunks that can be tackled at once. While, I did not cover every chunk in 
+   complete detail, the resources section below provides a link to a number of articles/resources where more information can be gotten about them.&lt;/p&gt;
 &lt;p&gt;If you do happen to have any question or comment, do feel free to leave one below or sync up with me on twitter at https://twitter.com/__olamilekan__. &lt;/p&gt;
 &lt;h2&gt;Resources&lt;/h2&gt;
 &lt;ol&gt;

@@ -401,7 +401,7 @@ article .meta a.comments_btn:hover {
             <time datetime="article.date.isoformat()" pubdate>May 05, 2018</time>
         </header>
 
-        <img src="/images/scikit.png">
+        <img src="olamilekanwahab.com/images/scikit.png">
         <div class="article_content">
             <p><strong>Hi</strong>, </p>
 <p>You should really read this to the end if:</p>
@@ -448,7 +448,8 @@ online guides.</p>
 <li>Resources  </li>
 </ul>
 <h2>What is a scikit in python?</h2>
-<p>A scikit, short for SciPy Toolkit(or the more expressive, Scientifica Python Toolkit) is a any open sourced software for Python written to supplement Scipy. Scikits are essentially add on packages 
+<p>A scikit, short for SciPy Toolkit(or the more expressive, Scientifica Python Toolkit) is any open sourced software written in Python to supplement Scipy. Scikits are essentially add on 
+packages 
 that are related to either science, engineering or research in one field or another. They're usually BSD licensed and are built upon existing libraries like scipy and numpy. A package can be called
 a scikit when :</p>
 <ol>
@@ -513,7 +514,7 @@ published in the same year.</p>
 the $y$ variables represent the output values. Each row of these matrices  to one sample of the dataset and each column to one variable of the problem.
 Sklearn as expected also follows the same form for representing data internally. To represent data, it classifies all data under 3 types of data:</p>
 <h4>1. Sparse Data</h4>
-<p>A sparse data is any dataset that mostly contains more zeros that non-zero entries. To be a bit technical, a vector is $k$-sparse if it contains at most $k$ nonzero entries. </p>
+<p>A sparse data is any dataset that mostly contains more zeros than non-zero entries. To be a bit technical, a vector is $k$-sparse if it contains at most $k$ nonzero entries. </p>
 <p><img alt="sparse matrix." src="/images/sparse_matrix.png" /> </p>
 <p>Figure 2 : An example of a sparse matrix.</p>
 <p>Sklearn represents sparse data as scipy sparse matrices. It does this because:</p>
@@ -612,17 +613,13 @@ supervised learning task. This parameter is the <code>label</code> datasets.)  T
 </pre></div>
 
 
-<p>Meta estimators are a higher order estimators that are made from other(base) estimators. They require base estimators to be provided in their constructor. The most used example of 
-  ,meta-estimators are ensemble methods available via <code>sklearn.ensemble</code> 
-  ,In sklearn, each instance of a classifier (estimator) implements a corresponding meta-estimator.  An alternative approach to creating meta-estimators is to use the multiclass sklearn module and 
-  implementing any of the algorithms below:</p>
-<ul>
-<li>one-vs-all</li>
-<li>one-vs-one</li>
-<li>
-<p>error correcting output codes</p>
+<p>Meta estimators are a higher order estimators that are made from other (base) estimators. They require base estimators to be provided in their constructor. The most used example of 
+   meta-estimators are ensemble methods available via <code>sklearn.ensemble</code>. 
+  In sklearn, each instance of a classifier (estimator) implements a corresponding meta-estimator. Custom meta-estimators can be created using the multiclass sklearn module and 
+  implementing any of the <a href="http://mlwiki.org/index.php/One-vs-All_Classification">one-vs-all</a>, <a href="https://www.quora.com/Whats-an-intuitive-explanation-of-one-versus-one-classification-for-support-vector-machines">one-vs-one</a>
+   or <a href="">error correcting output</a> algorithms.</p>
 <p>In conclusion, always keep the following at the back of your mind when writing or working with estimators and meta-estimators:</p>
-</li>
+<ul>
 <li>
 <p>Constructor parameters should have default values.</p>
 </li>
@@ -645,14 +642,26 @@ selection, feature extraction and
 dimensionality 
 reduction 
 algorithms are all provided as transformers within the sklearn.</p>
-<p><code>from sklearn.preprocessing import Imputer</code></p>
-<p><code>imputer = Imputer()</code></p>
-<p><code>imputer.fit(X train)</code></p>
-<p><code>X_train = imputer.transform(X_train)</code></p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">Imputer</span>
+
+<span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputer</span><span class="p">()</span>
+
+<span class="n">imputer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span> <span class="n">train</span><span class="p">)</span>
+
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</pre></div>
+
+
 <p>The above block can be made better as shown below:</p>
-<p><code>X_train = Imputer().fit(X_train).transform(X_train)</code></p>
+<div class="highlight"><pre><span></span>X_train = Imputer().fit(X_train).transform(X_train)
+</pre></div>
+
+
 <p>The above line can even made more better as shown below:</p>
-<p><code>X_train = Imputer().fit_transform(X_train)</code></p>
+<div class="highlight"><pre><span></span>X_train = Imputer().fit_transform(X_train)
+</pre></div>
+
+
 </li>
 <li>
 <p>Predictors</p>
@@ -662,7 +671,7 @@ Asides prediction, some predictors expose methods to benchmark various aspects o
 <li><code>decision_function</code> for linear models to measure the distance between samples</li>
 <li><code>score</code> to  measure the quality of the prediction. This method computes the coefficient of determination  in regression and the accuracy in classification.</li>
 <li><code>predict_proba</code> to measure class probabilities.</li>
-<li><code>predict_log_proba</code> to measure class probabilities.</li>
+<li><code>predict_log_proba</code> to measure log of class probabilities.</li>
 </ol>
 </li>
 <li>
@@ -677,11 +686,11 @@ till it gets to the estimator then it calls the fit method of the estimator.</p>
 <p>The final usage(features) of a pipeline depends on the attributes of the estimator in the pipeline. This means, if the estimator is a predictor pipeline, the pipeline can itself be used as a 
 predictor. 
 If the estimator is a transformer, then the pipeline is a transformer pipeline. </p>
-<p>Feature Unions are quite similar to pipelines in the sense that they are also chaining tools. However unline pipelines, feature unions only chain together transformation processes.
+<p>Feature Unions are quite similar to pipelines in the sense that they are also chaining tools. However unlike pipelines, feature unions only chain together transformation processes.
 This means they accept a list of transformers as input and expose a fit method which recursively calls the base transformers <code>fit</code> methods. The main advantage of feature union objects is that 
 they can be used in place of transformers in pipelines.</p>
 <p><img alt="dense matrix." src="/images/pipelines.png" /> </p>
-<p>Figure 5: An example of a pipline.</p>
+<p>Figure 5: Example pipeline to illustrate how feature unions work. This pipeline has 3 transformers and an estimator.</p>
 <p>The <code>PCA</code> and <code>KernelPCA</code> transformers in the pipeline image above can be combined into a single FeatureUnion which can then be passed down to the SelectKBest estimator and then to the logistic 
 regression predictor.</p>
 <p><img alt="dense matrix." src="/images/feature_union.png" /> </p>
@@ -704,8 +713,8 @@ regression predictor.</p>
 <p>Asides consistency, a number of other principles the sklearn library tries to adhere by include:</p>
 <ol>
 <li>
-<p>Inspection : This provides a reasonable interface to retrieve/inspect data from objects. For example, estimator hyperparameters are made to be directly accessible via public instance and their 
-learnt parameters are are also accessible via public instance variables with an underscore suffix </p>
+<p>Inspection: This provides a reasonable interface to retrieve/inspect data from objects. For example, estimator hyperparameters are made to be directly accessible via public instance and their 
+learnt parameters are also accessible via public instance variables with an underscore suffix </p>
 </li>
 <li>
 <p>Composition
@@ -718,9 +727,9 @@ learnt parameters are are also accessible via public instance variables with an 
 </li>
 </ol>
 <h2>Conclusion</h2>
-<p>Sklearn is a very interesting and powerful machine learning library. Given the fact that it covers most machine learning methods, sklearn can be a bit daunting to get through at first. 
-   In this article, I have attempted to break down the majorly objects available in the library into simple understandable chunks that can be tackled at once. While, I did not cover every chunk in 
-   complete details, the resources section below provides a link to a number of articles/resources where more information can be gotten about them.</p>
+<p>Sklearn is a very interesting and powerful machine learning library. Given the fact that it covers most machine learning methods, sklearn can be a bit daunting to get through. 
+   In this article, I have attempted to break down the major objects available in the library into simple understandable chunks that can be tackled at once. While, I did not cover every chunk in 
+   complete detail, the resources section below provides a link to a number of articles/resources where more information can be gotten about them.</p>
 <p>If you do happen to have any question or comment, do feel free to leave one below or sync up with me on twitter at https://twitter.com/__olamilekan__. </p>
 <h2>Resources</h2>
 <ol>
@@ -739,15 +748,15 @@ learnt parameters are are also accessible via public instance variables with an 
 
         <div class="meta">
             <div>
-                    <a href="/tag/machine-learning.html" class="tag">machine-learning</a>
-                    <a href="/tag/sklearn.html" class="tag">sklearn</a>
-                    <a href="/tag/python.html" class="tag">python</a>
+                    <a href="olamilekanwahab.com/tag/machine-learning.html" class="tag">machine-learning</a>
+                    <a href="olamilekanwahab.com/tag/sklearn.html" class="tag">sklearn</a>
+                    <a href="olamilekanwahab.com/tag/python.html" class="tag">python</a>
             </div>
         </div>
     </article>
     <section>
     <h1>Comments</h1>
-               <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I just read /blog/2018/05/05/understanding-the-sklearn-design/ by @__olamilekan__" data-size="large">Share on twitter</a>
+               <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I just read olamilekanwahab.com/blog/2018/05/05/understanding-the-sklearn-design/ by @__olamilekan__" data-size="large">Share on twitter</a>
         <div id="disqus_thread"></div>
         <script>
 
