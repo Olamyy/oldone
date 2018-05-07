@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 LOAD_CONTENT_CACHE = False
 
-SITEURL = 'olamyy.github.io'
+SITEURL = 'olamilekanwahab.com'
 AUTHOR = u'Olamilekan Wahab'
 SITENAME = u'Indent'
 

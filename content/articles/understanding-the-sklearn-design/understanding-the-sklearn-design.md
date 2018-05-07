@@ -46,7 +46,8 @@ The rest of the article will be organised as follows:
 
 
 ## What is a scikit in python?
-A scikit, short for SciPy Toolkit(or the more expressive, Scientifica Python Toolkit) is a any open sourced software for Python written to supplement Scipy. Scikits are essentially add on packages 
+A scikit, short for SciPy Toolkit(or the more expressive, Scientifica Python Toolkit) is any open sourced software written in Python to supplement Scipy. Scikits are essentially add on 
+packages 
 that are related to either science, engineering or research in one field or another. They're usually BSD licensed and are built upon existing libraries like scipy and numpy. A package can be called
 a scikit when :
 
@@ -116,7 +117,7 @@ Sklearn as expected also follows the same form for representing data internally.
 
 ####1. Sparse Data
 
-A sparse data is any dataset that mostly contains more zeros that non-zero entries. To be a bit technical, a vector is $k$-sparse if it contains at most $k$ nonzero entries. 
+A sparse data is any dataset that mostly contains more zeros than non-zero entries. To be a bit technical, a vector is $k$-sparse if it contains at most $k$ nonzero entries. 
     
 ![sparse matrix.](/images/sparse_matrix.png) 
 
@@ -230,16 +231,13 @@ The sklearn API was majorly designed to be consistent. This means object that do
            
            
    
-       Meta estimators are a higher order estimators that are made from other(base) estimators. They require base estimators to be provided in their constructor. The most used example of 
-      ,meta-estimators are ensemble methods available via `sklearn.ensemble` 
-      ,In sklearn, each instance of a classifier (estimator) implements a corresponding meta-estimator.  An alternative approach to creating meta-estimators is to use the multiclass sklearn module and 
-      implementing any of the algorithms below:
-       
-       * one-vs-all
-       * one-vs-one
-       * error correcting output codes
+       Meta estimators are a higher order estimators that are made from other (base) estimators. They require base estimators to be provided in their constructor. The most used example of 
+       meta-estimators are ensemble methods available via `sklearn.ensemble`. 
+      In sklearn, each instance of a classifier (estimator) implements a corresponding meta-estimator. Custom meta-estimators can be created using the multiclass sklearn module and 
+      implementing any of the [one-vs-all](http://mlwiki.org/index.php/One-vs-All_Classification), [one-vs-one](https://www.quora.com/Whats-an-intuitive-explanation-of-one-versus-one-classification-for-support-vector-machines)
+       or [error correcting output]() algorithms.
         
-        In conclusion, always keep the following at the back of your mind when writing or working with estimators and meta-estimators:
+      In conclusion, always keep the following at the back of your mind when writing or working with estimators and meta-estimators:
          
        * Constructor parameters should have default values.
        
@@ -262,21 +260,22 @@ The sklearn API was majorly designed to be consistent. This means object that do
     algorithms are all provided as transformers within the sklearn.
     
      
-    `from sklearn.preprocessing import Imputer`
+        from sklearn.preprocessing import Imputer
     
-    ```imputer = Imputer()```
-    
-    ```imputer.fit(X train)```
-    
-    ```X_train = imputer.transform(X_train)```
+        imputer = Imputer()
+        
+        imputer.fit(X train)
+        
+        X_train = imputer.transform(X_train)
     
     The above block can be made better as shown below:
     
-    `X_train = Imputer().fit(X_train).transform(X_train)`
-    
+        X_train = Imputer().fit(X_train).transform(X_train)
+        
     The above line can even made more better as shown below:
-    
-    `X_train = Imputer().fit_transform(X_train)`
+        
+        X_train = Imputer().fit_transform(X_train)
+
 
 
 3. Predictors
@@ -287,7 +286,7 @@ The sklearn API was majorly designed to be consistent. This means object that do
     1. `decision_function` for linear models to measure the distance between samples
     2. `score` to  measure the quality of the prediction. This method computes the coefficient of determination  in regression and the accuracy in classification.
     3. `predict_proba` to measure class probabilities.
-    4. `predict_log_proba` to measure class probabilities.
+    4. `predict_log_proba` to measure log of class probabilities.
     
 4. Pipelines and Feature Unions
 
@@ -306,13 +305,13 @@ The sklearn API was majorly designed to be consistent. This means object that do
     predictor. 
     If the estimator is a transformer, then the pipeline is a transformer pipeline. 
     
-    Feature Unions are quite similar to pipelines in the sense that they are also chaining tools. However unline pipelines, feature unions only chain together transformation processes.
+    Feature Unions are quite similar to pipelines in the sense that they are also chaining tools. However unlike pipelines, feature unions only chain together transformation processes.
     This means they accept a list of transformers as input and expose a fit method which recursively calls the base transformers `fit` methods. The main advantage of feature union objects is that 
     they can be used in place of transformers in pipelines.
     
     ![dense matrix.](/images/pipelines.png) 
     
-    Figure 5: An example of a pipline.
+    Figure 5: Example pipeline to illustrate how feature unions work. This pipeline has 3 transformers and an estimator.
     
     The `PCA` and `KernelPCA` transformers in the pipeline image above can be combined into a single FeatureUnion which can then be passed down to the SelectKBest estimator and then to the logistic 
     regression predictor.
@@ -336,8 +335,8 @@ The sklearn API was majorly designed to be consistent. This means object that do
 ## Other Principles
 Asides consistency, a number of other principles the sklearn library tries to adhere by include:
 
-1. Inspection : This provides a reasonable interface to retrieve/inspect data from objects. For example, estimator hyperparameters are made to be directly accessible via public instance and their 
-learnt parameters are are also accessible via public instance variables with an underscore suffix 
+1. Inspection: This provides a reasonable interface to retrieve/inspect data from objects. For example, estimator hyperparameters are made to be directly accessible via public instance and their 
+learnt parameters are also accessible via public instance variables with an underscore suffix 
 
 2. Composition
     Blocks of code were placed together in an attempt to ensure reusability and reduce class proliferation. This, for example makes it easy to create a feature union from a sequence of transformers
@@ -348,9 +347,9 @@ learnt parameters are are also accessible via public instance variables with an 
     
         
 ## Conclusion
-   Sklearn is a very interesting and powerful machine learning library. Given the fact that it covers most machine learning methods, sklearn can be a bit daunting to get through at first. 
-   In this article, I have attempted to break down the majorly objects available in the library into simple understandable chunks that can be tackled at once. While, I did not cover every chunk in 
-   complete details, the resources section below provides a link to a number of articles/resources where more information can be gotten about them.
+   Sklearn is a very interesting and powerful machine learning library. Given the fact that it covers most machine learning methods, sklearn can be a bit daunting to get through. 
+   In this article, I have attempted to break down the major objects available in the library into simple understandable chunks that can be tackled at once. While, I did not cover every chunk in 
+   complete detail, the resources section below provides a link to a number of articles/resources where more information can be gotten about them.
    
    If you do happen to have any question or comment, do feel free to leave one below or sync up with me on twitter at https://twitter.com/__olamilekan\__\. 
       
