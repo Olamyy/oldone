@@ -120,4 +120,4 @@ It uses optimised numpy array functions.&lt;/p&gt;
 &lt;li&gt;numpy.fftshift: This shifts zero-frequency terms to the center of the array. For two-dimensional input, swaps first and third quadrants, and second and fourth quadrants.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;If you are able to get to this point, you should have a clear idea of what the FFT algorithm is and how it can be implemented in various forms in Python.
-In the accompanying post, I would look into each scipy and numpy fft function and give a detailed outline of their use-cases.&lt;/p&gt;</summary><category term="Maths"></category><category term="Python"></category><category term="Fourier"></category></entry></feed>
+In the accompanying post, I would look into each scipy and numpy fft function and give a detailed outline of their use-cases.&lt;/p&gt;&lt;script src="//platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;</summary><category term="Maths"></category><category term="Python"></category><category term="Fourier"></category></entry></feed>
