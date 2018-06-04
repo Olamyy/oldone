@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="author" content="Olamilekan Wahab">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <title>Generating Yoruba Names with Char-RNN | Indent</title>
+
+        <link rel="alternate" type="application/atom+xml" title="Indent blog atom feed" href="/feeds/all.atom.xml" />
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <style>
+.highlight .hll { background-color: #ffffcc }
+.highlight .c { color: #60a0b0; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #007020; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .cm { color: #60a0b0; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #007020 } /* Comment.Preproc */
+.highlight .c1 { color: #60a0b0; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #60a0b0; background-color: #fff0f0 } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #808080 } /* Generic.Output */
+.highlight .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0040D0 } /* Generic.Traceback */
+.highlight .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #007020 } /* Keyword.Pseudo */
+.highlight .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #902000 } /* Keyword.Type */
+.highlight .m { color: #40a070 } /* Literal.Number */
+.highlight .s { color: #4070a0 } /* Literal.String */
+.highlight .na { color: #4070a0 } /* Name.Attribute */
+.highlight .nb { color: #007020 } /* Name.Builtin */
+.highlight .nc { color: #0e84b5; font-weight: bold } /* Name.Class */
+.highlight .no { color: #60add5 } /* Name.Constant */
+.highlight .nd { color: #555555; font-weight: bold } /* Name.Decorator */
+.highlight .ni { color: #d55537; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #007020 } /* Name.Exception */
+.highlight .nf { color: #06287e } /* Name.Function */
+.highlight .nl { color: #002070; font-weight: bold } /* Name.Label */
+.highlight .nn { color: #0e84b5; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #bb60d5 } /* Name.Variable */
+.highlight .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #40a070 } /* Literal.Number.Float */
+.highlight .mh { color: #40a070 } /* Literal.Number.Hex */
+.highlight .mi { color: #40a070 } /* Literal.Number.Integer */
+.highlight .mo { color: #40a070 } /* Literal.Number.Oct */
+.highlight .sb { color: #4070a0 } /* Literal.String.Backtick */
+.highlight .sc { color: #4070a0 } /* Literal.String.Char */
+.highlight .sd { color: #4070a0; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #4070a0 } /* Literal.String.Double */
+.highlight .se { color: #4070a0; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #4070a0 } /* Literal.String.Heredoc */
+.highlight .si { color: #70a0d0; font-style: italic } /* Literal.String.Interpol */
+.highlight .sx { color: #c65d09 } /* Literal.String.Other */
+.highlight .sr { color: #235388 } /* Literal.String.Regex */
+.highlight .s1 { color: #4070a0 } /* Literal.String.Single */
+.highlight .ss { color: #517918 } /* Literal.String.Symbol */
+.highlight .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #bb60d5 } /* Name.Variable.Class */
+.highlight .vg { color: #bb60d5 } /* Name.Variable.Global */
+.highlight .vi { color: #bb60d5 } /* Name.Variable.Instance */
+.highlight .il { color: #40a070 } /* Literal.Number.Integer.Long */</style>
+        <style>body {
+  margin: 0;
+  padding: 0;
+  font: 15px 'Source Sans Pro', sans-serif;
+  line-height: 1.6em;
+  color: #222;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: #007EE5;
+  text-decoration: none;
+}
+a:hover {
+  color: #007EE5;
+  text-decoration: none;
+}
+header.main-header {
+  background: none repeat scroll 0% 0% 	#808080;
+  margin-bottom: 0px;
+}
+header.main-header a {
+  color: #fff;
+}
+header.main-header .container {
+  max-width: 1000px;
+}
+
+article {
+  margin: 0;
+}
+article header.about {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+article header {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+article header h1 {
+  margin-bottom: 2px;
+  font-weight: 700;
+  color: #000;
+}
+article header time {
+  color: #9E9E9E;
+  font-size: 0.85em;
+  float: right;
+}
+article header time.left {
+  color: #9E9E9E;
+  font-size: 0.85em;
+  float: left;
+}
+article div.social-links ul {
+  padding: 0px;
+}
+article div.social-links li {
+  display: inline;
+  font-size: 20px;
+}
+article div.social-links li a {
+  color: #000;
+  padding: 10px;
+}
+article div.social-links li a:hover {
+  color: #666;
+  text-decoration: none;
+}
+article p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.6em;
+}
+article p.note {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 0.533em 0.733em;
+}
+article p.update {
+  background-color: #FEEFB3;
+  border: 1px solid #e6e68a;
+  padding: 0.533em 0.733em;
+}
+article p.alert {
+  background-color: #ffe2e2;
+  border: 1px solid #ffb2b2;
+  padding: 0.533em 0.733em;
+}
+article ul,
+article ol {
+  margin-top: 0px;
+  margin-bottom: 25px;
+}
+article li {
+  font-size: 16px;
+  line-height: 1.6em;
+}
+article a:hover {
+  text-decoration: underline;
+}
+article blockquote {
+  border-left: 2px solid #c7c7cc;
+  color: #666;
+  margin: 30px 0;
+  padding: 0 0 0 25px;
+}
+article img {
+  max-width: 100%;
+}
+article code {
+  color: #333;
+  border-radius: 0;
+  font-size: 13px;
+}
+article .meta {
+  font-size: 11px;
+}
+article .meta a:hover {
+  text-decoration: none;
+}
+article .meta div {
+  margin-bottom: 20px;
+  display: block;
+}
+article .meta a.tag {
+  margin: 0 10px 10px 0;
+  padding: 1px 12px;
+  display: inline-block;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.05);
+}
+article .meta a.tag:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+article .meta a.read_more,
+article .meta a.comments_btn {
+  font-size: 14px;
+  font-weight: 800;
+  padding: 10px 20px;
+  color: #205F29;
+  background: #FFF;
+  border: 1px solid #205F29;
+}
+article .meta a.read_more:hover,
+article .meta a.comments_btn:hover {
+  color: #FFF;
+  background: #5C881C;
+}
+.index {
+  max-width: 700px;
+}
+.index article header h2 {
+  font-size: 36px;
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+.index article header h2 a {
+  color: #000;
+}
+.index article header h2 a:hover {
+  color: #007EE5;
+  text-decoration: none;
+}
+.index .separator {
+  padding: 40px 0 0 0;
+  margin: 0 0 40px 0;
+  height: 10px;
+  border-bottom: solid 1px #CCC;
+}
+.index .pagination {
+  display: block;
+  margin-bottom: 100px;
+}
+.index .pagination .left {
+  text-align: right;
+}
+.index .pagination .right {
+  text-align: left;
+}
+.index .pagination a {
+  display: inline-block;
+  border: 2px solid #5C881C;
+  margin: 0 5px;
+  padding: 8px 20px;
+  font-weight: bold;
+  color: #5C881C;
+}
+.index .pagination a:hover {
+  color: #FFF;
+  background: #5C881C;
+}
+.post {
+  max-width: 700px;
+}
+.post h2:before {
+  content: "# ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post h3:before {
+  content: "## ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post h4:before {
+  content: "### ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post article .meta {
+  margin: 50px 0 100px;
+}
+.list {
+  max-width: 700px;
+}
+.list ul.double-list {
+  margin: 0 auto 60px;
+  padding: 0;
+  list-style-type: none;
+}
+.list ul.double-list li {
+  padding: 5px 0;
+}
+.list ul.double-list li h2 {
+  font-size: 1em;
+  display: inline;
+  font-weight: normal;
+}
+.list ul.double-list li span {
+  font-family: sans-serif;
+  text-transform: uppercase;
+  text-align: right;
+  float: right;
+  padding-top: 3px;
+  font-size: 12px;
+  color: #999;
+}
+.full-width-content {
+  padding-top: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.col-xs-1,
+.col-sm-1,
+.col-md-1,
+.col-lg-1,
+.col-xs-2,
+.col-sm-2,
+.col-md-2,
+.col-lg-2,
+.col-xs-3,
+.col-sm-3,
+.col-md-3,
+.col-lg-3,
+.col-xs-4,
+.col-sm-4,
+.col-md-4,
+.col-lg-4,
+.col-xs-5,
+.col-sm-5,
+.col-md-5,
+.col-lg-5,
+.col-xs-6,
+.col-sm-6,
+.col-md-6,
+.col-lg-6,
+.col-xs-7,
+.col-sm-7,
+.col-md-7,
+.col-lg-7,
+.col-xs-8,
+.col-sm-8,
+.col-md-8,
+.col-lg-8,
+.col-xs-9,
+.col-sm-9,
+.col-md-9,
+.col-lg-9,
+.col-xs-10,
+.col-sm-10,
+.col-md-10,
+.col-lg-10,
+.col-xs-11,
+.col-sm-11,
+.col-md-11,
+.col-lg-11,
+.col-xs-12,
+.col-sm-12,
+.col-md-12,
+.col-lg-12 {
+  padding-right: 0px;
+  padding-left: 0px;
+}</style>
+
+
+    </head>
+
+    <body>
+        <header class="navbar navbar-static-top bs-docs-nav main-header">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/" title="Home" class="title">Indent</a></li>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/pages/research.html" title="Papers">Research</a></li>
+                            <li><a href="/pages/about.html" title="About">About</a></li>
+                            <li><a href="http://github.com/olamyy" title="olamyy's Github" rel="me">Github</a></li>
+                            <li><a href="http://twitter.com/__olamilekan__" title="__olamilekan__ Twitter" rel="me">Twitter</a></li>
+                            <li><a href="/archives.html" title="Archive">Archive</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div id="wrap">
+<div class="container post">
+    <article>
+        <header>
+            <h1>Generating Yoruba Names with Char-RNN</h1>
+            <time datetime="article.date.isoformat()" pubdate>June 02, 2018</time>
+        </header>
+
+        <img src="/images/yorubanames.png">
+        <div class="article_content">
+            <p>Last week, I was bored. </p>
+<p>Mainly because most of the work I did during the week was theoretical.
+Reading Papers(this, this, this, and this.), trying to get familiar with some 
+differential calculus concepts and making my first set of changes to the sklearn library.</p>
+<p>On friday night, I decided to do something fun for the weekend. Around that same time, thanks to <a href="">Jannelle Shane</a>, I stumbled upon the 
+<code>char-rnn</code> concept and decided building something on it would be my fun project for the weekend.</p>
+<p>This article is an attempt to document everything I learnt while working with <code>char-rnn</code>s and how I was able to generate yoruba names with it.</p>
+<p>The rest of the article will be organised as follows:</p>
+<ul>
+<li>What is <code>char-rnn</code>? </li>
+<li>Yoruba Name Generation<ul>
+<li>Inspiration</li>
+<li>Getting the data</li>
+<li>Choosing the approach</li>
+<li>Result Benchmark, Challenges and Improvements</li>
+<li>Some of the generated names</li>
+</ul>
+</li>
+<li>Resources  </li>
+</ul>
+<h3>What is <code>Char-RNN</code></h3>
+<p><code>Char-rnn</code> short for <code>Character Recurrent Neural Network</code> are multi-layer neural networks for training textual models. They are essentially made up of RNN, LSTM and GRU.
+According to the author, <a href="">Andrej Karperthy</a>,</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>The (<code>char-rnn</code>) model takes one text file as input and trains a Recurrent Neural Network that learns to predict the next character in a sequence. The RNN can then be used to generate text 
+character by character that will look like the original training data. </p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>Given the above, a <code>char-rnn</code> model can be thought of classification model in that it's output is a probability distribution of character classes.
+The model is fed the characters one at a time and an output is generated at each ending character.</p>
+<p>Since this is a classification task, categorical cross entropy loss is used to train the model. This loss is mathematically given as </p>
+<p>$$ \sum_{i=1}^{n}y_{i}log(Y_{i})\label{c}\tag{1}$$ </p>
+<p>where $n$ represents number of samples</p>
+<p>where $y_{i}$ represents encoded target value(character in this instance)</p>
+<p>where $Y_{i}$ represents vector of probabilities over the samples</p>
+<p>The target characters(values) are derived by one hot encoding them as one-hot vectors. The position of the <code>1</code> represents the position of the
+generated character. The generated characters are created by iteratively minimizing the loss in <code>equation 1</code> above.</p>
+<h4>Yoruba Name Generation</h4>
+<h3>Inspiration</h3>
+<p>Some weeks back, I had this idea </p>
+<p><blockquote class="twitter-tweet" align="center"><a href="https://twitter.com/_olamilekan_/status/997502923952345089">Tweet of _olamilekan_/997502923952345089</a></blockquote></p>
+<p>Unfortunately, I was not able to work on this cause </p>
+<ol>
+<li>
+<p>I could not come up with a reasonable hardline for sentence delimiters in fuji music.
+    I asked this on twitter but so far, no headway yet.</p>
+<p><blockquote class="twitter-tweet" align="center"><a href="https://twitter.com/_olamilekan_/status/997504191038967810">Tweet of _olamilekan_/997504191038967810</a></blockquote></p>
+</li>
+<li>
+<p>There was really nowhere (at least that I know of) where I can get lyrics to fuji music.</p>
+</li>
+</ol>
+<p>While still ranting on twitter, <a href="https://mobile.twitter.com/ogunbode_">Femi</a> suggested a work he did using LSTMs to generate new names he using the <a href="yorubanames.com">Yoruba Names</a> API.</p>
+<p><blockquote class="twitter-tweet" align="center"><a href="https://twitter.com/ogunbode_/status/997503841062084608">Tweet of ogunbode_/997503841062084608</a></blockquote></p>
+<p>On the same thread, <a href="">Perfect</a> mentioned and shared the Yoruba Names API and that was all the inspiration that lead to this work.</p>
+<h3>The Data</h3>
+<p>The Yoruba names database contains 6842 of which 6280 were published. I would assume the 562 unpublished names were as a still undergoing scrutiny for errors or were not right for the 
+platform.</p>
+<p>Each name had the following structure:</p>
+<div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;pronunciation&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;ipaNotation&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;variants&quot;</span><span class="p">:</span> <span class="s2">&quot;Àrẹ&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;syllables&quot;</span><span class="p">:</span> <span class="s2">&quot;à-à-rẹ&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;meaning&quot;</span><span class="p">:</span> <span class="s2">&quot;The one who is the chief.&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;extendedMeaning&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">&quot;morphology&quot;</span><span class="p">:</span> <span class="s2">&quot;ààrẹ&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;geoLocation&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;place&quot;</span><span class="p">:</span> <span class="s2">&quot;OTHERS&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;OTHERS&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;famousPeople&quot;</span><span class="p">:</span> <span class="s2">&quot;Bọ́lá Àrẹ, gospel musician&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;inOtherLanguages&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">&quot;media&quot;</span><span class="p">:</span> <span class="s2">&quot;https://en.wikipedia.org/wiki/Bola_Are&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;tonalMark&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">&quot;tags&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">&quot;submittedBy&quot;</span><span class="p">:</span> <span class="s2">&quot;Not Available&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;etymology&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;part&quot;</span><span class="p">:</span> <span class="s2">&quot;ààrẹ&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;meaning&quot;</span><span class="p">:</span> <span class="s2">&quot;chief&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;PUBLISHED&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;createdAt&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="mi">2016</span><span class="p">,</span>
+      <span class="mi">1</span><span class="p">,</span>
+      <span class="mi">7</span><span class="p">,</span>
+      <span class="mi">21</span><span class="p">,</span>
+      <span class="mi">18</span><span class="p">,</span>
+      <span class="mi">1</span><span class="p">,</span>
+      <span class="mi">843000000</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;updatedAt&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="mi">2016</span><span class="p">,</span>
+      <span class="mi">11</span><span class="p">,</span>
+      <span class="mi">5</span><span class="p">,</span>
+      <span class="mi">11</span><span class="p">,</span>
+      <span class="mi">10</span><span class="p">,</span>
+      <span class="mi">55</span><span class="p">,</span>
+      <span class="mi">814000000</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ààrẹ&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+
+<p>Getting this data was easy. All it took was a saved <code>wget</code> request to their <a href="yorubaname.com/swagger-ui.html">API</a>.</p>
+<div class="highlight"><pre><span></span>wget <span class="s1">&#39;http://yorubaname.com/v1/names?count=6842&#39;</span> -O yorubanames.json
+</pre></div>
+
+
+<p>Since the task is to generate names, after getting the data, every other field in the dataset asides the <code>name</code> field was dropped. This is
+majorly because <code>char-rnn</code> cares less about feature samples and more about the characters that make up the needed label column. Another reason 
+would be because, I personally, haven't found a way to use tabular data with multiple features on <code>char-rnn</code>.</p>
+<p>The dataset had 6284 entries which is somewhat very <code>small</code> and has been made available in the project's <a href="">github</a>.</p>
+<h3>Choosing the approach</h3>
+<p>There were a number of different approaches I could have taken while working on this.
+Some of these approaches are:</p>
+<ol>
+<li>Using the Pytorch implementation of <code>char-rnn</code> <a href="https://github.com/karpathy/char-rnn].com/karpathy/char-rnn">here</a></li>
+<li>Using this theano/lassagne <a href="https://github.com/Lasagne/Recipes/blob/master/examples/lstm_text_generation.py">implementation</a></li>
+<li>Using <a href="https://github.com/hjweide/lasagne-char-rnn">Hendrik Weideman</a>'s lassagne implementation</li>
+<li>Using the <a href="https://github.com/minimaxir/textgenrnn">textgenrnn</a> python package</li>
+<li>Writing my own custom implementation as a way to learn.</li>
+</ol>
+<p>I started by writing my own custom <a href="">implementation</a> of <code>char-rnn</code> but the performance was a bit poor. I ended using <code>textgenrnn</code> which is
+a Keras implementation of the concept.</p>
+<p>The textgenrnn library was written in python 3 and optimized to ensure:</p>
+<p><img alt="textgen" src="/images/textgen.png" /> </p>
+<p>An added advantage of using textgenrnn is easy setup with fewer lines of code. A fully working instance of char-rnn can be set up using
+the library in as little as 8 lines of code.</p>
+<p>For my Yoruba names use case, I was able to setup a fully running char-rnn model on the data using the code below:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">textgenrnn</span> <span class="kn">import</span> <span class="n">textgenrnn</span>
+
+<span class="n">textgen</span> <span class="o">=</span> <span class="n">textgenrnn</span><span class="p">()</span>
+
+<span class="n">textgen</span><span class="o">.</span><span class="n">train_from_file</span><span class="p">(</span><span class="s1">&#39;yorubanames.csv&#39;</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1">#yorubanames.csv contains the</span>
+<span class="c1">#  6842 names available on the yoruba names platform.</span>
+
+<span class="n">textgen</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+
+<h4>Result Benchmark, Challenges and Improvements.</h4>
+<p>Using the default textgenrnn config, the model seems to perform quite well, generating names, 
+interesting enough to be taking as original yoruba names. However, most(83%) of the names were monosyllabic which would suggest they were more of actions(verbs) than names.</p>
+<p>To improve this, I tried to get the optimal hyperparameters for the model. Using <code>sklearn</code>'s GridSearch algorithm, I was able to conclude on the following parameters as the 
+best performing.</p>
+<div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;line_delimited&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+       <span class="s1">&#39;num_epochs&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="s1">&#39;gen_epochs&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s1">&#39;train_size&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+        <span class="s1">&#39;validation&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="s1">&#39;is_csv&#39;</span><span class="p">:</span> <span class="bp">True</span>
+        <span class="p">}</span>
+</pre></div>
+
+
+<p>Training the data with this config very much improved the generated names. The names were now made up of either 4 or 3 syllables which was much more acceptable.</p>
+<p>While this is nowhere not perfection, some of the challenges I faced while doing this include:</p>
+<ol>
+<li>Understanding how the model chooses yoruba signs (amin) for each name.</li>
+<li>For some weird reason, the model seems to perform way better(generate better names) when I export the dataset with its numerical index than when there's no index. I've tried investigating this
+but haven't been able to come up with a good explanation as to why this happens.</li>
+<li>The library does not provide access to all Keras Model APIs so there was really no empirical way to measure it's performance asides manual calculations.</li>
+</ol>
+<p>Some possible improvements on my initial work would be :</p>
+<ol>
+<li>Look for a way to include all features of the yoruba names dataset in the training. This would mean, looking for a way to include tabular multi feature datasets in <code>char-rnn</code>.</li>
+<li>Improve the textgenrnn package to make it a bit more pythonic.</li>
+</ol>
+<h2>Cross section of generated names</h2>
+<p>The first 50 of the generated names are shown below</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Ifádájù</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Àyínàjà</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ḿrìnní</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Aríyéyé</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Àjẹ̀yà</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>láyèsì</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Adeguntà</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Olúwanmíĺlá</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>antà</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>̀tẹ̀t́ládé</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Adéyìntà</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Àdẹ̀yàn</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>oshiníyè</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Olúwat̀mí</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Olúwátóyè</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>láníyì</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Akínfádù</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>ògbélá</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Adégbé</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Olúwàtàn</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Àyìbádé</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>̀jẹ́yì</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Ifádéyé</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Ifadòyíní</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Adébíyì</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Fátóyè</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Adémilé</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Olúwákóyé</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>ĺruníĺlá</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>ḿdùnmí</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Fádáyè</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Àjòyí</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Àyínlẹ́yé</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Ifádéyé</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Olúwabíróyè</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>láníyè</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Akínráyì</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Olúwáwó</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Ìdẹ̀jú</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Olúwaranísan</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Ìbóyè</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>ólá</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>Adégbé</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Àbẹ́lá</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>oloolúwadá</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>Olúwáshinílá</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>Akínbẹ́mi</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>Báyé</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>oluntì</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>Olúwáníyì</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Àyínká</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>Máyìn</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Resources</h2>
+<ol>
+<li><a href="https://github.com/karpathy/char-rnn">https://github.com/karpathy/char-rnn</a></li>
+<li><a href="https://github.com/minimaxir/textgenrnn">https://github.com/minimaxir/textgenrnn</a></li>
+<li><a href="https://github.com/ekzhang/char-rnn-keras/blob/master/Visualization.ipynb">https://github.com/ekzhang/char-rnn-keras/blob/master/Visualization.ipynb</a></li>
+<li><a href="https://stackoverflow.com/questions/41484580/gridsearch-with-keras-neural-networks">https://stackoverflow.com/questions/41484580/gridsearch-with-keras-neural-networks</a></li>
+</ol><script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+
+        <div class="meta">
+            <div>
+                    <a href="/tag/deep-learning.html" class="tag">deep-learning</a>
+                    <a href="/tag/char-rnn.html" class="tag">char-rnn</a>
+                    <a href="/tag/python.html" class="tag">python</a>
+                    <a href="/tag/texgenrnn.html" class="tag">texgenrnn</a>
+                    <a href="/tag/yoruba.html" class="tag">yoruba</a>
+                    <a href="/tag/yorubanames.html" class="tag">yorubanames</a>
+            </div>
+        </div>
+    </article>
+    <section>
+    <h1>Comments</h1>
+               <a href="https://twitter.com/intent/tweet?text=I just read https://www.olamilekanwahab.com/drafts/yoruba-names-neural-networks.html by @__olamilekan__" class="twitter-share-button" data-size="large"
+>Share article on Twitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+        <div id="disqus_thread"></div>
+        <script>
+
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://indent.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  </section>
+</div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
+
+        </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-104393656-1', 'danielfrg.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+    </body>
+</html>
