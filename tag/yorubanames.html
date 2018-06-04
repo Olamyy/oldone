@@ -6,7 +6,7 @@
         <meta name="author" content="Olamilekan Wahab">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Home | Indent</title>
+        <title>Archives | Indent</title>
 
         <link rel="alternate" type="application/atom+xml" title="Indent blog atom feed" href="/feeds/all.atom.xml" />
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
@@ -394,260 +394,20 @@ article .meta a.comments_btn:hover {
         </header>
 
         <div id="wrap">
-<div class="container index">
+<div class="container list">
+    <article>
+        <h1 style="margin-bottom: 30px;">Tag: yorubanames</h1>
 
-  <article>
-    <header>
-      <h2><a href="/blog/2018/06/02/yoruba-names-neural-networks/">Generating Yoruba Names using Char-RNN</a></h2>
-      <time datetime="" title="2018-06-02T00:00:00+00:00" pubdate>June 02, 2018</time>
-    </header>
-
-    <img src="/images/yorubanames.png">
-
-
-    <div class="article_content">
-      <p>Last week, I was bored. </p>
-<p>Mainly because most of the work I did during the week was theoretical.
-Reading papers(<a href="https://arxiv.org/abs/1206.5538">this</a>, <a href="https://arxiv.org/abs/cond-mat/0606005">this</a>, <a href="https://arxiv.org/abs/1707.02410">this</a>, and <a href="https://arxiv.org/abs/1802.07740">this</a>), 
-trying to get familiar with some concepts in differential calculus and making my first set of changes to the sklearn library.</p>
-<p>On friday night, I decided to do something fun for the weekend. Around that same time, thanks to <a href="">Jannelle Shane</a>, I stumbled upon the 
-<code>char-rnn</code> concept and decided building something on it would be my fun project for the weekend.</p>
-<p>This article is an attempt to document everything I learnt while working with <code>char-rnn</code> and how I was able to generate yoruba names with it.</p>
-<p>The rest of the article will be organised as follows:</p>
-<ul>
-<li>What is <code>char-rnn</code>? </li>
-<li>Yoruba Name Generation<ul>
-<li>Inspiration</li>
-<li>Getting the data</li>
-<li>Choosing the approach</li>
-<li>Result Benchmark, Challenges and Improvements</li>
-<li>Some of the generated names</li>
-</ul>
-</li>
-<li>Resources  </li>
-</ul>
-<h3>What is <code>Char-RNN</code></h3>
-<p><code>Char-rnn</code> short ...</p>
-    </div>
-
-    <div class="meta">
-      <div>
-        <a href="/blog/2018/06/02/yoruba-names-neural-networks/" class="read_more">Read more &#8594;</a>
-<a href="https://twitter.com/intent/tweet?text=I just read https://www.olamilekanwahab.com/blog/2018/06/02/yoruba-names-neural-networks/ by @__olamilekan__" class="read_more" data-size="large"
->Share on Twitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-      </div>
-          <div>
-            <a href="/tag/deep-learning.html" class="tag">deep-learning</a>
-            <a href="/tag/char-rnn.html" class="tag">char-rnn</a>
-            <a href="/tag/python.html" class="tag">python</a>
-            <a href="/tag/texgenrnn.html" class="tag">texgenrnn</a>
-            <a href="/tag/yoruba.html" class="tag">yoruba</a>
-            <a href="/tag/yorubanames.html" class="tag">yorubanames</a>
-      </div>
-
-    </div>
-
-  </article>
-  <div class="separator"></div>
-  <article>
-    <header>
-      <h2><a href="/blog/2018/05/05/understanding-the-sklearn-design/">The Sklearn API Design Principles</a></h2>
-      <time datetime="" title="2018-05-05T00:00:00+00:00" pubdate>May 05, 2018</time>
-    </header>
-
-    <img src="/images/scikit.png">
-
-
-    <div class="article_content">
-      <p><strong>Hi</strong>, </p>
-<p>You should really read this to the end if:</p>
-<ol>
-<li>
-<p>You've never really understood how sklearn modules/classes are structured.</p>
-</li>
-<li>
-<p>You're interested in contributing to sklearn.</p>
-</li>
-<li>
-<p>You need to understand the internals of sklearn, why some decisions were made and how some things work.</p>
-</li>
-</ol>
-<hr />
-<p>Some weeks back, I decided to start contributing to the open source scikit-learn library. This decision led me to read a whole lot of sklearn's code, documentation , contribution and 
-online guides.</p>
-<p>This article is an attempt to document everything I learnt about the design principles behind the library.</p>
-<p>The rest of the article will be organised as follows:</p>
-<ul>
-<li>What is a scikit in python? <ul>
-<li>Examples of scikits</li>
-</ul>
-</li>
-<li>Scikit-learn<ul>
-<li>What is scikit-learn?</li>
-<li>A little history</li>
-<li>Data representation</li>
-<li>API Design Principles<ul>
-<li>Consistency<ul>
-<li>Estimators</li>
-<li>Predictors</li>
-<li>Transformers</li>
-<li>Meta-estimators</li>
-<li>Pipelines and Feature Unions</li>
-</ul>
-</li>
-<li>Other Principles</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Conclusion</li>
-<li>Resources  </li>
-</ul>
-<h2>What is a scikit in python?</h2>
-<p>A scikit, short for SciPy ...</p>
-    </div>
-
-    <div class="meta">
-      <div>
-        <a href="/blog/2018/05/05/understanding-the-sklearn-design/" class="read_more">Read more &#8594;</a>
-<a href="https://twitter.com/intent/tweet?text=I just read https://www.olamilekanwahab.com/blog/2018/05/05/understanding-the-sklearn-design/ by @__olamilekan__" class="read_more" data-size="large"
->Share on Twitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-      </div>
-          <div>
-            <a href="/tag/machine-learning.html" class="tag">machine-learning</a>
-            <a href="/tag/sklearn.html" class="tag">sklearn</a>
-            <a href="/tag/python.html" class="tag">python</a>
-      </div>
-
-    </div>
-
-  </article>
-  <div class="separator"></div>
-  <article>
-    <header>
-      <h2><a href="/blog/2018/01/30/locally-weighted-regression/">Locally Weighted Regression</a></h2>
-      <time datetime="" title="2018-01-30T00:00:00+00:00" pubdate>January 30, 2018</time>
-    </header>
-
-    <img src="/images/locally-weighted-regression.png">
-
-
-    <div class="article_content">
-      <p>A couple of weeks back, I started a review of the linear models I've used over the years and and I realized that I never really understood how the locally weighted regression algorithm works. This and the fact that <code>sklearn</code> had no support for it, encouraged me to do an investigation into the working principles of the algorithm. In this post, I would attempt to provide an overview of the algorithm using mathematical inference and list some of the implementations available in Python. </p>
-<p>The rest of this article will be organised as follows:</p>
-<ul>
-<li>Regression <ul>
-<li>Regression Function</li>
-<li>Regression Assumptions</li>
-<li>The Linear Regression Algorithm</li>
-</ul>
-</li>
-<li>Locally Weighted Regression<ul>
-<li>Python Implementation<ul>
-<li>StatsModel Implementation</li>
-<li>Alexandre Gramfort's implementation</li>
-</ul>
-</li>
-<li>Benchmark</li>
-</ul>
-</li>
-<li>Conclusion</li>
-<li>Resources</li>
-</ul>
-<h2>Notations</h2>
-<p>The following notations would be used throughout this article</p>
-<table>
-<thead>
-<tr>
-<th>Symbol</th>
-<th align="center">Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$$ y $$</td>
-<td align="center">Target Variable</td>
-</tr>
-<tr>
-<td>$$ X $$</td>
-<td align="center">Features</td>
-</tr>
-<tr>
-<td>$$ (X, y)   $$</td>
-<td align="center">Training set</td>
-</tr>
-<tr>
-<td>$$ n $$</td>
-<td align="center">Number of features</td>
-</tr>
-<tr>
-<td>$$ X_i, y_i $$</td>
-<td align="center"><sup>ith</sup> index of X and y ...</td></tr></tbody></table>
-    </div>
-
-    <div class="meta">
-      <div>
-        <a href="/blog/2018/01/30/locally-weighted-regression/" class="read_more">Read more &#8594;</a>
-<a href="https://twitter.com/intent/tweet?text=I just read https://www.olamilekanwahab.com/blog/2018/01/30/locally-weighted-regression/ by @__olamilekan__" class="read_more" data-size="large"
->Share on Twitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-      </div>
-          <div>
-            <a href="/tag/maths.html" class="tag">Maths</a>
-            <a href="/tag/python.html" class="tag">Python</a>
-            <a href="/tag/regression.html" class="tag">regression</a>
-            <a href="/tag/lwr.html" class="tag">lwr</a>
-      </div>
-
-    </div>
-
-  </article>
-  <div class="separator"></div>
-  <article>
-    <header>
-      <h2><a href="/blog/2017/11/01/introduction-to-fourier-transform/">Introduction To The Fast Fourier Transform In Python</a></h2>
-      <time datetime="" title="2017-11-01T00:00:00+00:00" pubdate>November 01, 2017</time>
-    </header>
-
-    <img src="/images/fourier.jpg">
-
-
-    <div class="article_content">
-      <p>NOTE : This is the first of a two part blog post on the topic.</p>
-<p>The Fast Fourier Transform is an algorithmic optimization of the Discrete Fourier Transform.</p>
-<p>I came across it a couple of weeks back and found it quite interesting because it's based on a topic I had previously done in class but never really got to use. In this post, I would give a brief explanation of the FFT algorithm stating its mathematical background. In the blogpost following this, various uses-cases of the FFT in Python would explored.</p>
-<p>The FFT algorithm is an implementation of the Discrete Fourier Transform which is a type of Fourier Transform. The other type is the  <strong>Inverse Discrete Fourier Transform</strong>. It's an adaptation of the Fourier Transform, which in simple terms is an "attempt at digitizing the analog world".</p>
-<h3>The Fourier Transform</h3>
-<p>Everything can be described using a waveform. Waveforms are ...</p>
-    </div>
-
-    <div class="meta">
-      <div>
-        <a href="/blog/2017/11/01/introduction-to-fourier-transform/" class="read_more">Read more &#8594;</a>
-<a href="https://twitter.com/intent/tweet?text=I just read https://www.olamilekanwahab.com/blog/2017/11/01/introduction-to-fourier-transform/ by @__olamilekan__" class="read_more" data-size="large"
->Share on Twitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-      </div>
-          <div>
-            <a href="/tag/maths.html" class="tag">Maths</a>
-            <a href="/tag/python.html" class="tag">Python</a>
-            <a href="/tag/fourier.html" class="tag">Fourier</a>
-      </div>
-
-    </div>
-
-  </article>
-  <div class="separator"></div>
-
-  <nav class="pagination row">
-    <div class="col-xs-6 left">
-    </div>
-    <div class="col-xs-6 right">
-    </div>
-  </nav>
-
-  </div>
-
+        <ul class="double-list">
+            <li>
+                <a href='/blog/2018/06/02/yoruba-names-neural-networks/'>
+                    <h2>Generating Yoruba Names using Char-RNN</h2>
+                    <span>02.06.2018</span>
+                </a>
+            </li>
+        </ul>
+    </article>
 </div>
-
         </div>
 
 <script>
