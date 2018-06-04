@@ -2,25 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cb3aab7-629f-4fce-a7fe-cc502e21c902" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/content/articles/yoruba-names/yorubanames-char-rnn.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/content/images/textgen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/content/images/yorubanames.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plugins/embed_tweet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/blog/2017/11/01/introduction-to-fourier-transform/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/blog/2017/11/01/introduction-to-fourier-transform/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/blog/2018/01/30/locally-weighted-regression/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/blog/2018/01/30/locally-weighted-regression/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/drafts/love-of-fractals.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/drafts/love-of-fractals.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/drafts/splitting-dilemma.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/drafts/splitting-dilemma.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/articles/yoruba-names/yorubanames-char-rnn.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/articles/yoruba-names/yorubanames-char-rnn.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/archives.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/archives.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/author/olamilekan-wahab.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/author/olamilekan-wahab.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/authors.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/authors.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/categories.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output/feeds/all-en.atom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/output/feeds/all-en.atom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output/feeds/all.atom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/output/feeds/all.atom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/feeds/fourier-transforms.atom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/output/feeds/fourier-transforms.atom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/feeds/locally-weight-regression.atom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/output/feeds/locally-weight-regression.atom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output/feeds/olamilekan-wahab.atom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/output/feeds/olamilekan-wahab.atom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output/feeds/olamilekan-wahab.rss.xml" beforeDir="false" afterPath="$PROJECT_DIR$/output/feeds/olamilekan-wahab.rss.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/pages/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/pages/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/pages/research.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/pages/research.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/tag/python.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/tag/python.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/tags.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/tags.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pelican.pid" beforeDir="false" afterPath="$PROJECT_DIR$/pelican.pid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pelicanconf.py" beforeDir="false" afterPath="$PROJECT_DIR$/pelicanconf.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,46 +26,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="understanding-the-sklearn-design.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="670">
-                <caret line="355" selection-start-line="355" selection-end-line="365" selection-end-column="70" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="yorubanames-char-rnn.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/content/articles/yoruba-names/yorubanames-char-rnn.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="348">
-                <caret line="447" column="84" selection-start-line="447" selection-start-column="84" selection-end-line="447" selection-end-column="84" />
-                <folding>
-                  <element signature="e#1168#1190#0" />
-                  <element signature="e#1191#1407#0" />
-                  <element signature="e#1411#1675#0" />
-                  <element signature="e#1676#1921#0" />
-                  <element signature="e#2293#2550#0" />
-                  <element signature="e#3641#4537#0" />
-                </folding>
+              <first_editor relative-caret-position="325">
+                <caret line="150" column="137" selection-start-line="150" selection-start-column="137" selection-end-line="150" selection-end-column="137" />
               </first_editor>
               <second_editor />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="embed_tweet.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/embed_tweet.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="41" column="43" selection-start-line="41" selection-start-column="43" selection-end-line="41" selection-end-column="43" />
-              <folding>
-                <element signature="e#438#465#0" expanded="true" />
-              </folding>
+      <file leaf-file-name="locally-weight-regression.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/content/articles/locally-weight-regression/locally-weight-regression.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="105">
+                <caret line="7" column="17" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="17" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -86,7 +61,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sklearn</find>
       <find>s</find>
       <find>sc</find>
       <find>x</find>
@@ -111,6 +85,12 @@
       <find>_partial_fit</find>
       <find>PLUGINS</find>
       <find>[0-9,]</find>
+      <find>cause</find>
+      <find>interesting en</find>
+      <find>perfor</find>
+      <find>near</find>
+      <find>nowhere</find>
+      <find>available</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -187,6 +167,19 @@
               <item name="repository" type="462c0819:PsiDirectoryNode" />
               <item name="content" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="repository" type="b2602c69:ProjectViewProjectNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+              <item name="content" type="462c0819:PsiDirectoryNode" />
+              <item name="articles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="repository" type="b2602c69:ProjectViewProjectNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+              <item name="content" type="462c0819:PsiDirectoryNode" />
+              <item name="articles" type="462c0819:PsiDirectoryNode" />
+              <item name="yoruba-names" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -198,12 +191,12 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/content/images" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/plugins" />
       <recent name="$PROJECT_DIR$/content/articles/yoruba-names" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/content/images" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -396,6 +389,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32911393" />
@@ -404,8 +398,8 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="right" id="Mongo Explorer" order="3" weight="0.32960597" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.45333335" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25213677" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.9969231" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.25213677" />
       <window_info anchor="right" id="R Packages" order="3" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="R Graphics" order="3" />
@@ -733,14 +727,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/content/articles/keras-benchmark/keras-benchmark.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/content/articles/keras-benchmark/keras-benchmark.md" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -769,16 +756,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/content/articles/locally-weight-regression/locally-weight-regression.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="561">
-            <caret line="84" column="30" selection-start-line="84" selection-end-line="85" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/publishconf.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -786,13 +763,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/output/drafts/yoruba-names-neural-networks.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11">
-          <caret line="404" column="37" selection-start-line="404" selection-start-column="37" selection-end-line="404" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/output/drafts/yoruba-names-neural-networks.html" />
     <entry file="file://$PROJECT_DIR$/pelicanconf.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="508">
@@ -804,19 +775,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="41" column="43" selection-start-line="41" selection-start-column="43" selection-end-line="41" selection-end-column="43" />
-          <folding>
-            <element signature="e#438#465#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/content/b.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2005">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/content/b.csv" />
     <entry file="file://$PROJECT_DIR$/content/articles/understanding-the-sklearn-design/understanding-the-sklearn-design.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
@@ -827,19 +789,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/content/articles/locally-weight-regression/locally-weight-regression.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="105">
+            <caret line="7" column="17" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="17" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/content/articles/yoruba-names/yorubanames-char-rnn.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="348">
-            <caret line="447" column="84" selection-start-line="447" selection-start-column="84" selection-end-line="447" selection-end-column="84" />
-            <folding>
-              <element signature="e#1168#1190#0" />
-              <element signature="e#1191#1407#0" />
-              <element signature="e#1411#1675#0" />
-              <element signature="e#1676#1921#0" />
-              <element signature="e#2293#2550#0" />
-              <element signature="e#3641#4537#0" />
-            </folding>
+          <first_editor relative-caret-position="325">
+            <caret line="150" column="137" selection-start-line="150" selection-start-column="137" selection-end-line="150" selection-end-column="137" />
           </first_editor>
           <second_editor />
         </state>

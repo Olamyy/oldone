@@ -1,23 +1,23 @@
-Title: Generating Yoruba Names with Char-RNN
+Title: Generating Yoruba Names using Char-RNN
 author: Olamilekan Wahab
 Slug: yoruba-names-neural-networks
 categories: python sklearn machine-learning
 Date: 2018-06-02
 Tags: deep-learning,char-rnn,python,texgenrnn,yoruba, yorubanames
 image: yorubanames.png 
-Status: draft
+Status: published
 
 
 Last week, I was bored. 
 
 Mainly because most of the work I did during the week was theoretical.
-Reading Papers(this, this, this, and this.), trying to get familiar with some 
-differential calculus concepts and making my first set of changes to the sklearn library.
+Reading papers([this](https://arxiv.org/abs/1206.5538), [this](https://arxiv.org/abs/cond-mat/0606005), [this](https://arxiv.org/abs/1707.02410), and [this](https://arxiv.org/abs/1802.07740)), 
+trying to get familiar with some concepts in differential calculus and making my first set of changes to the sklearn library.
 
 On friday night, I decided to do something fun for the weekend. Around that same time, thanks to [Jannelle Shane](), I stumbled upon the 
 `char-rnn` concept and decided building something on it would be my fun project for the weekend.
 
-This article is an attempt to document everything I learnt while working with `char-rnn`s and how I was able to generate yoruba names with it.
+This article is an attempt to document everything I learnt while working with `char-rnn` and how I was able to generate yoruba names with it.
 
 
 The rest of the article will be organised as follows:
@@ -62,7 +62,7 @@ generated character. The generated characters are created by iteratively minimiz
     
 @\_olamilekan_/status/997502923952345089
 
-Unfortunately, I was not able to work on this cause 
+Unfortunately, I was not able to work on this because 
 
 1. I could not come up with a reasonable hardline for sentence delimiters in fuji music.
     I asked this on twitter but so far, no headway yet.
@@ -148,7 +148,7 @@ Since the task is to generate names, after getting the data, every other field i
 majorly because ``char-rnn`` cares less about feature samples and more about the characters that make up the needed label column. Another reason 
 would be because, I personally, haven't found a way to use tabular data with multiple features on ``char-rnn``.
 
-The dataset had 6284 entries which is somewhat very `small` and has been made available in the project's [github]().
+The dataset had 6284 entries which is somewhat very `small` and has been made available [here](https://github.com/Olamyy/created_datasets).
 
 ### Choosing the approach
 
@@ -188,7 +188,7 @@ textgen.generate(5)
 #### Result Benchmark, Challenges and Improvements.
 
 Using the default textgenrnn config, the model seems to perform quite well, generating names, 
-interesting enough to be taking as original yoruba names. However, most(83%) of the names were monosyllabic which would suggest they were more of actions(verbs) than names.
+interesting enough to be taken as original yoruba names. However, most(83%) of the names were monosyllabic which would suggest they were more of actions(verbs) than names.
 
 
 To improve this, I tried to get the optimal hyperparameters for the model. Using ``sklearn``'s GridSearch algorithm, I was able to conclude on the following parameters as the 
@@ -207,23 +207,23 @@ cfg = {'line_delimited': False,
 Training the data with this config very much improved the generated names. The names were now made up of either 4 or 3 syllables which was much more acceptable.
 
 
-While this is nowhere not perfection, some of the challenges I faced while doing this include:
+While this is nowhere near perfection, some of the challenges I faced while doing this include:
 
 1. Understanding how the model chooses yoruba signs (amin) for each name.
 2. For some weird reason, the model seems to perform way better(generate better names) when I export the dataset with its numerical index than when there's no index. I've tried investigating this
 but haven't been able to come up with a good explanation as to why this happens.
-3. The library does not provide access to all Keras Model APIs so there was really no empirical way to measure it's performance asides manual calculations.
+3. The library does not provide access to all Keras Model APIs so there was really no empirical way to measure its performance asides manual calculations.
 
 Some possible improvements on my initial work would be :
 
 1. Look for a way to include all features of the yoruba names dataset in the training. This would mean, looking for a way to include tabular multi feature datasets in `char-rnn`.
 2. Improve the textgenrnn package to make it a bit more pythonic.
-
+3. Generate meanings and along with each name. This would help provide more context as to what the algorithm perceives the meaning of the name to be.
 
 
 ## Cross section of generated names
 
-The first 50 of the generated names are shown below
+The first 50 generated names are shown below
 
 <table border="1" class="dataframe">
   <thead>
